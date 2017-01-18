@@ -1,0 +1,69 @@
+/*Foobar color palette CSS*/
+
+
+/*BACKGROUND COLORS*/
+
+.bg-alice-blue{
+  background-color: #EEEEFF !important;
+}
+
+.bg-purple-taupe{
+  background-color: #44344F !important;
+}
+
+.bg-eton-blue{
+  background-color: #8CD2A3 !important;
+}
+
+.bg-purple-navy{
+  background-color: #564D80 !important;
+}
+
+.bg-canary{
+  background-color: #FFFF82 !important;
+}
+
+.bg-grain-yellow{
+  background-color: #F5CB5C !important;
+}
+
+.bg-almond{
+  background-color: #EBDCCB !important;
+}
+
+.bg-sunset-orange{
+  background-color: #FF595E !important;
+}
+
+/*FONT COLOR*/
+.text-alice-blue{
+  color: #EEEEFF !important;
+}
+
+.text-purple-taupe{
+  color: #44344F !important;
+}
+
+.text-eton-blue{
+  color: #8CD2A3 !important;
+}
+
+.text-purple-navy{
+  color: #564D80 !important;
+}
+
+.text-canary{
+  color: #FFFF82 !important;
+}
+
+.text-grain-yellow{
+  color: #F5CB5C !important;
+}
+
+.text-almond{
+  color: #EBDCCB !important;
+}
+
+.text-sunset-orange{
+  color: #FF595E !important;
+}
