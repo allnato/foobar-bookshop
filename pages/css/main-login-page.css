@@ -1,0 +1,73 @@
+html, body{
+  height: 100%;
+}
+
+body{
+  background-color: #fefef9;
+}
+
+.banner-container{
+  padding: 30px 0;
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.banner-login > h1{
+  font-size: 11rem;
+  margin: 0 auto;
+}
+
+form{
+  margin: 0 auto;
+  float: none !important;
+}
+
+.form-group > button{
+  font-weight: bold;
+  color: white;
+}
+
+.banner-tag{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+
+  border-left: 2px rgba(0, 0, 0, 0.41) dashed;
+}
+
+.banner-tag > h1{
+  font-size: 5rem;
+  font-family: 'source sans regular';
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.description-section > .container > h1{
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.card-block > i{
+  font-size: 5rem;
+  text-align: center;
+}
+
+.card{
+  border: 3px dashed rgba(0,0,0,.125);
+  border-radius: 1.25rem;
+}
+.card-title,
+.card-subtitle{
+  text-align: center;
+}
