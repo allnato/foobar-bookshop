@@ -11,7 +11,8 @@
     <!-- Fonts and Color -->
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/palette.css">
-
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/main-login-page.css">
   </head>
@@ -49,8 +50,40 @@
       </div>
     </div>
 
-    <div class="about-section">
+    <div class="description-section mt-3">
+      <div class="container">
+        <h1 class="text-xs-center text-purple-taupe lora mb-3">Foobar Bookshop</h1>
 
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-block">
+                <i class="fa fa-search d-block text-eton-blue"></i>
+                <h1 class="card-title text-purple-taupe mt-3">Search</h1>
+                <h6 class="card-subtitle mb-2 text-muted">Browse wide collection of products</h6>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-block d-block">
+                <i class="fa fa-shopping-cart d-block text-eton-blue"></i>
+                <h1 class="card-title text-purple-taupe mt-3">Add</h1>
+                <h6 class="card-subtitle mb-2 text-muted">Add it to your cart!</h6>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-block d-block">
+                <i class="fa fa-usd d-block text-eton-blue"></i>
+                <h1 class="card-title text-purple-taupe mt-3">Buy</h1>
+                <h6 class="card-subtitle mb-2 text-muted">Buy our products via credit cards</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="product-section">
@@ -65,5 +98,6 @@
 
   <script type="text/javascript">
     $('.match').matchHeight();
+    $('.card').matchHeight();
   </script>
 </html>

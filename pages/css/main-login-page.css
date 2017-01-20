@@ -1,3 +1,11 @@
+html, body{
+  height: 100%;
+}
+
+body{
+  background-color: #fefef9;
+}
+
 .banner-container{
   padding: 30px 0;
 }
@@ -43,4 +51,23 @@ form{
   font-family: 'source sans regular';
   font-weight: bold;
   margin-top: 30px;
+}
+
+.description-section > .container > h1{
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.card-block > i{
+  font-size: 5rem;
+  text-align: center;
+}
+
+.card{
+  border: 3px dashed rgba(0,0,0,.125);
+  border-radius: 1.25rem;
+}
+.card-title,
+.card-subtitle{
+  text-align: center;
 }
