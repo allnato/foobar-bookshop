@@ -45,7 +45,7 @@
 
         <div class="banner-tag col-md-8 hidden-sm-down match">
           <img src="img/open-book.svg" alt="" class="" style="height: 160px">
-          <h1 class="text-purple-taupe">Foobar, the original.</h1>
+          <h1 class="text-purple-taupe tagline">Foobar, the original.</h1>
         </div>
       </div>
     </div>
@@ -97,7 +97,52 @@
   <script src="js/matchHeight.min.js" charset="utf-8"></script>
 
   <script type="text/javascript">
-    $('.match').matchHeight();
-    $('.card').matchHeight();
+
+
+    var taglines = [
+      "Connect with Foobar",
+      "Leggo my Foobar!",
+      "Foobar gives it really good.",
+      "World's finest Foobar.",
+      "Good to know Foobar",
+      "Truly Foobar",
+      "hhmmmmm... Foobar",
+      "Gotta Lotta Foobar",
+      "A Foobar is Forever",
+      "Foobar, the original",
+      "See the world with Foobar",
+      "People like Foobar",
+      "It's your Foobar!",
+      "Foobar, the clever way",
+      "Dial down the Foobar",
+      "Give that man a Foobar",
+      "I'm Lovin' Foobar",
+      "God made Foobar",
+      "Foobar for president.",
+      "Foobartastic!",
+      "I like the Foobar in You.",
+      "The Foobar universe",
+      "Foobar, you know you want it",
+      "OMG, it's a Foobar",
+      "It's nothing but Foobar",
+      "Foobar the clear choice",
+      "The Foobar Effect",
+      "Foobar - forget the rest.",
+      "The original Foobar",
+      "Say it with Foobar",
+      "Foobar is a winner",
+      "The Foobar spirit",
+      "Foobar, stay in touch",
+      "To Foobar, or not to Foobar",
+      "Foobar - The Revolution"
+    ];
+
+    $(document).ready(function() {
+      $('.match').matchHeight();
+      $('.card').matchHeight();
+
+      var num = Math.floor(Math.random() * taglines.length - 1);
+      $('.tagline').text(taglines[num]);
+    });
   </script>
 </html>
