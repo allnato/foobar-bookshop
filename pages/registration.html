@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Foobar | Register</title>
+
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Fonts and Color -->
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/palette.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="css/registration.css">
+  </head>
+
+  <body>
+    <div class="wrapper container">
+      <div class="register-wizard">
+        <ul>
+          <li><a href="#personal-information" data-toggle="tab">Personal Information</a></li>
+          <li><a href="#address-information" data-toggle="tab">Address Information</a></li>
+          <li><a href="#card-information" data-toggle="tab">Credit Card Information</a></li>
+        </ul>
+        <div class="progress" id="bar">
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+            style="width: 0%;"></div>
+        </div>
+        <form action="">
+          <div class="tab-content">
+
+            <div class="tab-pane" id="personal-information">
+              <!-- First Name -->
+              <div class="firstName form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" name="firstName" class="form-control" id="first_name">
+              </div>
+              <!-- Middle Initial -->
+              <div class="middleInitial form-group">
+                <label for="middle_initial">Middle Initial</label>
+                <input type="text" name="middleInitial" class="form-control" id="middle_initial">
+              </div>
+              <!-- Last Name -->
+              <div class="lastName form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" name="lastName" class="form-control" id="last_name">
+              </div>
+              <!-- Email -->
+              <div class="email form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" id="email">
+              </div>
+              <!-- Birth Date -->
+              <div class="birthDate form-group">
+                <label for="birth_date">Birth Date</label>
+                <input type="date" name="birthDate" class="form-control" id="birth_date">
+              </div>
+              <!-- Username -->
+              <div class="username form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username">
+              </div>
+              <!-- Password -->
+              <div class="password form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+              </div>
+              <!-- Password:re -->
+              <div class="password form-group">
+                <label for="confirm_password">Confirm password</label>
+                <input type="password" class="form-control" id="confirm_password">
+              </div>
+            </div>
+
+            <div class="tab-pane" id="address-information">
+              <div class="address form-group">
+                <label for="b_address">Address</label>
+                <input type="text" name="address" class="form-control" id="b_address">
+              </div>
+              <div class="city form-group">
+                <label for="b_city">City</label>
+                <input type="text" name="city" class="form-control" id="b_city">
+              </div>
+              <div class="zipcode form-group">
+                <label for="b_zipcode">Zipcode</label>
+                <input type="text" name="zipcode" class="form-control" id="b_zipcode">
+              </div>
+              <div class="region form-group">
+                <label for="b_region">Region</label>
+                <input type="text" name="region" class="form-control" id="b_region">
+              </div>
+              <div class="country form-group">
+                <label for="b_country">Country</label>
+                <input type="text" name="country" class="form-control" id="b_country">
+              </div>
+
+              <div class="address form-group">
+                <label for="d_address">Address</label>
+                <input type="text" name="address" class="form-control" id="d_address">
+              </div>
+              <div class="city form-group">
+                <label for="d_city">City</label>
+                <input type="text" name="city" class="form-control" id="d_city">
+              </div>
+              <div class="zipcode form-group">
+                <label for="d_zipcode">Zipcode</label>
+                <input type="text" name="zipcode" class="form-control" id="d_zipcode">
+              </div>
+              <div class="region form-group">
+                <label for="d_region">Region</label>
+                <input type="text" name="region" class="form-control" id="d_region">
+              </div>
+              <div class="country form-group">
+                <label for="d_country">Country</label>
+                <input type="text" name="country" class="form-control" id="d_country">
+              </div>
+            </div>
+
+            <div class="tab-pane" id="card-information">
+              <div class="card_name form-group">
+                <label for="card_name">Name on Card</label>
+                <input type="text" name="address" class="form-control" id="card_name">
+              </div>
+              <div class="card_num form-group">
+                <label for="card_number">Card Number</label>
+                <input type="text" name="city" class="form-control" id="card_number">
+              </div>
+              <div class="zipcode form-group">
+                <label for="type">Type</label>
+                <input type="text" name="zipcode" class="form-control" id="type">
+              </div>
+              <div class="exp_date form-group">
+                <label for="exp_date">Expiration Date</label>
+                <input type="text" name="region" class="form-control" id="exp_date">
+              </div>
+            </div>
+
+            <ul class="pager wizard">
+              <li class="previous first" style="display:none"><a href="#">First</a></li>
+              <li class="previous"><a href="#">&larr; Previous</a></li>
+              <li class="next last" style="display:none"><a href="#">Last</a></li>
+              <li class="next"><a href="#">Next &rarr;</a></li>
+            </ul>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery.min.js" charset="utf-8"></script>
+  <script src="js/tether.min.js" charset="utf-8"></script>
+  <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+
+  <script src="js/matchHeight.min.js" charset="utf-8"></script>
+  <script src="js/bootstrap.wizard.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.register-wizard').bootstrapWizard({
+        'tabClass': 'nav nav-pills',
+        'onTabShow': function(tab, navigation, index){
+          var $total = navigation.find('li').length;
+          var $current = index;
+          var $percent = ($current/$total) * 100;
+          $('.register-wizard .progress-bar').css('width', $percent+'%');
+        }});
+    });
+  </script>
+</html>
