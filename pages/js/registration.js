@@ -37,46 +37,56 @@ $(document).ready(function() {
           equalTo: '#password'
         },
         b_address:{
-
+          required: true,
+          maxlength: 50
         },
         b_city:{
-
+          required: true,
+          maxlength: 30
         },
         b_zipcode:{
-
+          required: true,
+          maxlength: 32,
+          digits: true
         },
         b_region:{
-
+          required: true,
+          maxlength: 30
         },
         b_country:{
-
+          required: true
         },
         d_address:{
-
+          required: true,
+          maxlength: 30
         },
         d_city:{
-
+          required: true,
+          maxlength: 30
         },
         d_zipcode:{
-
+          required: true,
+          maxlength: 32,
+          digits: true
         },
         d_region:{
-
+          required: true,
+          maxlength: 30
         },
         d_country:{
-
+          required: true
         },
         card_name: {
-
+          required: true
         },
         card_number:{
-
+          required: true
         },
         card_type:{
-
+          required: true
         },
         card_exp:{
-
+          required: true
         }
       },
       messages:{
