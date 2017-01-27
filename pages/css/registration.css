@@ -42,3 +42,11 @@ html, body{
 
   margin-top: 10px;
 }
+
+.help-block{
+  font-size: .8rem;
+}
+
+#middle_initial{
+  text-transform: uppercase;
+}
