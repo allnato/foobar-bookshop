@@ -150,4 +150,14 @@ $(document).ready(function() {
         }
       }
     });
+
+    var card = new Card({
+      form: "#register-form",
+      container: ".card-wrapper",
+      formSelectors:{
+        numberInput: 'input#card_number',
+        expiryInput: 'input#exp_date',
+        nameInput: 'input#card_name'
+      }
+    })
 });
