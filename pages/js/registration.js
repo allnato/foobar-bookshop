@@ -160,4 +160,8 @@ $(document).ready(function() {
         nameInput: 'input#card_name'
       }
     })
+
+    $("input#card_number").detectCard().on("cardChange", function(e, card){
+      console.log(card.type);
+    });
 });
