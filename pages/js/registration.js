@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
     var $validate = $('#register-form').validate({
       rules: {
         firstName:{
@@ -25,7 +27,8 @@ $(document).ready(function() {
         username:{
           required: true,
           minlength: 4,
-          maxlength: 15
+          maxlength: 15,
+          username: true
         },
         password:{
           required: true,
@@ -76,16 +79,17 @@ $(document).ready(function() {
         d_country:{
           required: true
         },
-        card_name: {
+        cardName: {
           required: true
         },
-        card_number:{
+        cardNum:{
+          required: true,
+          creditcard: true
+        },
+        cardType:{
           required: true
         },
-        card_type:{
-          required: true
-        },
-        card_exp:{
+        cardExp:{
           required: true
         }
       },
@@ -174,3 +178,48 @@ $(document).ready(function() {
       toggleActive: true
     });
 });
+
+$.validator.addMethod("username", function(value, element){
+  return this.optional(element) || /^(\w+)$/g.test(value);
+}, "Username must contain only letters, numbers, and underscores ('_')");
+// http://jqueryvalidation.org/creditcard-method/
+// based on http://en.wikipedia.org/wiki/Luhn_algorithm
+$.validator.addMethod( "creditcard", function( value, element ) {
+	if ( this.optional( element ) ) {
+		return "dependency-mismatch";
+	}
+
+	// Accept only spaces, digits and dashes
+	if ( /[^0-9 \-]+/.test( value ) ) {
+    console.log("DITO HERE maybe");
+		return false;
+	}
+
+	var nCheck = 0,
+		nDigit = 0,
+		bEven = false,
+		n, cDigit;
+
+	value = value.replace( /\D/g, "" );
+	// Basing min and max length on
+	// http://developer.ean.com/general_info/Valid_Credit_Card_Types
+	if ( value.length < 13 || value.length > 19 ) {
+    console.log("DITO HERE");
+		return false;
+	}
+
+	for ( n = value.length - 1; n >= 0; n-- ) {
+		cDigit = value.charAt( n );
+		nDigit = parseInt( cDigit, 10 );
+		if ( bEven ) {
+			if ( ( nDigit *= 2 ) > 9 ) {
+				nDigit -= 9;
+			}
+		}
+
+		nCheck += nDigit;
+		bEven = !bEven;
+	}
+
+	return ( nCheck % 10 ) === 0;
+}, "Please enter a valid credit card number." );
