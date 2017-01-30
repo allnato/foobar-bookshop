@@ -164,4 +164,13 @@ $(document).ready(function() {
     $("input#card_number").detectCard().on("cardChange", function(e, card){
       console.log(card.type);
     });
+
+    $('#birth_date').datepicker({
+      format: "mm-dd-yyyy",
+      startDate: "01-01-1800",
+      maxViewMode: 3,
+      todayBtn: "linked",
+      todayHighlight: true,
+      toggleActive: true
+    });
 });
