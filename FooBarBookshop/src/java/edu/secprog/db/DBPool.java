@@ -19,9 +19,9 @@ public class DBPool {
 	
 	private static DBPool singleton;
 	private BasicDataSource dataSource;
-	private static String username="root";
+	private static String username="test";
 	private static String password="1234";
-	private static String url="jdbc:mysql://localhost:3306/notesdb";
+	private static String url="jdbc:mysql://localhost:3306/foobar_booksop";
 	
 	private DBPool(){
 		dataSource = new BasicDataSource();
