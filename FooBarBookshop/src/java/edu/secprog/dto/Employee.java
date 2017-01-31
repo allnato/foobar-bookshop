@@ -27,6 +27,12 @@ public class Employee extends Account implements Serializable {
     public int getEmployeeID() {
         return employeeID;
     }
+    /**
+     * @param employeeID the employeeID to set
+     */
+    public void setEmployeeID(int employeeID) {
+        this.employeeID = employeeID;
+    }
 
     /**
      * @return the dateHired
@@ -55,6 +61,9 @@ public class Employee extends Account implements Serializable {
     public void setEmployeeType(String employeeType) {
         this.employeeType = employeeType;
     }
+
+
+    
     
     
 }
