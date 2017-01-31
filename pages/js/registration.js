@@ -166,7 +166,7 @@ $(document).ready(function() {
     })
 
     $("input#card_number").detectCard().on("cardChange", function(e, card){
-      console.log(card.type);
+      $('#card_type').val(card.type);
     });
 
     $('#birth_date').datepicker({
@@ -191,7 +191,6 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 
 	// Accept only spaces, digits and dashes
 	if ( /[^0-9 \-]+/.test( value ) ) {
-    console.log("DITO HERE maybe");
 		return false;
 	}
 
@@ -204,7 +203,6 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 	// Basing min and max length on
 	// http://developer.ean.com/general_info/Valid_Credit_Card_Types
 	if ( value.length < 13 || value.length > 19 ) {
-    console.log("DITO HERE");
 		return false;
 	}
 
