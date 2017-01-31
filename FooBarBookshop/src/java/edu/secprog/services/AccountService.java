@@ -5,6 +5,9 @@
  */
 package edu.secprog.services;
 
+import edu.secprog.dto.CreditCard;
+import edu.secprog.dto.Customer;
+import edu.secprog.dto.CustomerAddress;
 import java.util.ArrayList;
 
 import edu.secprog.dto.Employee;
@@ -59,6 +62,13 @@ public class AccountService {
         }catch(Exception e) {
             e.printStackTrace();
         }
+        
+        return false;
+    }
+    
+    public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) {
+        
+        
         
         return false;
     }
