@@ -79,7 +79,7 @@
     <body>
     <c:forEach items="${Employees}" var="Employees">
         ${Employees.employeeType}
-    </c:foreach>
+    </c:forEach>
       
     </body>
 </html>

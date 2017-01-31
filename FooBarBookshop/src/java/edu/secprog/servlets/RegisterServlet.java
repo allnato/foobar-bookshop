@@ -53,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
              throws ServletException, IOException {
         ArrayList<Employee> Employees = AccountService.getAllEmployees();
         request.setAttribute("Employees", Employees);
-        request.getRequestDispatcher("Warehouse.html").forward(request, response);
+        request.getRequestDispatcher("Warehouse.jsp").forward(request, response);
         
         
     }

@@ -22,14 +22,14 @@ public class AccountService {
         ArrayList<Employee> employeeList = new ArrayList<Employee>();
         ResultSet rs = null;
         try {
-            Class.forName("com.mysql.jdbc.driver");
+            Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT firstname FROM users;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT employeeType FROM employees;");
             rs = pstmt.executeQuery();
             while(rs.next()) {
                Employee e = new Employee();
-               e.setFirstname(rs.getString(Employee.COLUMN_FIRSTNAME));
+               e.setEmployeeType(rs.getString(Employee.COLUMN_EMPLOYEETYPE));
                employeeList.add(e);
             }
             
