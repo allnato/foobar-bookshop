@@ -38,9 +38,7 @@
             </div>
 
             <div class="form-group">
-                <a href="registration.jsp">
-                    <button type="button" class="btn btn-block bg-purple-taupe">Register</button>
-                </a>
+               <button onclick="window.location='registration.jsp';" type="button" class="btn btn-block bg-purple-taupe">Register</button>
             </div>
           </form>
 
