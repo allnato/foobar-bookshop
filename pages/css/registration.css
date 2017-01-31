@@ -50,3 +50,22 @@ html, body{
 #middle_initial{
   text-transform: uppercase;
 }
+
+.pager.wizard li>a,
+.pager.wizard li>button{
+  font-size: 1rem;
+}
+
+form input,
+form select{
+  font-size: 1rem !important;
+  font-family: lato;
+}
+
+#card_type{
+  text-transform: capitalize;
+}
+
+.register-navigation{
+  margin: 20px 0;
+}

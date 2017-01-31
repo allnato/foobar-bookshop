@@ -84,13 +84,15 @@ $(document).ready(function() {
         },
         cardNum:{
           required: true,
-          creditcard: true
+          creditcard: true,
+          digits: true
         },
         cardType:{
           required: true
         },
         cardExp:{
-          required: true
+          required: true,
+          digits: true
         }
       },
       messages:{
@@ -221,3 +223,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 
 	return ( nCheck % 10 ) === 0;
 }, "Please enter a valid credit card number." );
+
+$('.pager a').click(function(event) {
+  $("html, body").animate({ scrollTop: 0 }, 600);
+});
