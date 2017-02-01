@@ -68,8 +68,27 @@ public class AccountService {
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) {
         
-        
-        
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
+                    + "middleinitial,birthdate,email,username,password,status) values("
+                    + "?,?,?,?,?,?,?,?)");
+            pstmt.setString(1, nc.getFirstname());
+            pstmt.setString(2, nc.getLastname());
+            pstmt.setString(3, nc.getMiddleinitial());
+            pstmt.setString(4, nc.getBirthdate());
+            pstmt.setString(5, nc.getEmail());
+            pstmt.setString(6, nc.getUsername());
+            pstmt.setString(7, nc.getPassword());;
+            pstmt.setString(8, nc.getStatus());
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+                
         return false;
     }
     

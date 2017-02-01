@@ -135,7 +135,9 @@
       "The Foobar spirit",
       "Foobar, stay in touch",
       "To Foobar, or not to Foobar",
-      "Foobar - The Revolution"
+      "Foobar - The Revolution",
+      "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars"
+              
     ];
 
     $(document).ready(function() {

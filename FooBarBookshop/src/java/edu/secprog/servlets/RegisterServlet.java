@@ -10,6 +10,8 @@ import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -73,6 +75,12 @@ public class RegisterServlet extends HttpServlet {
         nc.setBirthdate(request.getParameter("birthDate"));
         nc.setUsername(request.getParameter("username"));
         nc.setPassword(request.getParameter("password"));
+        nc.setStatus("active");
+        Date dt = new Date();
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateRegistered = sdf.format(dt);
+        nc.setDateRegistered(dateRegistered);
         // Set user address on a different object and table
         // Billing Address
         bca.setAddress(request.getParameter("b_address"));
