@@ -1,15 +1,16 @@
-package edu.secprog.servlets;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package edu.secprog.servlets;
 
-import edu.secprog.dto.Employee;
+import edu.secprog.security.BCrypt;
+import edu.secprog.dto.CreditCard;
+import edu.secprog.dto.Customer;
+import edu.secprog.dto.CustomerAddress;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Beep xD
+ * @author Mark Christian Sanchez
  */
-@WebServlet(urlPatterns = {"/Register", "/home"})
+@WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
 
     /**
@@ -32,35 +33,81 @@ public class RegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        boolean isSuccessful;
+        Customer nc = new Customer();
+        CustomerAddress bca = new CustomerAddress();
+        CustomerAddress dca = new CustomerAddress();
+        CreditCard cc = new CreditCard();
+        // Set user information
+        nc.setFirstname(request.getParameter("firstName"));
+        nc.setMiddleinitial(request.getParameter("middleInitial"));
+        nc.setLastname(request.getParameter("lastName"));
+        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(12)));
+        nc.setBirthdate(request.getParameter("birthDate"));
+        nc.setUsername(request.getParameter("username"));
+        nc.setPassword(request.getParameter("password"));
+        // Set user address on a different object and table
+        // Billing Address
+        bca.setAddress(request.getParameter("b_address"));
+        bca.setCity(request.getParameter("b_city"));
+        bca.setZipcode(Integer.parseInt(request.getParameter("b_zipcode")));
+        bca.setRegion(request.getParameter("b_region"));
+        bca.setCountry(request.getParameter("b_country"));
+        bca.setAddressType("billing");
+        // Shipping Address
+        dca.setAddress(request.getParameter("d_address"));
+        dca.setCity(request.getParameter("d_city"));
+        dca.setZipcode(Integer.parseInt(request.getParameter("d_zipcode")));
+        dca.setRegion(request.getParameter("d_region"));
+        dca.setCountry(request.getParameter("d_country"));
+        dca.setAddressType("delivery");
         
-//        Account newEmployee = new Employee();
-//        
-//        String email = request.getParameter(Account.COLUMN_EMAIL);
-//        String pass = request.getParameter(Account.COLUMN_PASSWORD);
-//        String firstname = request.getParameter(Account.COLUMN_FIRSTNAME);
-//        String lastname = request.getParameter(Account.COLUMN_LASTNAME);
-//        String middleinitial = request.getParameter(Account.COLUMN_MIDDLEINITIAL);
-//        String birthdate = request.getParameter(Account.COLUMN_BIRTHDATE);
-//        String username = request.getParameter(Account.COLUMN_USERNAME);
-//        String status = request.getParameter(Account.COLUMN_STATUS);
-          doGet(request,response);
+        // Set user credit card info
+        cc.setName(request.getParameter("cardName"));
+        cc.setCardNum(Integer.parseInt(request.getParameter("cardNum")));
+        cc.setType(request.getParameter("cardType"));
+        cc.setExpDate(request.getParameter("cardExp"));
+        
+        
+        isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
     }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-             throws ServletException, IOException {
-        ArrayList<Employee> Employees = AccountService.getAllEmployees();
-        request.setAttribute("Employees", Employees);
-        request.getRequestDispatcher("Warehouse.jsp").forward(request, response);
-        
-        
-    }
-        
-        
-        
-        
-  
-}
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}

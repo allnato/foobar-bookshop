@@ -5,6 +5,9 @@
  */
 package edu.secprog.services;
 
+import edu.secprog.dto.CreditCard;
+import edu.secprog.dto.Customer;
+import edu.secprog.dto.CustomerAddress;
 import java.util.ArrayList;
 
 import edu.secprog.dto.Employee;
@@ -37,6 +40,37 @@ public class AccountService {
             e.printStackTrace();
         }
         return employeeList;
+    }
+    
+    public static boolean verifyLogin(String username, String password) {
+        
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT status FROM users"
+                    + " WHERE username= '" + username + "' AND password= '" + password +  "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                connection.close();
+                pstmt.close();
+                return true;
+            }
+            return false;
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) {
+        
+        
+        
+        return false;
     }
     
 }
