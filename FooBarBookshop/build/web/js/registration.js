@@ -84,15 +84,13 @@ $(document).ready(function() {
         },
         cardNum:{
           required: true,
-          creditcard: true,
-          digits: true
+          creditcard: true
         },
         cardType:{
           required: true
         },
         cardExp:{
-          required: true,
-          digits: true
+          required: true
         }
       },
       messages:{

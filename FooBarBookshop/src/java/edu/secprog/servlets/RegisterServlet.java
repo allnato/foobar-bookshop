@@ -10,8 +10,11 @@ import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,7 +75,16 @@ public class RegisterServlet extends HttpServlet {
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
         nc.setEmail(request.getParameter("email"));
-        nc.setBirthdate(request.getParameter("birthDate"));
+        Date birthDate = null;
+        SimpleDateFormat sdf0 =
+                new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            birthDate = sdf0.parse(request.getParameter("birthDate"));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+        nc.setBirthdate(sdf0.format(birthDate));
         nc.setUsername(request.getParameter("username"));
         nc.setPassword(request.getParameter("password"));
         nc.setStatus("active");
@@ -99,12 +111,18 @@ public class RegisterServlet extends HttpServlet {
         
         // Set user credit card info
         cc.setName(request.getParameter("cardName"));
-        cc.setCardNum(Integer.parseInt(request.getParameter("cardNum")));
+        cc.setCardNum(request.getParameter("cardNum"));
         cc.setType(request.getParameter("cardType"));
         cc.setExpDate(request.getParameter("cardExp"));
         
         
-        isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
+        try {
+            isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
+            request.getRequestDispatcher("/login");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
