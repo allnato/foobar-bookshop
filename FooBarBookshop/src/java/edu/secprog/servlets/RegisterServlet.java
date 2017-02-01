@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.BCrypt;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
@@ -69,7 +70,7 @@ public class RegisterServlet extends HttpServlet {
         nc.setFirstname(request.getParameter("firstName"));
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
-        nc.setEmail(request.getParameter("email"));
+        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(12)));
         nc.setBirthdate(request.getParameter("birthDate"));
         nc.setUsername(request.getParameter("username"));
         nc.setPassword(request.getParameter("password"));
