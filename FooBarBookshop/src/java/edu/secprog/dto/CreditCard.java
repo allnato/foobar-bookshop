@@ -21,7 +21,7 @@ public class CreditCard implements Serializable {
     
     private int creditCardID;
     private String name;
-    private int cardNum;
+    private String cardNum;
     private String type;
     private String expDate;
 
@@ -49,14 +49,14 @@ public class CreditCard implements Serializable {
     /**
      * @return the cardNum
      */
-    public int getCardNum() {
+    public String getCardNum() {
         return cardNum;
     }
 
     /**
      * @param cardNum the cardNum to set
      */
-    public void setCardNum(int cardNum) {
+    public void setCardNum(String cardNum) {
         this.cardNum = cardNum;
     }
 

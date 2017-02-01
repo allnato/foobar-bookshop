@@ -70,10 +70,10 @@ public class RegisterServlet extends HttpServlet {
         nc.setFirstname(request.getParameter("firstName"));
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
-        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(12)));
+        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
         nc.setBirthdate(request.getParameter("birthDate"));
         nc.setUsername(request.getParameter("username"));
-        nc.setPassword(request.getParameter("password"));
+        nc.setPassword(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
         // Set user address on a different object and table
         // Billing Address
         bca.setAddress(request.getParameter("b_address"));
@@ -92,9 +92,9 @@ public class RegisterServlet extends HttpServlet {
         
         // Set user credit card info
         cc.setName(request.getParameter("cardName"));
-        cc.setCardNum(Integer.parseInt(request.getParameter("cardNum")));
+        cc.setCardNum(BCrypt.hashpw(request.getParameter("cardNum"), BCrypt.gensalt(10)));
         cc.setType(request.getParameter("cardType"));
-        cc.setExpDate(request.getParameter("cardExp"));
+        cc.setExpDate(BCrypt.hashpw(request.getParameter("cardExp"), BCrypt.gensalt(10)));
         
         
         isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
