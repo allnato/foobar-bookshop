@@ -84,22 +84,20 @@ $(document).ready(function() {
         },
         cardNum:{
           required: true,
-          creditcard: true,
-          digits: true
+          creditcard: true
         },
         cardType:{
           required: true
         },
         cardExp:{
-          required: true,
-          digits: true
+          required: true
         }
       },
       messages:{
         firstName: "Please enter your first name",
         lastName: "Please enter you last name",
         middleInitial: "Please enter your middle initial",
-        email: "Please enter your Email address so we can contact you"
+        email: "Please enter your Email"
       },
       errorElement: 'div',
       errorPlacement: function(error, element) {
