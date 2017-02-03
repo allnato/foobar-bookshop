@@ -1,6 +1,7 @@
 html, body{
   height: 100%;
   font-size: 16px;
+  background-color: aliceblue;
 }
 
 .register-navigation{
@@ -99,4 +100,16 @@ form h3{
   font-family: lato;
   font-weight: bold;
   color: #666666;
+}
+
+.thead h2{
+  font-family: 'merriweather';
+  font-weight: bold;
+  line-height: 2.5rem;
+  color: #6d4c41;
+  margin: 2rem 0px;
+}
+
+.thead img{
+  width: 85%;
 }
