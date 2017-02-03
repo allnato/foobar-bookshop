@@ -177,6 +177,15 @@ $(document).ready(function() {
       todayHighlight: true,
       toggleActive: true
     });
+
+    $('.finish button').click(function(event) {
+      $('#d_address').val($('#b_address').val());
+      $('#d_city').val($('#b_city').val());
+      $('#d_region').val($('#b_region').val());
+      $('#d_zipcode').val($('#b_zipcode').val());
+      $('#d_country').val($('#b_country').val());
+      $('#register-form').submit();
+    });
 });
 
 $.validator.addMethod("username", function(value, element){
@@ -238,8 +247,9 @@ $('#sameAddress').change(function() {
 
 function clearDeliveryAddrFields(){
   $('.deliveryFields .help-block').remove();
-  $('.deliveryFields .has-error').remove();
-  $('.deliveryFields .has-success').remove();
+  $('.deliveryFields .form-control').removeClass('has-error');
+  $('.deliveryFields .form-control').removeClass('has-success');
+  $('.deliveryFields .glyphicon').remove();
   $('.deliveryFields .form-control').each(function(index, el) {
     $(this).val("");
     $(this).attr('disabled', 'disabled');

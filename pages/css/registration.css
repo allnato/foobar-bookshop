@@ -113,3 +113,7 @@ form h3{
 .thead img{
   width: 85%;
 }
+
+.finish{
+  float: right;
+}
