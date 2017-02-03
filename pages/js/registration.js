@@ -225,3 +225,29 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 $('.pager a').click(function(event) {
   $("html, body").animate({ scrollTop: 0 }, 600);
 });
+
+$('#sameAddress').change(function() {
+  if($(this).is(':checked')){
+    console.log("it is checked");
+    clearDeliveryAddrFields();
+  } else {
+    console.log("it is not checked");
+    addDeliveryAddrFields();
+  }
+});
+
+function clearDeliveryAddrFields(){
+  $('.deliveryFields .help-block').remove();
+  $('.deliveryFields .has-error').remove();
+  $('.deliveryFields .has-success').remove();
+  $('.deliveryFields .form-control').each(function(index, el) {
+    $(this).val("");
+    $(this).attr('disabled', 'disabled');
+  });
+}
+
+function addDeliveryAddrFields(){
+  $('.deliveryFields .form-control').each(function(index, el) {
+    $(this).removeAttr('disabled');
+  });
+}
