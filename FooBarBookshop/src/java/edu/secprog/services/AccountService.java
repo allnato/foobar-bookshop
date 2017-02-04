@@ -142,39 +142,39 @@ public class AccountService {
         } catch(Exception e) {
             e.printStackTrace();
         }
-//        /* Step 3: Add the billing and delivery address data to the customer_address table
-//         */
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
-//                    + "address,city,zipcode,region,country) "
-//                    + "values(?,?,?,?,?,?,?)");
-//            pstmt.setLong(1, customerID);
-//            pstmt.setString(2, bca.getAddressType());
-//            pstmt.setString(3, bca.getAddress());
-//            pstmt.setString(4, bca.getCity());
-//            pstmt.setInt(5, bca.getZipcode());
-//            pstmt.setString(6, bca.getRegion());
-//            pstmt.setString(7, bca.getCountry());
-//            
-//            pstmt.executeUpdate();
-//            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
-//                    + "address,city,zipcode,region,country) "
-//                    + "values(?,?,?,?,?,?,?)");
-//            pstmt.setLong(1, customerID);
-//            pstmt.setString(2, dca.getAddressType());
-//            pstmt.setString(3, dca.getAddress());
-//            pstmt.setString(4, dca.getCity());
-//            pstmt.setInt(5, dca.getZipcode());
-//            pstmt.setString(6, dca.getRegion());
-//            pstmt.setString(7, dca.getCountry());
-//        }
-//        catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//        }
-//
+        /* Step 3: Add the billing and delivery address data to the customer_address table
+         */
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
+                    + "address,city,zipcode,region,country) "
+                    + "values(?,?,?,?,?,?,?)");
+            pstmt.setLong(1, customerID);
+            pstmt.setString(2, bca.getAddressType());
+            pstmt.setString(3, bca.getAddress());
+            pstmt.setString(4, bca.getCity());
+            pstmt.setInt(5, bca.getZipcode());
+            pstmt.setString(6, bca.getRegion());
+            pstmt.setString(7, bca.getCountry());
+            
+            pstmt.executeUpdate();
+            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
+                    + "address,city,zipcode,region,country) "
+                    + "values(?,?,?,?,?,?,?)");
+            pstmt.setLong(1, customerID);
+            pstmt.setString(2, dca.getAddressType());
+            pstmt.setString(3, dca.getAddress());
+            pstmt.setString(4, dca.getCity());
+            pstmt.setInt(5, dca.getZipcode());
+            pstmt.setString(6, dca.getRegion());
+            pstmt.setString(7, dca.getCountry());
+        }
+        catch(SQLException e) {
+                System.out.println("May problem sa mga addresses");
+        }
+
 //        
 //        /* Step 5: Add the credit card to the credit_cards table
 //         */
