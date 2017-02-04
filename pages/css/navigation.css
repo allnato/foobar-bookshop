@@ -1,8 +1,16 @@
 .navbar-default .navbar-nav>li>a:hover,
-.navbar-default .navbar-nav>li>a:focus,
-.navbar-default .navbar-nav>li.active>a{
+.navbar-default .navbar-nav>li>a:focus{
   color: #333333;
   background-color: #f1f1f1;
+}
+.navbar-default .navbar-nav>li.active>a,
+.navbar-default .navbar-nav>li.active>a:hover{
+  color: #4caf50;
+  background-color: #f1f1f1;
+}
+
+.navbar-default .navbar-nav{
+  font-family: lato;
 }
 
 .navbar-brand{
@@ -12,4 +20,12 @@
 
 .fa.fa-heart{
   color: crimson;
+}
+
+.navbar-from{
+  text-align: center;
+}
+
+.badge{
+  background-color: #e91e63;
 }
