@@ -74,7 +74,7 @@ public class RegisterServlet extends HttpServlet {
         nc.setFirstname(request.getParameter("firstName"));
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
-        nc.setEmail(request.getParameter("email"));
+        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
         Date birthDate = null;
         SimpleDateFormat sdf0 =
                 new SimpleDateFormat("yyyy-MM-dd");
@@ -84,9 +84,9 @@ public class RegisterServlet extends HttpServlet {
         catch (ParseException e) {
             e.printStackTrace();
         }
-        nc.setBirthdate(sdf0.format(birthDate));
+        nc.setBirthdate(request.getParameter("birthDate"));
         nc.setUsername(request.getParameter("username"));
-        nc.setPassword(request.getParameter("password"));
+        nc.setPassword(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
         nc.setStatus("active");
         Date dt = new Date();
         SimpleDateFormat sdf =
@@ -111,9 +111,9 @@ public class RegisterServlet extends HttpServlet {
         
         // Set user credit card info
         cc.setName(request.getParameter("cardName"));
-        cc.setCardNum(request.getParameter("cardNum"));
+        cc.setCardNum(BCrypt.hashpw(request.getParameter("cardNum"), BCrypt.gensalt(10)));
         cc.setType(request.getParameter("cardType"));
-        cc.setExpDate(request.getParameter("cardExp"));
+        cc.setExpDate(BCrypt.hashpw(request.getParameter("cardExp"), BCrypt.gensalt(10)));
         
         
         try {
