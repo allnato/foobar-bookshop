@@ -8,6 +8,7 @@ package edu.secprog.servlets;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
+import edu.secprog.security.BCrypt;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
 import java.text.ParseException;
