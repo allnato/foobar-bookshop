@@ -174,6 +174,7 @@ public class AccountService {
             pstmt.setString(7, dca.getCountry());
         }
         catch(SQLException e) {
+                e.printStackTrace();
                 System.out.println("May problem sa mga addresses");
         }
 
