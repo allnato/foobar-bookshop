@@ -71,3 +71,6 @@ form{
 .card-subtitle{
   text-align: center;
 }
+.footer{
+  border-radius: 0px;
+}

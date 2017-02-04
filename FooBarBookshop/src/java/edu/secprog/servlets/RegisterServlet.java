@@ -5,12 +5,16 @@
  */
 package edu.secprog.servlets;
 
-import edu.secprog.security.BCrypt;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -71,9 +75,24 @@ public class RegisterServlet extends HttpServlet {
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
         nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
+        Date birthDate = null;
+        SimpleDateFormat sdf0 =
+                new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            birthDate = sdf0.parse(request.getParameter("birthDate"));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
         nc.setBirthdate(request.getParameter("birthDate"));
         nc.setUsername(request.getParameter("username"));
         nc.setPassword(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
+        nc.setStatus("active");
+        Date dt = new Date();
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateRegistered = sdf.format(dt);
+        nc.setDateRegistered(dateRegistered);
         // Set user address on a different object and table
         // Billing Address
         bca.setAddress(request.getParameter("b_address"));
@@ -97,7 +116,13 @@ public class RegisterServlet extends HttpServlet {
         cc.setExpDate(BCrypt.hashpw(request.getParameter("cardExp"), BCrypt.gensalt(10)));
         
         
-        isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
+        try {
+            isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
+            request.getRequestDispatcher("/login");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**

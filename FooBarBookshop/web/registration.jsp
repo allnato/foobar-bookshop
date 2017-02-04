@@ -53,7 +53,7 @@
           <div class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
             style="width: 0%;"></div>
         </div>
-        <form action="" id="register-form">
+        <form action="register" method="POST" id="register-form">
           <div class="tab-content">
 
             <div class="tab-pane" id="personal-information">
