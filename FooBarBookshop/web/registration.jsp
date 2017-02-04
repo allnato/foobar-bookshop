@@ -724,7 +724,7 @@
                       <li class="previous"><a href="#">&larr; Prev</a></li>
                       <li class="next last" style="display:none"><a href="#">Last</a></li>
                       <li class="next"><a href="#">Next &rarr;</a></li>
-                      <li class="finish"><button type="button" class="btn btn-success">Sign-Up!</button></li>
+                      <li class="finish"><button type="submit" class="btn btn-success">Sign-Up!</button></li>
                     </ul>
                   </div>
                 </form>
