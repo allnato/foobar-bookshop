@@ -24,7 +24,7 @@ public class CustomerAddress implements Serializable {
     private String addressType;
     private String address;
     private String city;
-    private int zipcode;
+    private String zipcode;
     private String region;
     private String country;
 
@@ -80,14 +80,14 @@ public class CustomerAddress implements Serializable {
     /**
      * @return the zipcode
      */
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
     /**
      * @param zipcode the zipcode to set
      */
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 
