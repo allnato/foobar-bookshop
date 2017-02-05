@@ -117,3 +117,14 @@ form h3{
 .finish{
   float: right;
 }
+
+.tab-pane.centered > div{
+  float: none;
+  display: inline-block;
+  *display: inline; /* ie7 fix */
+  zoom: 1;
+}
+
+.tab-pane.centered{
+  text-align: center;
+}
