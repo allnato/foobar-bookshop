@@ -25,7 +25,7 @@ import java.sql.Statement;
 public class AccountService {
 
     public static ArrayList<Employee> getAllEmployees(){
-        ArrayList<Employee> employeeList = new ArrayList<Employee>();
+        ArrayList<Employee> employeeList = new ArrayList<>();
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -39,8 +39,7 @@ public class AccountService {
                employeeList.add(e);
             }
             
-        }catch(Exception e) {
-            e.printStackTrace();
+        }catch(ClassNotFoundException | SQLException e) {
         }
         return employeeList;
     }
@@ -63,8 +62,7 @@ public class AccountService {
             }
             return false;
             
-        }catch(Exception e) {
-            e.printStackTrace();
+        }catch(ClassNotFoundException | SQLException e) {
         }
         
         return false;
@@ -111,8 +109,7 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End CHeck if registering is successful
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(ClassNotFoundException | SQLException e) {
         }
         /* Step 2: Add date registered and generated ID to the customers table
          */
@@ -141,8 +138,7 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End Check if registering is successful
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(ClassNotFoundException | SQLException e) {
         }
         /* Step 3: Add the billing and delivery address data to the customer_address table
          */
@@ -157,78 +153,81 @@ public class AccountService {
             pstmt.setString(2, bca.getAddressType());
             pstmt.setString(3, bca.getAddress());
             pstmt.setString(4, bca.getCity());
-            pstmt.setInt(5, bca.getZipcode());
+            pstmt.setString(5, bca.getZipcode());
             pstmt.setString(6, bca.getRegion());
             pstmt.setString(7, bca.getCountry());
             
             pstmt.executeUpdate();
-            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
+            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType, "
                     + "address,city,zipcode,region,country) "
                     + "values(?,?,?,?,?,?,?)");
             pstmt.setLong(1, customerID);
             pstmt.setString(2, dca.getAddressType());
             pstmt.setString(3, dca.getAddress());
             pstmt.setString(4, dca.getCity());
-            pstmt.setInt(5, dca.getZipcode());
+            pstmt.setString(5, dca.getZipcode());
             pstmt.setString(6, dca.getRegion());
             pstmt.setString(7, dca.getCountry());
+            pstmt.executeUpdate();
         }
         catch(SQLException e) {
                 System.out.println("May problem sa mga addresses");
         }
 
-//        
-//        /* Step 5: Add the credit card to the credit_cards table
-//         */
-//                
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
-//                    + "type, expDate) "
-//                    + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-//            pstmt.setString(1, cc.getName());
-//            pstmt.setString(2, cc.getCardNum());
-//            pstmt.setString(3, cc.getType());
-//            pstmt.setString(4, cc.getExpDate());
-//            int affected = pstmt.executeUpdate();
-//            // Check if registering is successful. Return creditcardID generated
-//            try {
-//                rs = pstmt.getGeneratedKeys();
-//                if(rs.next()) {
-//                    creditCardID = rs.getLong(1);
-//                }
-//                else {
-//                    throw new SQLException("Register failed! No rows affected");
-//                }
-//            } catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//            }
-//            // End Check if registering is successful
-//            
-//        }
-//        catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//        }
-//        
-//        /* Step 6: Add the credit card ID to the customer_cards table
-//         */
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-//            pstmt.setLong(1, customerID);
-//            pstmt.setLong(2, creditCardID);
-//            pstmt.executeUpdate();
-//
-//        }
-//        catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//        }
         
-        return false;
+        /* Step 5: Add the credit card to the credit_cards table
+         */
+                
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
+                    + "type, expDate) "
+                    + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, cc.getName());
+            pstmt.setString(2, cc.getCardNum());
+            pstmt.setString(3, cc.getType());
+            pstmt.setString(4, cc.getExpDate());
+            int affected = pstmt.executeUpdate();
+            // Check if registering is successful. Return creditcardID generated
+            try {
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    creditCardID = rs.getLong(1);
+                }
+                else {
+                    throw new SQLException("Boss may problems");
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("Register failed! No rows affected");
+            }
+            // End Check if registering is successful
+            
+        }
+        catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("Lahat may problema");
+        }
+        
+        /* Step 6: Add the credit card ID to the customer_cards table
+         */
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
+            pstmt.setLong(1, customerID);
+            pstmt.setLong(2, creditCardID);
+            pstmt.executeUpdate();
+
+        }
+        catch(SQLException e) {
+                System.out.println("Dami nanamang problem ano ba yan.");
+        }
+        
+        return true;
     }
     
 }
