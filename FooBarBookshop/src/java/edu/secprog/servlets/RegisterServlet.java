@@ -120,12 +120,14 @@ public class RegisterServlet extends HttpServlet {
         cc.setName(request.getParameter("cardName"));
         cc.setCardNum(BCrypt.hashpw(request.getParameter("cardNum"), BCrypt.gensalt(10)));
         cc.setType(request.getParameter("cardType"));
-        cc.setExpDate(BCrypt.hashpw(request.getParameter("cardExp"), BCrypt.gensalt(10)));
-        
+        cc.setExpDate(request.getParameter("cardExp"));
+        System.out.println("YUNG CARD TYPE: " + request.getParameter("cardType"));
         
         try {
             isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
-            request.getRequestDispatcher("/login");
+            if (isSuccessful) {
+                request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
