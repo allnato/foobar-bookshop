@@ -21,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -127,6 +128,19 @@ public class RegisterServlet extends HttpServlet {
             isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
             System.out.println("SUCCESSFUL BA BES?" + isSuccessful);
             if (isSuccessful) {
+                HttpSession session = request.getSession(false);
+                if (session == null) {
+                    session = request.getSession();
+                    String username = request.getParameter("username");
+                    session.setAttribute("username", username);
+                } else {
+                    // Already created.
+                    session.invalidate();
+                    session = request.getSession();
+                    String username = request.getParameter("username");
+                    session.setAttribute("username", username);
+                }
+                // Change the code below to redirect to loginServlet if the main page is available
                 request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
             }
         } catch (ClassNotFoundException ex) {
