@@ -1,2 +1,2 @@
-# foobar-bookshop
-A Secure Programming (SEC-PRG) machine project.
+# Foobartastic Bookshop
+SEC-PRG Machine Project
