@@ -179,11 +179,14 @@ $(document).ready(function() {
     });
 
     $('.finish button').click(function(event) {
-      $('#d_address').val($('#b_address').val());
-      $('#d_city').val($('#b_city').val());
-      $('#d_region').val($('#b_region').val());
-      $('#d_zipcode').val($('#b_zipcode').val());
-      $('#d_country').val($('#b_country').val());
+      // Copy billing to delivery if checkbox is cheked.
+      if($('#sameAddress').is(':checked')){
+        $('#d_address').val($('#b_address').val());
+        $('#d_city').val($('#b_city').val());
+        $('#d_region').val($('#b_region').val());
+        $('#d_zipcode').val($('#b_zipcode').val());
+        $('#d_country').val($('#b_country').val());
+      }
       $('#register-form').submit();
     });
 });

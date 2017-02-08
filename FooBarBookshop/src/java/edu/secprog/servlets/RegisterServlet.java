@@ -125,6 +125,7 @@ public class RegisterServlet extends HttpServlet {
         
         try {
             isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
+            System.out.println("SUCCESSFUL BA BES?" + isSuccessful);
             if (isSuccessful) {
                 request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
             }
