@@ -74,3 +74,12 @@ form{
 .footer{
   border-radius: 0px;
 }
+div.rc-anchor-content{
+  width: 155px !important;
+}
+div.rc-anchor-pt{
+  right: 50px !important;
+}
+div.rc-anchor-normal{
+  width: 247px !important;
+}
