@@ -19,8 +19,6 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/registration.css">
     <link rel="stylesheet" href="css/navigation.css">
-    
-    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
   <body>

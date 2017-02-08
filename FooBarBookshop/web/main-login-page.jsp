@@ -16,6 +16,23 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/main-login-page.css">
+    
+    <style>
+        div.rc-anchor-content{
+          width: 155px !important;
+        }
+        div.rc-anchor-pt{
+          right: 50px !important;
+        }
+        div.rc-anchor-normal{
+          width: 247px !important;
+        }
+        body{
+          background-color: #ffffff !important;
+        }
+    </style>
+    
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
   <body>
@@ -33,6 +50,31 @@
               <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
 
+            <div>
+              <div class="g-recaptcha form-group has-feedback" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
+              <noscript>
+                        <div class="tab-pane centered">
+                          <div style="width: 302px; height: 422px; position: relative;">
+                            <div style="width: 302px; height: 422px; position: absolute;">
+                              <iframe src="https://www.google.com/recaptcha/api/fallback?k=6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"
+                                      frameborder="0" scrolling="no"
+                                      style="width: 302px; height:422px; border-style: none;">
+                              </iframe>
+                            </div>
+                          </div>
+                          <div style="width: 300px; height: 60px; border-style: none;
+                                         bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px;
+                                         background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+                            <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                                         class="g-recaptcha-response"
+                                         style="width: 250px; height: 40px; border: 1px solid #c1c1c1;
+                                                margin: 10px 25px; padding: 0px; resize: none;" >
+                            </textarea>
+                          </div>
+                        </div>
+              </noscript>
+            </div>
+              
             <div class="form-group">
               <button type="submit" class="btn btn-block bg-purple-navy">Login</button>
             </div>
@@ -46,7 +88,7 @@
 
         <div class="banner-tag col-md-8 hidden-sm-down match">
           <img src="img/open-book.svg" alt="" class="" style="height: 160px">
-          <h1 class="text-purple-taupe tagline">Foobar, the original.</h1>
+          <h1 class="text-purple-taupe tagline">Foobar, the original</h1>
         </div>
       </div>
     </div>
@@ -136,8 +178,9 @@
       "Foobar, stay in touch",
       "To Foobar, or not to Foobar",
       "Foobar - The Revolution",
-      "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars"
-              
+      "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars",
+      "I heart Foobar",
+      "Mave is Foobar"
     ];
 
     $(document).ready(function() {
