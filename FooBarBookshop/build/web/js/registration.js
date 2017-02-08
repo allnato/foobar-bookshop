@@ -170,7 +170,7 @@ $(document).ready(function() {
     });
 
     $('#birth_date').datepicker({
-      format: "mm-dd-yyyy",
+      format: "yyyy-mm-dd",
       startDate: "01-01-1800",
       maxViewMode: 3,
       todayBtn: "linked",
