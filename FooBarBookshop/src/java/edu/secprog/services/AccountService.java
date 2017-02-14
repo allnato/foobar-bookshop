@@ -55,14 +55,18 @@ public class AccountService {
                     + " WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
-                connection.close();
-                pstmt.close();
+                rs.next();
+                System.out.println("Yung string is" + rs.getString("password"));
                 if(BCrypt.checkpw(password, rs.getString("password")))
                     return true;
             }
+            connection.close();
+            pstmt.close();
             return false;
             
         }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
         }
         
         return false;

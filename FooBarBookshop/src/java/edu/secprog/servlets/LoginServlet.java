@@ -62,9 +62,13 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         boolean isLoggedIn;
         isLoggedIn = AccountService.verifyLogin(username, password);
-        if(isLoggedIn)
+        if(isLoggedIn) {
+            System.out.println("Uy naglogin haha");
             request.getRequestDispatcher("Home.jsp").forward(request, response);
-        
+        }
+        else {
+            System.out.println("bes what happened");
+        }
         
     }
 
