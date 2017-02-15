@@ -56,7 +56,7 @@ public class AccountService {
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
                 rs.next();
-                System.out.println("Yung string is" + rs.getString("password"));
+                
                 if(BCrypt.checkpw(password, rs.getString("password")))
                     return true;
             }
