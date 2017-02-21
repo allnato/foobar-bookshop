@@ -5,7 +5,9 @@ html, body{
 
 /* Sidebar Category */
 .category-label{
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 5vh;
 }
 
 .category-container{
