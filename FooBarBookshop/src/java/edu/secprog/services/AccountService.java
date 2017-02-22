@@ -24,41 +24,64 @@ import java.sql.Statement;
  */
 public class AccountService {
 
-    public static ArrayList<Employee> getAllEmployees(){
-        ArrayList<Employee> employeeList = new ArrayList<>();
+    public static boolean checkAttempts(String userID, String uStatus) {
         ResultSet rs = null;
-        try {
+        if(uStatus.equals("active")) {
+            try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT employeeType FROM employees;");
+            // Check for three successful fails
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM foobar_booksop.logins"
+                    + " WHERE userID= '" + userID + "' AND foobar_booksop.logins.status= " + "'failed'"
+                    + " ORDER BY foobar_booksop.logins.timestamp DESC LIMIT 3;");
             rs = pstmt.executeQuery();
-            while(rs.next()) {
-               Employee e = new Employee();
-               e.setEmployeeType(rs.getString(Employee.COLUMN_EMPLOYEETYPE));
-               employeeList.add(e);
-            }
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int count = rs.getInt("count");
+                if(count >= 3) {
+                    System.out.println("HOI LOCKED NA BES");
+                    connection.close();
+                    pstmt.close();
+                    return false;
+                }
+                else {
+                    connection.close();
+                    pstmt.close();
+                    return true;
+                }
+                
+             
+            } 
             
-        }catch(ClassNotFoundException | SQLException e) {
+            }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+            }
         }
-        return employeeList;
+        else {
+            return false;
+        }
+        return false;
     }
     
-    public static boolean verifyLogin(String username, String password) {
+    public static boolean checkPassword(String userID) {
+        
+        return false;
+    }
+    
+    public static boolean verifyExists(String username, String password) {
         
         ResultSet rs = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT status, password FROM users"
+            PreparedStatement pstmt = connection.prepareStatement("SELECT status, userID FROM users"
                     + " WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
-                rs.next();
-                
-                if(BCrypt.checkpw(password, rs.getString("password")))
-                    return true;
+             // If User Exists, check the number of attempts then check the password
             }
             connection.close();
             pstmt.close();
