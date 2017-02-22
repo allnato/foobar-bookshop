@@ -5,9 +5,9 @@ html, body{
 
 /* Sidebar Category */
 .category-label{
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 4vh;
 }
 
 .category-container{
@@ -25,3 +25,19 @@ html, body{
 }
 
 /*[END] Sidebar Category*/
+
+/* Content-Filter-Row */
+.content-filter-action{
+  margin-bottom: 15px;
+}
+
+.filter-actions{
+  padding: 0 15px;
+}
+
+.filter-actions button,
+.filter-actions .dropdown{
+  font-family: lato;
+}
+
+/* [END] Content-Filter-Row */

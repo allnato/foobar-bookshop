@@ -66,7 +66,7 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search fa-2x"></i></div>
-            <input type="text" class="form-control input-lg" placeholder="Finding a product? Search it here!">
+            <input type="text" class="form-control input-lg" placeholder="Can't find your product? Search it Here!">
             <div class="input-group-addon">
               <button type="button" name="button" class="btn btn-primary">Search</button>
             </div>
@@ -74,100 +74,136 @@
         </div>
       </div>
 
+      <!-- Content -->
       <div class="content container-fluid">
-        <!-- Sidebar Navigation -->
-        <div class="col-sm-2">
-          <h2 class="category-label lato text-center">
-          <i class="fa fa-shopping-bag"></i>  <br/> Categories
-          </h2>
-          <div class="panel panel-warning">
-            <div class="category-container panel-body">
-              <div class="category-list list-group">
-                <a href="#" class="list-group-item active">All</a>
-                <a href="#" class="list-group-item">Books</a>
-                <a href="#" class="list-group-item">Magazines</a>
-                <a href="#" class="list-group-item">CDs & DVDs</a>
-                <a href="#" class="list-group-item">Furnitures</a>
+        <!-- Content Filter -->
+        <div class="row content-filter-action">
+          <!-- Category Label -->
+          <div class="col-sm-2">
+            <h2 class="category-label lato text-center">
+              <i class="fa fa-list"></i> Categories
+            </h2>
+          </div>
+          <!-- Filter Actions -->
+          <div class="col-sm-10">
+            <div class="filter-actions pull-right">
+              <!-- Search Items -->
+              <div class="form-inline" style="display: inline">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-eye fa-lg"></i></span>
+                    <input type="text" class="form-control" id="search-filter" placeholder="Filter the products">
+                  </div>
+                </div>
               </div>
+              <!-- Sort by Type -->
+              <div class="dropdown" style="display: inline">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Name
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Name</a></li>
+                  <li><a href="#">Rating</a></li>
+                  <li><a href="#">Price</a></li>
+                  <li><a href="#">Date</a></li>
+                </ul>
+              </div>
+              <!-- Sort by Direction -->
+              <button class="btn btn-default text-right" type="button">
+                <i class="fa fa-long-arrow-up fa-lg"></i> Ascending
+              </button>
             </div>
           </div>
         </div>
-        <!-- Main Catalog -->
-
-        <div class="col-sm-10">
-          <div class="content-filter col-sm-12">
-            <button class="btn btn-default" type="button">Search</button>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+        <!-- Main Content -->
+        <div class="row content-main">
+          <!-- Sidebar Navigation -->
+          <div class="col-sm-2">
+            <div class="panel panel-warning">
+              <div class="category-container panel-body">
+                <div class="category-list list-group">
+                  <a href="#" class="list-group-item active">All</a>
+                  <a href="#" class="list-group-item">Books</a>
+                  <a href="#" class="list-group-item">Magazines</a>
+                  <a href="#" class="list-group-item">CDs & DVDs</a>
+                  <a href="#" class="list-group-item">Furnitures</a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+          <!-- Main Catalog -->
+          <div class="col-sm-10">
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="panel panel-primary">
-              <div class="panel-heading"></div>
-              <div class="panel-body"></div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body"></div>
+              </div>
             </div>
           </div>
         </div>
