@@ -41,3 +41,13 @@ html, body{
 }
 
 /* [END] Content-Filter-Row */
+
+/* Content Items*/
+.content-main .col-sm-10 .panel-body{
+  height: 12rem;
+}
+/* [END] Content Items */
+
+.search .input-group-addon{
+  border: 0;
+}
