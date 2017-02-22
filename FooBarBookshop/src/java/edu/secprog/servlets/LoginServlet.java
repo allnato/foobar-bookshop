@@ -7,12 +7,13 @@ package edu.secprog.servlets;
 
 import edu.secprog.services.AccountService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,10 +58,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession(false);
+        boolean isLoggedIn;
+        boolean isLocked;
+        long lockedTime;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean isLoggedIn;
+
         isLoggedIn = AccountService.verifyLogin(username, password);
         if(isLoggedIn) {
             System.out.println("Uy naglogin haha");
@@ -69,7 +73,6 @@ public class LoginServlet extends HttpServlet {
         else {
             System.out.println("bes what happened");
         }
-        
     }
 
     /**
