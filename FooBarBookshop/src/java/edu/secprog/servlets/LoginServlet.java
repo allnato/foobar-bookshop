@@ -64,14 +64,11 @@ public class LoginServlet extends HttpServlet {
         long lockedTime;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String status;
-        status = AccountService.verifyLogin(username, password);
-        if(status.equals("active")) {
+
+        isLoggedIn = AccountService.verifyLogin(username, password);
+        if(isLoggedIn) {
             System.out.println("Uy naglogin haha");
             request.getRequestDispatcher("Home.jsp").forward(request, response);
-        }
-        else if(status.equals("banned")) {
-            System.out.println("I'm locked patulong pls :( ");
         }
         else {
             System.out.println("bes what happened");

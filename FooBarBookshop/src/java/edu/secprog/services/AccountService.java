@@ -44,10 +44,9 @@ public class AccountService {
         return employeeList;
     }
     
-    public static String verifyLogin(String username, String password) {
+    public static boolean verifyLogin(String username, String password) {
         
         ResultSet rs = null;
-        String status;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -63,14 +62,14 @@ public class AccountService {
             }
             connection.close();
             pstmt.close();
-            return "invalid";
+            return false;
             
         }catch(ClassNotFoundException | SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
         
-        return "invalid";
+        return false;
     }
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
