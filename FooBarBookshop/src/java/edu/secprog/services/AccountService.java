@@ -44,32 +44,35 @@ public class AccountService {
         return employeeList;
     }
     
-    public static boolean verifyLogin(String username, String password) {
+    public static String verifyLogin(String username, String password) {
         
         ResultSet rs = null;
+        String status;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT status, hash FROM users, passwords"
-                    + " WHERE users.userID=passwords.userID AND username= '" + username + "';");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT status, password FROM users"
+                    + " WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
                 rs.next();
                 
-                if(BCrypt.checkpw(password, rs.getString("hash")))
-                    return true;
+                if(BCrypt.checkpw(password, rs.getString("password"))) {
+                    status = rs.getString("status");
+                    return status;
+                }
             }
             connection.close();
             pstmt.close();
-            return false;
+            return "invalid";
             
         }catch(ClassNotFoundException | SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
         
-        return false;
+        return "invalid";
     }
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
@@ -85,10 +88,8 @@ public class AccountService {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
-                    + "middleinitial,birthdate,email,username,status) values("
+                    + "middleinitial,birthdate,email,username,password,status) values("
                     + "?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement pstmt_pass = connection.prepareStatement("INSERT INTO passwords(hash) values("
-                    + "?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, nc.getFirstname());
             pstmt.setString(2, nc.getLastname());
             pstmt.setString(3, nc.getMiddleinitial());

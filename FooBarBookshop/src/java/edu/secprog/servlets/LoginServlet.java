@@ -7,13 +7,12 @@ package edu.secprog.servlets;
 
 import edu.secprog.services.AccountService;
 import java.io.IOException;
-import java.util.Date;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,21 +57,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        boolean isLoggedIn;
-        boolean isLocked;
-        long lockedTime;
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        isLoggedIn = AccountService.verifyLogin(username, password);
-        if(isLoggedIn) {
+        String status;
+        status = AccountService.verifyLogin(username, password);
+        if(status.equals("active")) {
             System.out.println("Uy naglogin haha");
             request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }
+        else if(status.equals("banned")) {
+            System.out.println("I'm locked patulong pls :( ");
         }
         else {
             System.out.println("bes what happened");
         }
+        
     }
 
     /**
