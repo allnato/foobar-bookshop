@@ -93,6 +93,14 @@ html, body{
   color: white;
 }
 
+.filter-actions .btn-default:hover,
+.filter-actions .btn-default:active,
+.filter-actions .btn-default:focus{
+  background-color: #564d80 !important;
+  border-color: #413a61 !important;
+  color: white !important;
+}
+
 /* [END] Content-Filter-Row */
 
 /* Content Items*/
