@@ -52,12 +52,12 @@ public class AccountService {
                 }
                 
              
-            } 
+            }
             
-            }catch(ClassNotFoundException | SQLException e) {
+        }catch(ClassNotFoundException | SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
-            }
+        }
         }
         else {
             return false;
@@ -70,9 +70,10 @@ public class AccountService {
         return false;
     }
     
-    public static boolean verifyExists(String username, String password) {
+    public static String verifyExists(String username, String password) {
         
         ResultSet rs = null;
+        String status;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -82,17 +83,23 @@ public class AccountService {
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
              // If User Exists, check the number of attempts then check the password
+                rs.next();
+                
+                if(BCrypt.checkpw(password, rs.getString("password"))) {
+                    status = rs.getString("status");
+                    return status;
+                }
             }
             connection.close();
             pstmt.close();
-            return false;
+            return "invalid";
             
         }catch(ClassNotFoundException | SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
         
-        return false;
+        return "invalid";
     }
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
