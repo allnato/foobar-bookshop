@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        isLoggedIn = AccountService.verifyLogin(username, password);
+        isLoggedIn = AccountService.verifyExists(username, password);
         if(isLoggedIn) {
             System.out.println("Uy naglogin haha");
             request.getRequestDispatcher("Home.jsp").forward(request, response);
