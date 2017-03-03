@@ -101,6 +101,12 @@ html, body{
   color: white !important;
 }
 
+.open>.dropdown-toggle.btn-default{
+  background-color: #564d80 !important;
+  border-color: #413a61 !important;
+  color: white !important;
+}
+
 /* [END] Content-Filter-Row */
 
 /* Content Items*/
