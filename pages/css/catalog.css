@@ -11,11 +11,11 @@ html, body{
   border-color: #413a61;
 }
 
-.navbar-brand{
+.navbar.navbar-inverse .navbar-brand{
   color: white !important;
 }
 
-.nav li a{
+.navbar.navbar-inverse .nav li a{
   color: white !important;
 }
 

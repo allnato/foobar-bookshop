@@ -1,7 +1,7 @@
 html, body{
   height: 100%;
   font-size: 16px;
-  background-color: aliceblue;
+  background-color: #8cd2a3;
 }
 
 .register-navigation{
@@ -116,4 +116,26 @@ form h3{
 
 .finish{
   float: right;
+}
+
+.panel{
+  border-width: 0 0 4px 0;
+}
+
+/* navbar */
+.navbar.navbar-inverse{
+  background-color: #564d80;
+  border-color: #413a61;
+}
+
+.navbar.navbar-inverse .navbar-brand{
+  color: white !important;
+}
+
+.navbar.navbar-inverse .nav li a{
+  color: white !important;
+}
+
+.navbar.navbar-inverse .navbar-text{
+  color: white !important;
 }
