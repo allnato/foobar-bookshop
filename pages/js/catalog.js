@@ -9,8 +9,10 @@ var $productItems = $('.catalog-items').isotope({
   },
   filter: function() {
     return qsRegex ? $(this).text().match( qsRegex ) : true;
-  }
-})
+  },
+  layoutMode: 'masonry'
+});
+$productItems.isotope('layout');
 
 // use value of search field to filter
 var $quicksearch = $('#search-filter').keyup( debounce( function() {

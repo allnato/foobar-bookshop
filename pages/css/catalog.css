@@ -76,7 +76,7 @@ html, body{
 .category-label{
   /*margin-bottom: 1rem;*/
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   color: white;
   margin: 0;
 }
@@ -199,6 +199,10 @@ html, body{
 .item-price,
 .item-price:hover{
   font-weight: bold;
+  color: #009688;
+}
+
+.item-card .text-success{
   color: #009688;
 }
 
