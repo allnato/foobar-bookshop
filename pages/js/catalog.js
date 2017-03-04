@@ -68,6 +68,14 @@ $('.sort-type').click(function(event) {
 });
 
 $('.sidebar-nav').stick_in_parent({
-  inner_scrolling: false,
-  bottoming: false
+  parent: '.content-main'
+});
+
+$(window).resize(function(event) {
+  if ($(this).width() <= 768 ) {
+    $(".sidebar-nav").trigger("sticky_kit:detach");
+  }
+  else {
+    $(".sidebar-nav").stick_in_parent({recalc_every: 1});
+  }
 });
