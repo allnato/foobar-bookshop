@@ -3,3 +3,17 @@ html, body{
   font-size: 16px;
   background-color: #8cd2a3;
 }
+
+.panel{
+  border-width: 0 0 4px 0;
+}
+
+.item-name,
+.item-price,
+.item-price-label{
+  font-weight: bold;
+}
+
+.item-price{
+  color: #c11851;
+}
