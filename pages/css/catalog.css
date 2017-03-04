@@ -247,3 +247,8 @@ html, body{
 .item-container{
   padding-bottom: 5rem;
 }
+
+.pagination-container{
+  display: flex;
+  justify-content: center;
+}
