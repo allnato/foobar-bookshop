@@ -5,42 +5,7 @@ html, body{
   background-color: #8cd2a3;
 }
 
-/* navbar */
-.navbar.navbar-inverse{
-  background-color: #564d80;
-  border-color: #413a61;
-}
 
-.navbar.navbar-inverse .navbar-brand{
-  color: white !important;
-}
-
-.navbar.navbar-inverse .nav li a{
-  color: white !important;
-}
-
-
-.navbar-inverse .navbar-nav>li>a:hover,
-.navbar-inverse .navbar-nav>li>a:active,
-.navbar-inverse .navbar-nav>li>a:focus{
-  background-color: #4c4472 !important;
-}
-
-.navbar-inverse .navbar-brand:hover,
-.navbar-inverse .navbar-brand:active,
-.navbar-inverse .navbar-brand:focus{
-  background-color: #4c4472 !important;
-}
-
-.navbar.navbar-inverse .nav .dropdown-menu li a{
-  color: gray !important;
-}
-
-.nav .dropdown-menu li a:active,
-.nav .dropdown-menu li a:focus,
-.nav .dropdown-menu li a:hover{
-  background-color: #ececec;
-}
 
 /* Sidebar Category */
 .sidebar-nav{
