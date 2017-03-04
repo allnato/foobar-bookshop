@@ -36,6 +36,18 @@ html, body{
   background-color: #eee;
 }
 
+.navbar-inverse .navbar-nav>li>a:hover,
+.navbar-inverse .navbar-nav>li>a:active,
+.navbar-inverse .navbar-nav>li>a:focus{
+  background-color: #4c4472 !important;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:active,
+.navbar-inverse .navbar-brand:focus{
+  background-color: #4c4472 !important;
+}
+
 .nav-icon p{
   color: #303030;
   font-family: lato;
