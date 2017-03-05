@@ -64,14 +64,6 @@ public class LoginServlet extends HttpServlet {
         boolean isLoggedIn;
         boolean isLocked;
         long lockedTime;
-
-        String pass = "password123";
-        byte[] encrypted;
-        byte[] initVector = null;
-        
-        initVector = AES.setVector();
-        encrypted = AES.encryptString(pass, initVector);
-        System.out.println(AES.decryptString(encrypted, initVector));
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");

@@ -7,6 +7,7 @@ package edu.secprog.services;
 
 import edu.secprog.security.AES;
 import edu.secprog.security.Audit;
+import edu.secprog.security.BCrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,23 +25,35 @@ public class SecurityService {
     
     // main model for the security packages
     
-    public void addPassword(String hashed, byte[] encrypted, byte[] vector, int userID) {
+    public void addPassword(String pass, int userID) {
         long insertID = -1;
+        byte[] vector, encrypted;
+        String hashed;
         PreparedStatement pstmt = null;
         Connection connection = null;
         ResultSet rs = null;
 
+        /* Step 0: Parse the plaintext password
+        */
+        
+        vector = AES.setVector();
+        encrypted = AES.encryptString(pass, vector);
+        
+        hashed = BCrypt.hashpw(pass, BCrypt.gensalt(10));
+        
         /* Step 1: Add the data to the user table, regardless if employee or customer
          */
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            pstmt = connection.prepareStatement("INSERT INTO passwords(encrypted, vector"
-                    + ",timestamp) values(?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            pstmt.setBytes(1, encrypted);
-            pstmt.setBytes(2, vector);
-            pstmt.setTimestamp(3, Audit.getCurrentTimeStamp());
+            pstmt = connection.prepareStatement("INSERT INTO passwords(hashed, encrypted, vector, "
+                    + "timestamp, userID) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, hashed);
+            pstmt.setBytes(2, encrypted);
+            pstmt.setBytes(3, vector);
+            pstmt.setTimestamp(4, Audit.getCurrentTimeStamp());
+            pstmt.setInt(5, userID);
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows == 0) {
@@ -65,13 +78,9 @@ public class SecurityService {
         finally {
             try {
                 pstmt.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
                 connection.close();
             } catch (SQLException ex) {
-                Logger.getLogger(AES.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
