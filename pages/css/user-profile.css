@@ -3,3 +3,23 @@ html, body{
   font-size: 16px;
   background-color: #8cd2a3;
 }
+
+.profile-picture{
+  max-width: 300px;
+  max-height: 300px;
+  height: 300px;
+  width: 300px;
+
+  margin: 0 auto;
+}
+
+.fullname{
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.username{
+  margin-top: 0;
+}
