@@ -8,8 +8,12 @@ package edu.secprog.servlets;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
+import edu.secprog.dto.Password;
+import edu.secprog.security.AES;
+import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.services.AccountService;
+import edu.secprog.services.SecurityService;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +75,8 @@ public class RegisterServlet extends HttpServlet {
         CustomerAddress bca = new CustomerAddress();
         CustomerAddress dca = new CustomerAddress();
         CreditCard cc = new CreditCard();
+        Password ps = new Password();
+        
         // Set user information
         nc.setFirstname(request.getParameter("firstName"));
         nc.setMiddleinitial(request.getParameter("middleInitial"));
@@ -127,8 +133,25 @@ public class RegisterServlet extends HttpServlet {
             isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
             System.out.println("SUCCESSFUL BA BES?" + isSuccessful);
             if (isSuccessful) {
-                request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+                // Set password
+                int userID;
+                byte[] vector;
+                vector = AES.setVector();
+
+                ps.setHashed(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
+                ps.setEncrypted(AES.encryptString(request.getParameter("password"), vector));
+                ps.setVector(vector);
+                ps.setTimestamp(Audit.getCurrentTimeStamp());
+                
+                userID = SecurityService.getPassOwner(request.getParameter("username"));
+                if(userID > 0) {
+                    ps.setUserID(userID);
+                    SecurityService.addPassword(ps);
+                    request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+                }
             }
+            
+            // add else if registration is not successful
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

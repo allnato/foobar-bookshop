@@ -115,16 +115,15 @@ public class AccountService {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
-                    + "middleinitial,birthdate,email,username,password,status) values("
-                    + "?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    + "middleinitial,birthdate,email,username,status) values("
+                    + "?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, nc.getFirstname());
             pstmt.setString(2, nc.getLastname());
             pstmt.setString(3, nc.getMiddleinitial());
             pstmt.setString(4, nc.getBirthdate());
             pstmt.setString(5, nc.getEmail());
             pstmt.setString(6, nc.getUsername());
-            pstmt.setString(7, nc.getPassword());
-            pstmt.setString(8, nc.getStatus());
+            pstmt.setString(7, nc.getStatus());
             int affectedRows = pstmt.executeUpdate();
             
             if (affectedRows == 0) {

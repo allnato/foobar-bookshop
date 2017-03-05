@@ -8,6 +8,8 @@ package edu.secprog.services;
 import edu.secprog.security.AES;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
+import edu.secprog.dto.Password;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,21 +27,11 @@ public class SecurityService {
     
     // main model for the security packages
     
-    public void addPassword(String pass, int userID) {
+    public static void addPassword(Password ps) {
         long insertID = -1;
-        byte[] vector, encrypted;
-        String hashed;
         PreparedStatement pstmt = null;
         Connection connection = null;
         ResultSet rs = null;
-
-        /* Step 0: Parse the plaintext password
-        */
-        
-        vector = AES.setVector();
-        encrypted = AES.encryptString(pass, vector);
-        
-        hashed = BCrypt.hashpw(pass, BCrypt.gensalt(10));
         
         /* Step 1: Add the data to the user table, regardless if employee or customer
          */
@@ -49,11 +41,11 @@ public class SecurityService {
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
             pstmt = connection.prepareStatement("INSERT INTO passwords(hashed, encrypted, vector, "
                     + "timestamp, userID) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, hashed);
-            pstmt.setBytes(2, encrypted);
-            pstmt.setBytes(3, vector);
-            pstmt.setTimestamp(4, Audit.getCurrentTimeStamp());
-            pstmt.setInt(5, userID);
+            pstmt.setString(1, ps.getHashed());
+            pstmt.setBytes(2, ps.getEncrypted());
+            pstmt.setBytes(3, ps.getVector());
+            pstmt.setTimestamp(4, ps.getTimestamp());
+            pstmt.setInt(5, ps.getUserID());
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows == 0) {
@@ -83,5 +75,33 @@ public class SecurityService {
                 Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public static int getPassOwner(String username) {
+        ResultSet rs = null;
+        int userID;
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT userID FROM users"
+                    + " WHERE username= '" + username + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                
+                userID = rs.getInt("userID");
+                return userID;
+            }
+            
+            connection.close();
+            pstmt.close();
+        } catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        return -1;
     }
 }
