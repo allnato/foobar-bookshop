@@ -4,6 +4,12 @@ html, body{
   background-color: #8cd2a3;
 }
 
+form input,
+form select{
+  font-size: 1rem !important;
+  font-family: lato;
+}
+
 .profile-picture{
   max-width: 300px;
   max-height: 300px;
@@ -13,13 +19,21 @@ html, body{
   margin: 0 auto;
 }
 
-.fullname{
+.profile-fullname{
   margin-top: 0;
   margin-bottom: 0;
   font-weight: bold;
   text-align: center;
 }
 
-.username{
+.profile-username{
   margin-top: 0;
+}
+
+.profile-information-container{
+  margin-top: 4rem;
+}
+
+.panel-body{
+  padding: 20px;
 }
