@@ -45,3 +45,12 @@ html, body{
 .item-reviews-label{
   font-weight: bold;
 }
+
+.list-group-item{
+  padding: 15px 15px;
+}
+
+.list-group-item-heading{
+  font-weight: bold;
+  text-decoration: underline;
+}
