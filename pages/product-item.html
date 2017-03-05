@@ -72,8 +72,32 @@
                 </div>
                 <div class="item-information col-xs-6">
                   <h1 class="item-name lora">Humpty Dumpty</h1>
+                  <div class="item-sub-info">
+                    <h4 class="item-update-label lato">Last Update: <span class="item-update">12/21/2017</span></h4>
+                    &emsp;
+                    <h4 class="item-review-label text-info lato"><span class="item-review">4</span> Reviews</h4>
+                  </div>
                   <hr>
-                  <h3 class="item-price-label lato">Price: <span class="item-price">60.00 PHP</span></h3>
+                  <h3 class="item-price-label lora">Price: <span class="item-price lato">60.00 PHP</span></h3>
+                  <h3 class="item-type-label lora">Type: <span class="item-type lato">Book</span></h3>
+                  <p class="item-information-label lora">Item Information</p>
+                  <p class="item-information lato">
+                    Humpty Dumpty is a character in an English nursery rhyme,
+                    probably originally a riddle and one of the best known
+                    in the English-speaking world.
+                  </p>
+                  <!-- Forms -->
+                  <div class="item-form">
+                    <div class="col-sm-6 col-sm-offset-3">
+                      <div class="form-group">
+                        <label for="input-quantity">Quantity</label>
+                        <input type="number" id="input-quantity" class="form-control lato text-center" value="1" min="1">
+                      </div>
+                      <button class="btn btn-warning item-add-cart-btn lato btn-block">
+                        <i class="fa fa-cart-plus fa-lg"></i>&emsp;Add to Cart
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -82,7 +106,10 @@
 
         <div class="item-reviews-container row">
           <div class="panel panel-info">
-            <div class="panel-body"></div>
+            <div class="panel-body">
+              <h3 class="item-reviews-label lora">Item Reviews</h3>
+              <hr>
+            </div>
           </div>
         </div>
 

@@ -10,10 +10,38 @@ html, body{
 
 .item-name,
 .item-price,
-.item-price-label{
+.item-type{
   font-weight: bold;
 }
 
 .item-price{
   color: #c11851;
+}
+
+.item-update-label,
+.item-review-label{
+  display: inline-block;
+}
+
+.item-update-label{
+  color: gray;
+}
+
+.item-information-label{
+  margin-top: 2rem;
+  text-decoration: underline;
+}
+
+.item-information{
+  margin-bottom: 2rem;
+}
+
+.item-add-cart-btn,
+#input-quantity{
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.item-reviews-label{
+  font-weight: bold;
 }
