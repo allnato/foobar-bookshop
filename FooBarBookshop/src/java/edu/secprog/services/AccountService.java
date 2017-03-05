@@ -32,9 +32,9 @@ public class AccountService {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
             // Check for three successful fails
-            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM foobar_booksop.logins"
-                    + " WHERE userID= '" + userID + "' AND foobar_booksop.logins.status= " + "'failed'"
-                    + " ORDER BY foobar_booksop.logins.timestamp DESC LIMIT 3;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM logins"
+                    + " WHERE userID= '" + userID + "' AND status= " + "'failed'"
+                    + " ORDER BY timestamp DESC LIMIT 3;");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
                 rs.next();
@@ -50,8 +50,6 @@ public class AccountService {
                     pstmt.close();
                     return true;
                 }
-                
-             
             }
             
         }catch(ClassNotFoundException | SQLException e) {
@@ -65,27 +63,52 @@ public class AccountService {
         return false;
     }
     
-    public static boolean checkPassword(String userID) {
-        // Josh do check password
-        return false;
-    }
+    // used for forgot password
     
-    public static String verifyExists(String username, String password) {
-        
+    public static boolean checkPrevPassword(String username, String password) {
         ResultSet rs = null;
         String status;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT status, userID FROM users"
-                    + " WHERE username= '" + username + "';");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
+                    + " passwords WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
              // If User Exists, check the number of attempts then check the password
                 rs.next();
                 
-                if(BCrypt.checkpw(password, rs.getString("password"))) {
+                if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
+                    return true;
+                }
+            }
+            connection.close();
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public static String verifyExists(String username, String password) {
+        ResultSet rs = null;
+        String status;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.status, u.userID, hashed FROM users u, "
+                    + " passwords WHERE username= '" + username + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+             // If User Exists, check the number of attempts then check the password
+                rs.next();
+                
+                if(BCrypt.checkpw(password, rs.getString("hashed"))) {
                     status = rs.getString("status");
                     return status;
                 }
