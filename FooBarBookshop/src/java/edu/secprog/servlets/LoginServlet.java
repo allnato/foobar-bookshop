@@ -69,8 +69,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String status;
-        String[] rec = { "dlsu.sachii@gmail.com" };
-        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+        //String[] rec = { "dlsu.sachii@gmail.com" };
+        //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
         status = AccountService.verifyExists(username, password);
         if(status.equals("active")) {
             System.out.println("Uy naglogin haha");

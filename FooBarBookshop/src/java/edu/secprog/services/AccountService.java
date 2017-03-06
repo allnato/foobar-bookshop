@@ -5,6 +5,7 @@
  */
 package edu.secprog.services;
 
+import edu.secprog.db.DBPool;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
@@ -28,9 +29,7 @@ public class AccountService {
         ResultSet rs = null;
         if(uStatus.equals("active")) {
             try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             // Check for three successful fails
             PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM logins"
                     + " WHERE userID= '" + userID + "' AND status= " + "'failed'"
@@ -52,7 +51,7 @@ public class AccountService {
                 }
             }
             
-        }catch(ClassNotFoundException | SQLException e) {
+        }catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
@@ -69,9 +68,7 @@ public class AccountService {
         ResultSet rs = null;
         String status;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
                     + " passwords WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
@@ -86,7 +83,7 @@ public class AccountService {
             connection.close();
             pstmt.close();
             
-        }catch(ClassNotFoundException | SQLException e) {
+        }catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
@@ -98,9 +95,7 @@ public class AccountService {
         ResultSet rs = null;
         String status;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT u.status, u.userID, hashed FROM users u, "
                     + " passwords WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
@@ -117,7 +112,7 @@ public class AccountService {
             pstmt.close();
             return "invalid";
             
-        }catch(ClassNotFoundException | SQLException e) {
+        }catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
@@ -134,9 +129,7 @@ public class AccountService {
         /* Step 1: Add the data to the user table, regardless if employee or customer
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
                     + "middleinitial,birthdate,email,username,status) values("
                     + "?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -165,14 +158,12 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End CHeck if registering is successful
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(SQLException e) {
         }
         /* Step 2: Add date registered and generated ID to the customers table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customers(userID, dateRegistered) "
                     + "values(?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setLong(1, insertID);
@@ -194,14 +185,12 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End Check if registering is successful
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(SQLException e) {
         }
         /* Step 3: Add the billing and delivery address data to the customer_address table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
                     + "address,city,zipcode,region,country) "
                     + "values(?,?,?,?,?,?,?)");
@@ -235,9 +224,7 @@ public class AccountService {
          */
                 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
                     + "type, expDate) "
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -270,9 +257,7 @@ public class AccountService {
         /* Step 6: Add the credit card ID to the customer_cards table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
             pstmt.setLong(1, customerID);
             pstmt.setLong(2, creditCardID);

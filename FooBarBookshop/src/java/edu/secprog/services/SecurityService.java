@@ -5,6 +5,7 @@
  */
 package edu.secprog.services;
 
+import edu.secprog.db.DBPool;
 import edu.secprog.security.AES;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
@@ -36,9 +37,7 @@ public class SecurityService {
         /* Step 1: Add the data to the user table, regardless if employee or customer
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            connection = DBPool.getInstance().getConnection();
             pstmt = connection.prepareStatement("INSERT INTO passwords(hashed, encrypted, vector, "
                     + "timestamp, userID) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, ps.getHashed());
@@ -64,7 +63,7 @@ public class SecurityService {
                 System.out.println("Register failed! No rows affected");
                 }
             // End CHeck if registering is successful
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(SQLException e) {
             //put future audit codes here in the future
             }
         finally {
@@ -82,9 +81,7 @@ public class SecurityService {
         int userID;
         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT userID FROM users"
                     + " WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
@@ -97,7 +94,7 @@ public class SecurityService {
             
             connection.close();
             pstmt.close();
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
