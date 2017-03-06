@@ -81,14 +81,16 @@
                       </button>
                     </div>
                     <div class="form-group">
-                      <button class="btn btn-default form-control btn-block">
+                      <button class="btn btn-default form-control btn-block"
+                       data-toggle="modal" data-target="#changeCreditCardModal">
                         <i class="fa fa-credit-card fa-lg"></i>
                         &nbsp;
                         Change Credit Card
                       </button>
                     </div>
                     <div class="form-group">
-                      <button class="btn btn-default form-control btn-block">
+                      <button class="btn btn-default form-control btn-block"
+                      data-toggle="modal" data-target="#changePasswordModal">
                         <i class="fa fa-key fa-lg"></i>
                         &nbsp;
                         Change Password
@@ -692,10 +694,93 @@
         </div>
       </div>
     </div>
+    <!-- Modals -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Change Your Password</h4>
+          </div>
+          <div class="modal-body">
+            <form action="" method="POST">
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                  <input type="password" class="form-control" id="currentPassword">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
+                  <input type="password" class="form-control" id="newPassword">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="newPasswordAgain">Retype new Passowrd</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                  <input type="password" class="form-control" id="newPasswordAgain">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" disabled>Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modals -->
+    <div class="modal fade" id="changeCreditCardModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Change your Credit Card</h4>
+          </div>
+          <div class="modal-body">
+            <div class="tab-pane" id="card-information">
+              <form class="creditForm" method="post">
+                <div class="card-wrapper">
+                </div>
+                  <div class="card_name form-group has-feedback">
+                    <label for="card_name">Name on Card</label>
+                    <input type="text" name="cardName" class="form-control" id="card_name" placeholder="Card Name">
+                  </div>
+                  <div class="row cardnumtype">
+                    <div class="card_num form-group has-feedback col-sm-8">
+                      <label for="card_number">Card Number</label>
+                      <input type="text" name="cardNum" class="form-control" id="card_number" placeholder="ex. XXXX XXXX XXXX XXXX">
+                    </div>
+                    <div class="card_type form-group has-feedback col-sm-4">
+                      <label for="type">Type</label>
+                      <input type="text" name="cardType" class="form-control" id="card_type" readonly>
+                    </div>
+                  </div>
+                  <div class="exp_date form-group has-feedback">
+                    <label for="exp_date">Expiration Date</label>
+                    <input type="text" name="cardExp" class="form-control" id="exp_date" placeholder="mm / yy(yy)">
+                  </div>
+              </form>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" disabled>Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="js/card.js" charset="utf-8"></script>
   <script src="js/user-profile.js" charset="utf-8"></script>
 
 </html>
