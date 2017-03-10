@@ -51,10 +51,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
              throws ServletException, IOException {
-        // Testing
-        ArrayList<Employee> Employees = AccountService.getAllEmployees();
-        request.setAttribute("Employees", Employees);
-        // End DB Testing
         
         //Redirect to default login page
         request.getRequestDispatcher("main-login-page.jsp").forward(request, response);

@@ -1,6 +1,7 @@
 html, body{
   height: 100%;
   font-size: 16px;
+  background-color: aliceblue;
 }
 
 .register-navigation{
@@ -68,4 +69,51 @@ form select{
 
 .register-navigation{
   margin: 20px 0;
+}
+
+.fullname .form-control-feedback,
+.logincred .form-control-feedback,
+.city-region-zip .form-control-feedback,
+.cardnumtype .form-control-feedback{
+  text-align: initial;
+}
+
+#middle_initial{
+  padding-right: 12px;
+}
+
+.help-block{
+  position: absolute;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.form-group{
+  margin-bottom: 28px;
+}
+
+.middleInitial .help-block{
+  display: none !important;
+}
+
+form h3{
+  font-family: lato;
+  font-weight: bold;
+  color: #666666;
+}
+
+.thead h2{
+  font-family: 'merriweather';
+  font-weight: bold;
+  line-height: 2.5rem;
+  color: #6d4c41;
+  margin: 2rem 0px;
+}
+
+.thead img{
+  width: 85%;
+}
+
+.finish{
+  float: right;
 }

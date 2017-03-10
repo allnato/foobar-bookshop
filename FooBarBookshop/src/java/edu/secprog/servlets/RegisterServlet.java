@@ -8,6 +8,7 @@ package edu.secprog.servlets;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
+import edu.secprog.security.BCrypt;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
 import java.text.ParseException;
@@ -74,19 +75,20 @@ public class RegisterServlet extends HttpServlet {
         nc.setFirstname(request.getParameter("firstName"));
         nc.setMiddleinitial(request.getParameter("middleInitial"));
         nc.setLastname(request.getParameter("lastName"));
-        nc.setEmail(request.getParameter("email"));
+        nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
         Date birthDate = null;
         SimpleDateFormat sdf0 =
-                new SimpleDateFormat("yyyy-MM-dd");
+            new SimpleDateFormat("yyyy-MM-dd");
         try {
             birthDate = sdf0.parse(request.getParameter("birthDate"));
+        } catch (ParseException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch (ParseException e) {
-            e.printStackTrace();
-        }
-        nc.setBirthdate(sdf0.format(birthDate));
+        java.sql.Date sqlBirthDate = new java.sql.Date(birthDate.getTime());
+ 
+        nc.setBirthdate(sqlBirthDate.toString());
         nc.setUsername(request.getParameter("username"));
-        nc.setPassword(request.getParameter("password"));
+        nc.setPassword(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
         nc.setStatus("active");
         Date dt = new Date();
         SimpleDateFormat sdf =
@@ -95,30 +97,38 @@ public class RegisterServlet extends HttpServlet {
         nc.setDateRegistered(dateRegistered);
         // Set user address on a different object and table
         // Billing Address
+        System.out.println(request.getParameter("b_address"));
+        System.out.println(request.getParameter("b_city"));
+        
         bca.setAddress(request.getParameter("b_address"));
         bca.setCity(request.getParameter("b_city"));
-        bca.setZipcode(Integer.parseInt(request.getParameter("b_zipcode")));
+        bca.setZipcode(request.getParameter("b_zipcode"));
         bca.setRegion(request.getParameter("b_region"));
         bca.setCountry(request.getParameter("b_country"));
         bca.setAddressType("billing");
+        System.out.println(bca.getAddressType());
         // Shipping Address
         dca.setAddress(request.getParameter("d_address"));
         dca.setCity(request.getParameter("d_city"));
-        dca.setZipcode(Integer.parseInt(request.getParameter("d_zipcode")));
+        dca.setZipcode(request.getParameter("d_zipcode"));
         dca.setRegion(request.getParameter("d_region"));
         dca.setCountry(request.getParameter("d_country"));
         dca.setAddressType("delivery");
+        System.out.println(dca.getAddressType());
         
         // Set user credit card info
         cc.setName(request.getParameter("cardName"));
-        cc.setCardNum(request.getParameter("cardNum"));
+        cc.setCardNum(BCrypt.hashpw(request.getParameter("cardNum"), BCrypt.gensalt(10)));
         cc.setType(request.getParameter("cardType"));
         cc.setExpDate(request.getParameter("cardExp"));
-        
+        System.out.println("YUNG CARD TYPE: " + request.getParameter("cardType"));
         
         try {
             isSuccessful = AccountService.registerUser(nc,bca,dca,cc);
-            request.getRequestDispatcher("/login");
+            System.out.println("SUCCESSFUL BA BES?" + isSuccessful);
+            if (isSuccessful) {
+                request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

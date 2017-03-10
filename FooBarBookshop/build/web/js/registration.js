@@ -97,7 +97,7 @@ $(document).ready(function() {
         firstName: "Please enter your first name",
         lastName: "Please enter you last name",
         middleInitial: "Please enter your middle initial",
-        email: "Please enter your Email address so we can contact you"
+        email: "Please enter your Email"
       },
       errorElement: 'div',
       errorPlacement: function(error, element) {
@@ -170,12 +170,24 @@ $(document).ready(function() {
     });
 
     $('#birth_date').datepicker({
-      format: "mm-dd-yyyy",
+      format: "yyyy-mm-dd",
       startDate: "01-01-1800",
       maxViewMode: 3,
       todayBtn: "linked",
       todayHighlight: true,
       toggleActive: true
+    });
+
+    $('.finish button').click(function(event) {
+      // Copy billing to delivery if checkbox is cheked.
+      if($('#sameAddress').is(':checked')){
+        $('#d_address').val($('#b_address').val());
+        $('#d_city').val($('#b_city').val());
+        $('#d_region').val($('#b_region').val());
+        $('#d_zipcode').val($('#b_zipcode').val());
+        $('#d_country').val($('#b_country').val());
+      }
+      $('#register-form').submit();
     });
 });
 
@@ -225,3 +237,30 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 $('.pager a').click(function(event) {
   $("html, body").animate({ scrollTop: 0 }, 600);
 });
+
+$('#sameAddress').change(function() {
+  if($(this).is(':checked')){
+    console.log("it is checked");
+    clearDeliveryAddrFields();
+  } else {
+    console.log("it is not checked");
+    addDeliveryAddrFields();
+  }
+});
+
+function clearDeliveryAddrFields(){
+  $('.deliveryFields .help-block').remove();
+  $('.deliveryFields .form-control').removeClass('has-error');
+  $('.deliveryFields .form-control').removeClass('has-success');
+  $('.deliveryFields .glyphicon').remove();
+  $('.deliveryFields .form-control').each(function(index, el) {
+    $(this).val("");
+    $(this).attr('disabled', 'disabled');
+  });
+}
+
+function addDeliveryAddrFields(){
+  $('.deliveryFields .form-control').each(function(index, el) {
+    $(this).removeAttr('disabled');
+  });
+}

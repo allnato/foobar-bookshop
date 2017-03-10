@@ -11,6 +11,7 @@ import edu.secprog.dto.CustomerAddress;
 import java.util.ArrayList;
 
 import edu.secprog.dto.Employee;
+import edu.secprog.security.BCrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,49 +24,82 @@ import java.sql.Statement;
  */
 public class AccountService {
 
-    public static ArrayList<Employee> getAllEmployees(){
-        ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    public static boolean checkAttempts(String userID, String uStatus) {
         ResultSet rs = null;
-        try {
+        if(uStatus.equals("active")) {
+            try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT employeeType FROM employees;");
-            rs = pstmt.executeQuery();
-            while(rs.next()) {
-               Employee e = new Employee();
-               e.setEmployeeType(rs.getString(Employee.COLUMN_EMPLOYEETYPE));
-               employeeList.add(e);
-            }
-            
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        return employeeList;
-    }
-    
-    public static boolean verifyLogin(String username, String password) {
-        
-        ResultSet rs = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT status FROM users"
-                    + " WHERE username= '" + username + "' AND password= '" + password +  "';");
+            // Check for three successful fails
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM foobar_booksop.logins"
+                    + " WHERE userID= '" + userID + "' AND foobar_booksop.logins.status= " + "'failed'"
+                    + " ORDER BY foobar_booksop.logins.timestamp DESC LIMIT 3;");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
-                connection.close();
-                pstmt.close();
-                return true;
+                rs.next();
+                int count = rs.getInt("count");
+                if(count >= 3) {
+                    System.out.println("HOI LOCKED NA BES");
+                    connection.close();
+                    pstmt.close();
+                    return false;
+                }
+                else {
+                    connection.close();
+                    pstmt.close();
+                    return true;
+                }
+                
+             
             }
-            return false;
             
-        }catch(Exception e) {
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        }
+        else {
+            return false;
+        }
+        return false;
+    }
+    
+    public static boolean checkPassword(String userID) {
+        // Josh do check password
+        return false;
+    }
+    
+    public static String verifyExists(String username, String password) {
+        
+        ResultSet rs = null;
+        String status;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT status, userID FROM users"
+                    + " WHERE username= '" + username + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+             // If User Exists, check the number of attempts then check the password
+                rs.next();
+                
+                if(BCrypt.checkpw(password, rs.getString("password"))) {
+                    status = rs.getString("status");
+                    return status;
+                }
+            }
+            connection.close();
+            pstmt.close();
+            return "invalid";
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
         
-        return false;
+        return "invalid";
     }
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
@@ -109,8 +143,7 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End CHeck if registering is successful
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(ClassNotFoundException | SQLException e) {
         }
         /* Step 2: Add date registered and generated ID to the customers table
          */
@@ -139,8 +172,7 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End Check if registering is successful
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(ClassNotFoundException | SQLException e) {
         }
         /* Step 3: Add the billing and delivery address data to the customer_address table
          */
@@ -155,78 +187,81 @@ public class AccountService {
             pstmt.setString(2, bca.getAddressType());
             pstmt.setString(3, bca.getAddress());
             pstmt.setString(4, bca.getCity());
-            pstmt.setInt(5, bca.getZipcode());
+            pstmt.setString(5, bca.getZipcode());
             pstmt.setString(6, bca.getRegion());
             pstmt.setString(7, bca.getCountry());
             
             pstmt.executeUpdate();
-            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
+            pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType, "
                     + "address,city,zipcode,region,country) "
                     + "values(?,?,?,?,?,?,?)");
             pstmt.setLong(1, customerID);
             pstmt.setString(2, dca.getAddressType());
             pstmt.setString(3, dca.getAddress());
             pstmt.setString(4, dca.getCity());
-            pstmt.setInt(5, dca.getZipcode());
+            pstmt.setString(5, dca.getZipcode());
             pstmt.setString(6, dca.getRegion());
             pstmt.setString(7, dca.getCountry());
+            pstmt.executeUpdate();
         }
         catch(SQLException e) {
                 System.out.println("May problem sa mga addresses");
         }
 
-//        
-//        /* Step 5: Add the credit card to the credit_cards table
-//         */
-//                
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
-//                    + "type, expDate) "
-//                    + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-//            pstmt.setString(1, cc.getName());
-//            pstmt.setString(2, cc.getCardNum());
-//            pstmt.setString(3, cc.getType());
-//            pstmt.setString(4, cc.getExpDate());
-//            int affected = pstmt.executeUpdate();
-//            // Check if registering is successful. Return creditcardID generated
-//            try {
-//                rs = pstmt.getGeneratedKeys();
-//                if(rs.next()) {
-//                    creditCardID = rs.getLong(1);
-//                }
-//                else {
-//                    throw new SQLException("Register failed! No rows affected");
-//                }
-//            } catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//            }
-//            // End Check if registering is successful
-//            
-//        }
-//        catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//        }
-//        
-//        /* Step 6: Add the credit card ID to the customer_cards table
-//         */
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-//            pstmt.setLong(1, customerID);
-//            pstmt.setLong(2, creditCardID);
-//            pstmt.executeUpdate();
-//
-//        }
-//        catch(SQLException e) {
-//                System.out.println("Register failed! No rows affected");
-//        }
         
-        return false;
+        /* Step 5: Add the credit card to the credit_cards table
+         */
+                
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
+                    + "type, expDate) "
+                    + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, cc.getName());
+            pstmt.setString(2, cc.getCardNum());
+            pstmt.setString(3, cc.getType());
+            pstmt.setString(4, cc.getExpDate());
+            int affected = pstmt.executeUpdate();
+            // Check if registering is successful. Return creditcardID generated
+            try {
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    creditCardID = rs.getLong(1);
+                }
+                else {
+                    throw new SQLException("Boss may problems");
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("Register failed! No rows affected");
+            }
+            // End Check if registering is successful
+            
+        }
+        catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("Lahat may problema");
+        }
+        
+        /* Step 6: Add the credit card ID to the customer_cards table
+         */
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
+            pstmt.setLong(1, customerID);
+            pstmt.setLong(2, creditCardID);
+            pstmt.executeUpdate();
+
+        }
+        catch(SQLException e) {
+                System.out.println("Dami nanamang problem ano ba yan.");
+        }
+        
+        return true;
     }
     
 }

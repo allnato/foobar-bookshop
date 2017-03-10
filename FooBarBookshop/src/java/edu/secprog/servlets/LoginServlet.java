@@ -6,13 +6,15 @@
 package edu.secprog.servlets;
 
 import edu.secprog.services.AccountService;
+import edu.secprog.services.MailService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,15 +59,27 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        boolean isLoggedIn;
+        boolean isLocked;
+        long lockedTime;
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean isLoggedIn;
-        isLoggedIn = AccountService.verifyLogin(username, password);
-        if(isLoggedIn)
+        String[] rec = { "dlsu.sachii@gmail.com" };
+        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+        String status;
+        status = AccountService.verifyExists(username, password);
+        if(status.equals("active")) {
+            System.out.println("Uy naglogin haha");
             request.getRequestDispatcher("Home.jsp").forward(request, response);
-        
-        
+        }
+        else if(status.equals("banned")) {
+            System.out.println("I'm locked patulong pls :( ");
+        }
+        else {
+            System.out.println("bes what happened");
+        }
     }
 
     /**
