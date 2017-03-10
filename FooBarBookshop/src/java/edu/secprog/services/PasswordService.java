@@ -5,23 +5,48 @@
  */
 package edu.secprog.services;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
  * @author Mark Christian Sanchez
  */
 public class PasswordService {
-    String jwt = Jwts.builder()
-  .setSubject("users/TzMUocMF4p")
-  .setExpiration(new Date(1300819380))
-  .claim("name", "Robert Token Man")
-  .claim("scope", "self groups/admins")
-  .signWith(
-    SignatureAlgorithm.HS256,
-    "secret".getBytes("UTF-8")
-  )
-  .compact();
+        static final long NUM_100NS_INTERVALS_SINCE_UUID_EPOCH = 0x01b21dd213814000L;
+        public static UUID generateToken() {
+            
+            UUID uuid = UUID.randomUUID();
+            
+            return uuid;
+        }
+        
+        public static Date DateFromUUID(UUID uuid) {
+            long time = uuid.timestamp() - NUM_100NS_INTERVALS_SINCE_UUID_EPOCH / 10000;
+            Date date = new Date(time);
+            return date;
+        } 
+        
+        public static boolean registerUIDToDB() {
+            ResultSet rs = null;
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
+                    + "middleinitial,birthdate,email,username,password,status) values("
+                    + "?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            rs = pstmt.executeQuery();
+            }
+            catch(ClassNotFoundException | SQLException e) {
+                
+            }
+            return false;
+        }
 }
