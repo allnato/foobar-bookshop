@@ -31,11 +31,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#" class="navbar-brand">fb</a>
+          <a href="/home" class="navbar-brand">fb</a>
         </div>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
-            <li><a href="">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="">About us</a></li>
           </ul>
           <p class="navbar-text navbar-right">Made with <i class="fa fa-heart"></i> by foobar</p>

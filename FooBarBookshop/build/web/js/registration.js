@@ -170,7 +170,7 @@ $(document).ready(function() {
     });
 
     $('#birth_date').datepicker({
-      format: "yyyy-mm-dd",
+      format: "mm-dd-yyyy",
       startDate: "01-01-1800",
       maxViewMode: 3,
       todayBtn: "linked",
@@ -179,6 +179,7 @@ $(document).ready(function() {
     });
 
     $('.finish button').click(function(event) {
+      addDeliveryAddrFields();
       // Copy billing to delivery if checkbox is cheked.
       if($('#sameAddress').is(':checked')){
         $('#d_address').val($('#b_address').val());
@@ -246,6 +247,11 @@ $('#sameAddress').change(function() {
     console.log("it is not checked");
     addDeliveryAddrFields();
   }
+});
+
+// Validate when select field change
+$('select').change(function(event) {
+  $(this).valid();
 });
 
 function clearDeliveryAddrFields(){
