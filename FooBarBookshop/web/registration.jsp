@@ -22,7 +22,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation" aria-expanded="false">
@@ -31,11 +31,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#" class="navbar-brand">fb</a>
+          <a href="home" class="navbar-brand">fb</a>
         </div>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
-            <li><a href="">Home</a></li>
+            <li><a href="home">Home</a></li>
             <li><a href="">About us</a></li>
           </ul>
           <p class="navbar-text navbar-right">Made with <i class="fa fa-heart"></i> by foobar</p>
@@ -46,7 +46,7 @@
       <div class="row">
         <div class="col-sm-7 theform">
           <div class="panel panel-info">
-            <div class="panel-heading">
+            <div class="panel-heading bg-purple-navy">
               Sign-up here
             </div>
             <div class="panel-body">
@@ -734,7 +734,7 @@
         </div>
         <div class="col-sm-5 thead hidden-xs">
           <h2 class="text-center">Sign-up today to access our wonderful deals and products!</h2>
-          <img class="center-block" src="img/online-shop.svg" alt="">
+          <img class="center-block" src="img/tablet.svg" alt="">
         </div>
       </div>
     </div>

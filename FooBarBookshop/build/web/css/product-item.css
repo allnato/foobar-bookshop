@@ -1,0 +1,56 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+  background-color: #8cd2a3;
+}
+
+.panel{
+  border-width: 0 0 4px 0;
+}
+
+.item-name,
+.item-price,
+.item-type{
+  font-weight: bold;
+}
+
+.item-price{
+  color: #c11851;
+}
+
+.item-update-label,
+.item-review-label{
+  display: inline-block;
+}
+
+.item-update-label{
+  color: gray;
+}
+
+.item-information-label{
+  margin-top: 2rem;
+  text-decoration: underline;
+}
+
+.item-information{
+  margin-bottom: 2rem;
+}
+
+.item-add-cart-btn,
+#input-quantity{
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.item-reviews-label{
+  font-weight: bold;
+}
+
+.list-group-item{
+  padding: 15px 15px;
+}
+
+.list-group-item-heading{
+  font-weight: bold;
+  text-decoration: underline;
+}

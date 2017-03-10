@@ -143,7 +143,8 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End CHeck if registering is successful
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(Exception e) {
+            e.printStackTrace();
         }
         /* Step 2: Add date registered and generated ID to the customers table
          */
@@ -205,7 +206,8 @@ public class AccountService {
             pstmt.executeUpdate();
         }
         catch(SQLException e) {
-                System.out.println("May problem sa mga addresses");
+                e.printStackTrace();
+                System.out.println("May problem sa mga addresses");    
         }
 
         
@@ -240,7 +242,7 @@ public class AccountService {
             // End Check if registering is successful
             
         }
-        catch(SQLException e) {
+        catch(Exception e) {
                 e.printStackTrace();
                 System.out.println("Lahat may problema");
         }
@@ -252,13 +254,15 @@ public class AccountService {
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-            pstmt.setLong(1, customerID);
+            pstmt.setLong(1, insertID);
             pstmt.setLong(2, creditCardID);
+            System.out.println("Customer ID: " + insertID);
             pstmt.executeUpdate();
 
         }
-        catch(SQLException e) {
-                System.out.println("Dami nanamang problem ano ba yan.");
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Dami nanamang problem ano ba yan.");
         }
         
         return true;
