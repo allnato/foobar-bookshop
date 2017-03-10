@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         boolean isLoggedIn;
         boolean isLocked;
         long lockedTime;

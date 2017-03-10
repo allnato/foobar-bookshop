@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/security/Audit.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/RegisterServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/MailService.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/SecurityService.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/security/AES.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/LogoutServlet.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/MainServlet.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/AccountService.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/LoginServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/db/DBPool.java</file>
         </group>
     </open-files>
 </project-private>
