@@ -51,3 +51,32 @@ form select{
   font-size: 1rem;
   font-family: lato;
 }
+
+#card_type{
+  text-transform: capitalize;
+}
+
+.middleInitial .help-block{
+  display: none !important;
+}
+
+.help-block{
+  position: absolute;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.form-group{
+  margin-bottom: 28px;
+}
+
+.fullname .form-control-feedback,
+.logincred .form-control-feedback,
+.city-region-zip .form-control-feedback,
+.cardnumtype .form-control-feedback{
+  text-align: initial;
+}
+
+#password-form .error{
+  color: red;
+}

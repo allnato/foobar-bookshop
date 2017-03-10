@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="css/palette.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Bootstrap Datepicker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/user-profile.css">
     <link rel="stylesheet" href="css/navigation.css">
@@ -74,7 +76,7 @@
                   <h2 class="profile-username text-center lato"><small>JoePak</small></h2>
                   <div class="action-buttons well">
                     <div class="form-group">
-                      <button class="btn btn-default form-control btn-block">
+                      <button class="btn btn-default form-control btn-block" id="edit-profile-btn">
                         <i class="fa fa-user fa-lg"></i>
                         &nbsp;
                         Edit Profile
@@ -100,33 +102,33 @@
                 </div>
               </div>
               <div class="profile-information-container col-sm-7">
-                <form action="" method="POST">
+                <form action="" method="POST" id="personal-information-form">
                   <h3>Personal Info</h3>
                   <hr>
                   <div class="row fullname">
                     <!-- First Name -->
                     <div class="firstName form-group has-feedback col-sm-5">
                       <label for="first_name">First Name</label>
-                      <input type="text" name="firstName" class="form-control" id="first_name">
+                      <input disabled type="text" name="firstName" class="form-control" id="first_name">
                     </div>
                     <!-- Last Name -->
                     <div class="lastName form-group has-feedback col-sm-5">
                       <label for="last_name">Last Name</label>
-                      <input type="text" name="lastName" class="form-control" id="last_name">
+                      <input disabled type="text" name="lastName" class="form-control" id="last_name">
                     </div>
                     <!-- Middle Initial -->
                     <div class="middleInitial form-group has-feedback col-sm-2">
                       <label for="middle_initial">M.I.</label>
-                      <input type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
+                      <input disabled type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
                     </div>
                   </div>
                   <div class="username form-group has-feedback">
                     <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
+                    <input disabled type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
                   </div>
                   <div class="birthDate form-group has-feedback">
                     <label for="birth_date">Birth Date</label>
-                    <input type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
+                    <input disabled type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
                   </div>
 
                   <div class="tab-pane" id="address-information">
@@ -135,25 +137,25 @@
                     <div class="billingFields">
                       <div class="address form-group has-feedback">
                         <label for="b_address">Address</label>
-                        <input type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address">
+                        <input disabled type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="b_city">City</label>
-                          <input type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="b_region">Region/Province/State</label>
-                          <input type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="b_zipcode">Zipcode</label>
-                          <input type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="b_country">Country</label>
-                        <select type="text" name="d_country" class="form-control" id="b_country">
+                        <select disabled type="text" name="b_country" class="form-control" id="b_country">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>
@@ -407,33 +409,29 @@
                       </div>
                     </div>
                     <h3>Delivery Address</h3>
-                    <label class="checkbox-inline text-info">
-                      <input type="checkbox" id="sameAddress">
-                      Make my Billing address same as my Delivery Address.
-                    </label>
                     <hr>
                     <div class="deliveryFields">
                       <div class="address form-group has-feedback">
                         <label for="d_address">Address</label>
-                        <input type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address">
+                        <input disabled type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="d_city">City</label>
-                          <input type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="d_region">Region</label>
-                          <input type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="d_zipcode">Zipcode</label>
-                          <input type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="d_country">Country</label>
-                        <select type="text" name="d_country" class="form-control" id="d_country">
+                        <select disabled type="text" name="d_country" class="form-control" id="d_country">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>
@@ -687,6 +685,10 @@
                       </div>
                     </div>
                   </div>
+                  <hr>
+                  <div class="form-group">
+                    <button type="submit" disabled class="btn btn-default btn-block btn-lg lato " name="button">Save Changes</button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -695,82 +697,74 @@
       </div>
     </div>
     <!-- Modals -->
+    <!-- Change Password Modal -->
     <div class="modal fade" id="changePasswordModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Change Your Password</h4>
           </div>
-          <div class="modal-body">
-            <form action="" method="POST">
-              <div class="form-group">
-                <label for="currentPassword">Current Password</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                  <input type="password" class="form-control" id="currentPassword">
+          <form action="" method="POST" id="password-form">
+            <div class="modal-body">
+                <div class="form-group has-feedback">
+                  <label for="currentPassword"><i class="fa fa-key"></i> Current Password</label>
+                  <input type="password" class="form-control" id="currentPassword" name="old_password">
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="newPassword">New Password</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-unlock"></i></span>
-                  <input type="password" class="form-control" id="newPassword">
+                <div class="form-group has-feedback">
+                  <label for="newPassword"><i class="fa fa-unlock"></i> New Password</label>
+                  <input type="password" class="form-control" id="newPassword" name="password">
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="newPasswordAgain">Retype new Passowrd</label>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                  <input type="password" class="form-control" id="newPasswordAgain">
+                <div class="form-group has-feedback">
+                  <label for="newPasswordAgain"><i class="fa fa-lock"></i> Retype new Passowrd</label>
+                  <input type="password" class="form-control" id="newPasswordAgain" name="password_confirm">
                 </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" disabled>Save changes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" >Save changes</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </form>
         </div>
       </div>
     </div>
-    <!-- Modals -->
+    <!-- Change Credit Card Modal -->
     <div class="modal fade" id="changeCreditCardModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Change your Credit Card</h4>
           </div>
-          <div class="modal-body">
-            <div class="tab-pane" id="card-information">
-              <form class="creditForm" method="post">
-                <div class="card-wrapper">
-                </div>
-                  <div class="card_name form-group has-feedback">
-                    <label for="card_name">Name on Card</label>
-                    <input type="text" name="cardName" class="form-control" id="card_name" placeholder="Card Name">
+          <form class="creditForm" method="post" id="credit-card-form">
+            <div class="modal-body">
+              <div class="tab-pane" id="card-information">
+                  <div class="card-wrapper">
                   </div>
-                  <div class="row cardnumtype">
-                    <div class="card_num form-group has-feedback col-sm-8">
-                      <label for="card_number">Card Number</label>
-                      <input type="text" name="cardNum" class="form-control" id="card_number" placeholder="ex. XXXX XXXX XXXX XXXX">
+                    <div class="card_name form-group has-feedback">
+                      <label for="card_name">Name on Card</label>
+                      <input type="text" name="cardName" class="form-control" id="card_name" placeholder="Card Name">
                     </div>
-                    <div class="card_type form-group has-feedback col-sm-4">
-                      <label for="type">Type</label>
-                      <input type="text" name="cardType" class="form-control" id="card_type" readonly>
+                    <div class="row cardnumtype">
+                      <div class="card_num form-group has-feedback col-sm-8">
+                        <label for="card_number">Card Number</label>
+                        <input type="text" name="cardNum" class="form-control" id="card_number" placeholder="ex. XXXX XXXX XXXX XXXX">
+                      </div>
+                      <div class="card_type form-group has-feedback col-sm-4">
+                        <label for="type">Type</label>
+                        <input type="text" name="cardType" class="form-control" id="card_type" disabled>
+                      </div>
                     </div>
-                  </div>
-                  <div class="exp_date form-group has-feedback">
-                    <label for="exp_date">Expiration Date</label>
-                    <input type="text" name="cardExp" class="form-control" id="exp_date" placeholder="mm / yy(yy)">
-                  </div>
-              </form>
+                    <div class="exp_date form-group has-feedback">
+                      <label for="exp_date">Expiration Date</label>
+                      <input type="text" name="cardExp" class="form-control" id="exp_date" placeholder="mm / yy(yy)">
+                    </div>
 
+              </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" disabled>Save changes</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" >Save changes</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </form>
         </div>
       </div>
     </div>
@@ -780,7 +774,12 @@
 
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
-  <script src="js/card.js" charset="utf-8"></script>
-  <script src="js/user-profile.js" charset="utf-8"></script>
+  <script src="js/bootstrap-datepicker.min.js" charset="utf-8"></script>
 
+
+  <script src="js/jquery.validate.min.js" charset="utf-8"></script>
+  <script src="js/card.js" charset="utf-8"></script>
+  <script src="js/detect-card.js" charset="utf-8"></script>
+
+  <script src="js/user-profile.js" charset="utf-8"></script>
 </html>
