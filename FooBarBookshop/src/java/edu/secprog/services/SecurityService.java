@@ -10,6 +10,7 @@ import edu.secprog.security.AES;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.dto.Password;
+import edu.secprog.dto.UserEvent;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -100,5 +101,9 @@ public class SecurityService {
         }
         
         return -1;
+    }
+    
+    public static void addAuditLog(UserEvent ue) {
+        
     }
 }

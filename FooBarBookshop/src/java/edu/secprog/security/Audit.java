@@ -5,6 +5,7 @@
  */
 package edu.secprog.security;
 
+import edu.secprog.dto.UserEvent;
 import java.sql.Timestamp;
 
 /**
@@ -18,5 +19,17 @@ public class Audit {
         tstamp = new Timestamp(System.currentTimeMillis());
         
         return tstamp;
+    }
+    
+    // an event should contain the following: userID, Class: functionName(), raw content{<error code> [event title]: data}, alert type, timestamp
+    
+    public static UserEvent getErrorAudit(String message, String stackTrace) {
+        UserEvent ue = new UserEvent();
+        
+        return ue;
+    }
+    
+    public static int classifyHTTPCode() {
+        return -1;
     }
 }
