@@ -5,12 +5,8 @@
  */
 package edu.secprog.servlets;
 
-import edu.secprog.security.BCrypt;
-import edu.secprog.services.AccountService;
-import edu.secprog.services.MailService;
-import edu.secprog.services.PasswordService;
 import java.io.IOException;
-import java.util.UUID;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mark Christian Sanchez
  */
-@WebServlet(urlPatterns = {"/sendToEmail"})
-public class PasswordServlet extends HttpServlet {
+@WebServlet(name = "ForgotServlet", urlPatterns = {"/ForgotInstructions"})
+public class ForgotServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,32 +43,18 @@ public class PasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        request.getRequestDispatcher("forgot_password.jsp").forward(request, response);
 
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] rec = { request.getParameter("email") };
-        UUID uuid = PasswordService.generateToken();
-        String token = uuid.toString();
-        String email = BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10));
-        int userID = AccountService.getIDByEmail(email);
-        if (userID != -1) {
-            
-            PasswordService.registerUIDToDB(userID, token, email);
-        }
-        String subject = "Password Reset Instructions";
-        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token;
-        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
+
     }
-    
+
+
+
 }

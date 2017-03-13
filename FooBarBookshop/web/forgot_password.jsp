@@ -50,7 +50,7 @@
           </div>
           <div class="panel-body">
             <!-- Enter Email Form -->
-            <form action="" method="POST">
+            <form action="sendToEmail" method="POST">
               <h3 class="text-center"><i class="fa fa-envelope-o"></i></h3>
               <div class="form-group">
                 <h4 class="lato text-center">Enter your Email Address</h4>
