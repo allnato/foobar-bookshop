@@ -1,0 +1,82 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+  background-color: #8cd2a3;
+}
+
+form input,
+form select{
+  font-size: 1rem !important;
+  font-family: lato;
+}
+
+.profile-picture{
+  max-width: 300px;
+  max-height: 300px;
+  height: 300px;
+  width: 300px;
+
+  margin: 0 auto;
+}
+
+.profile-fullname{
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.profile-username{
+  margin-top: 0;
+}
+
+.profile-information-container{
+  margin-top: 4rem;
+}
+
+.panel-body{
+  padding: 20px;
+}
+
+.action-buttons{
+  margin-top: 4rem;
+}
+
+.action-buttons button{
+  font-family: lato;
+  font-size: 1rem;
+}
+
+.modal form .form-control{
+  font-size: 1rem;
+  font-family: lato;
+}
+
+#card_type{
+  text-transform: capitalize;
+}
+
+.middleInitial .help-block{
+  display: none !important;
+}
+
+.help-block{
+  position: absolute;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.form-group{
+  margin-bottom: 28px;
+}
+
+.fullname .form-control-feedback,
+.logincred .form-control-feedback,
+.city-region-zip .form-control-feedback,
+.cardnumtype .form-control-feedback{
+  text-align: initial;
+}
+
+#password-form .error{
+  color: red;
+}

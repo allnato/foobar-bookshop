@@ -106,6 +106,14 @@ public class RegisterServlet extends HttpServlet {
         bca.setRegion(request.getParameter("b_region"));
         bca.setCountry(request.getParameter("b_country"));
         bca.setAddressType("billing");
+        // Delivery Debugging Purposes
+        System.out.println("Delivery Address");
+        System.out.println(bca.getAddress());
+        System.out.println(bca.getCity());
+        System.out.println(bca.getZipcode());
+        System.out.println(bca.getRegion());
+        System.out.println(bca.getCountry());
+        System.out.println(bca.getAddressType());
         System.out.println(bca.getAddressType());
         // Shipping Address
         dca.setAddress(request.getParameter("d_address"));
@@ -114,6 +122,13 @@ public class RegisterServlet extends HttpServlet {
         dca.setRegion(request.getParameter("d_region"));
         dca.setCountry(request.getParameter("d_country"));
         dca.setAddressType("delivery");
+        // Delivery Debugging Purposes
+        System.out.println("Delivery Address");
+        System.out.println(dca.getAddress());
+        System.out.println(dca.getCity());
+        System.out.println(dca.getZipcode());
+        System.out.println(dca.getRegion());
+        System.out.println(dca.getCountry());
         System.out.println(dca.getAddressType());
         
         // Set user credit card info

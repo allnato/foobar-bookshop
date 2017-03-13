@@ -8,7 +8,7 @@
 
     <!-- Bootstrap stylesheet -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    
+
     <!-- Fonts and Color -->
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/palette.css">
@@ -16,28 +16,44 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/main-login-page.css">
+
+    <style>
+      .capatcha {
+          text-align: center;
+      }
+
+      .g-recaptcha {
+          display: inline-block;
+      }
+    </style>
   </head>
 
   <body>
     <div class="banner-login-section">
       <div class="banner-container bg-eton-blue row no-gutters">
         <div class="banner-login col-md-4 col-sm-12 match">
-          <h1 class="text-purple-taupe lora text-xs-center">fb</h1>
+          <h1 class="text-purple-taupe lora text-xs-center">&nbspfb</h1>
 
           <form action="login" method="POST" class="col-md-8">
-            <div class="form-group">
+            <div class="form-group offset-md-2">
               <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
 
-            <div class="form-group">
+            <div class="form-group offset-md-2">
               <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
 
-            <div class="form-group">
+            <div class="form-group offset-md-2">
+              <div class="capatcha">
+                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5" data-type="image"></div>
+              </div>
+            </div>
+
+            <div class="form-group offset-md-2">
               <button type="submit" class="btn btn-block bg-purple-navy">Login</button>
             </div>
 
-            <div class="form-group">
+            <div class="form-group offset-md-2">
                <button onclick="window.location='registration.jsp';" type="button" class="btn btn-block bg-purple-taupe">Register</button>
             </div>
           </form>
@@ -91,6 +107,7 @@
 
     </div>
   </body>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="js/tether.min.js" charset="utf-8"></script>
   <script src="js/bootstrap.min.js" charset="utf-8"></script>
@@ -127,6 +144,8 @@
       "OMG, it's a Foobar",
       "It's nothing but Foobar",
       "Foobar the clear choice",
+      "Foobar is life",
+      "Mave loves Foobar",
       "The Foobar Effect",
       "Foobar - forget the rest.",
       "The original Foobar",
@@ -137,7 +156,6 @@
       "To Foobar, or not to Foobar",
       "Foobar - The Revolution",
       "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars"
-              
     ];
 
     $(document).ready(function() {
@@ -146,6 +164,14 @@
 
       var num = Math.floor(Math.random() * taglines.length - 1);
       $('.tagline').text(taglines[num]);
+
+      $("form").submit(function(event) {
+          if(!grecaptcha.getResponse()) {
+              event.preventDefault();
+              alert("Kindly check the recaptcha and try again.");
+          }
+          grecaptcha.reset();
+      });
     });
   </script>
 </html>
