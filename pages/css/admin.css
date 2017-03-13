@@ -70,3 +70,8 @@ form select{
 .cardnumtype .form-control-feedback{
   text-align: initial;
 }
+
+.modal button{
+  font-family: lato;
+  font-size: 1rem;
+}

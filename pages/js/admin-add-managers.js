@@ -3,6 +3,25 @@
   var $SMtable = $('#SMtable');
 
   $PMtable.bootstrapTable({
+    columns: [
+      {
+        field: 'PMid'
+      }, {
+        field: 'PMfirstName'
+      }, {
+        field: 'PMlastName'
+      }, {
+        field: 'PMinCharge'
+      }, {
+        field: 'PMlastLogin'
+      }, {
+        field: 'PMaction',
+        title: 'Actions',
+        align: 'center',
+        formatter: actionFormatter
+      }
+    ],
+    idField: 'PMid',
     classes: 'table table-reponsive table-striped table-no-bordered',
     smartDisplay: true,
     resizable: true,
@@ -55,6 +74,19 @@
     },
   });
 
+  function actionFormatter(value, row, index){
+    return [
+      '<a class="remove" href="javascript:void(0)" title="Remove">',
+      '<i class="glyphicon glyphicon-remove text-danger"></i>',
+      '</a>'
+    ].join('');
+  }
+
+  window.actionEvents = {
+    'click .remove': function(e, value, row, index){
+      console.log('Fuck me');
+    }
+  };
 
   var $validate = $('#addMngrForm').validate({
     rules: {
