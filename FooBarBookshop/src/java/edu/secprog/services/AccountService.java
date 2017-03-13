@@ -95,6 +95,31 @@ public class AccountService {
         return false;
     }
     
+    public static int getIDByEmail(String email) {
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT userID FROM users"
+                    + " WHERE email= '" + email + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                return rs.getInt("userID");
+            }
+            connection.close();
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        
+        return -1;
+    }
+    
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
         
         long insertID = -1;

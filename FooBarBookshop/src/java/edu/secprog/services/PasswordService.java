@@ -33,15 +33,15 @@ public class PasswordService {
             return date;
         } 
         
-        public static boolean registerUIDToDB() {
+        public static boolean registerUIDToDB(int userID, String token, String email) {
             ResultSet rs = null;
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
-                    + "middleinitial,birthdate,email,username,password,status) values("
-                    + "?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO token(userID, token,"
+                    + "isActive) values("
+                    + "?,?,?)", Statement.RETURN_GENERATED_KEYS);
             rs = pstmt.executeQuery();
             }
             catch(ClassNotFoundException | SQLException e) {

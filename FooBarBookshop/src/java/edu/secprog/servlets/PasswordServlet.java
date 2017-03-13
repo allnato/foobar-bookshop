@@ -5,9 +5,12 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.BCrypt;
+import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
+import edu.secprog.services.PasswordService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,8 +61,16 @@ public class PasswordServlet extends HttpServlet {
             throws ServletException, IOException {
         String[] rec = null ;
         rec[0] = request.getParameter("email");
-        String subject = "Password Reset";
-        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/";
+        UUID uuid = PasswordService.generateToken();
+        String token = uuid.toString();
+        String email = BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10));
+        int userID = AccountService.getIDByEmail(email);
+        if (userID != -1) {
+            
+            PasswordService.registerUIDToDB(userID, token, email);
+        }
+        String subject = "Password Reset Instructions";
+        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/" + token;
         MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
     }
     
