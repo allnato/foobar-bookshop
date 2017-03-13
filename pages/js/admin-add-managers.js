@@ -1,27 +1,9 @@
-
+  changeContainerSize();
   var $PMtable = $('#PMtable');
   var $SMtable = $('#SMtable');
 
+$(document).ready(function() {
   $PMtable.bootstrapTable({
-    columns: [
-      {
-        field: 'PMid'
-      }, {
-        field: 'PMfirstName'
-      }, {
-        field: 'PMlastName'
-      }, {
-        field: 'PMinCharge'
-      }, {
-        field: 'PMlastLogin'
-      }, {
-        field: 'PMaction',
-        title: 'Actions',
-        align: 'center',
-        formatter: actionFormatter
-      }
-    ],
-    idField: 'PMid',
     classes: 'table table-reponsive table-striped table-no-bordered',
     smartDisplay: true,
     resizable: true,
@@ -46,7 +28,6 @@
     onClickRow: function(row, $element){
     },
   });
-
   $SMtable.bootstrapTable({
     classes: 'table table-reponsive table-striped table-no-bordered',
     smartDisplay: true,
@@ -73,6 +54,7 @@
     onClickRow: function(row, $element){
     },
   });
+});
 
   function actionFormatter(value, row, index){
     return [
@@ -82,11 +64,26 @@
     ].join('');
   }
 
-  window.actionEvents = {
-    'click .remove': function(e, value, row, index){
-      console.log('Fuck me');
-    }
-  };
+  window.PMactionEvents = {
+      'click .remove': function (e, value, row, index) {
+          $PMtable.bootstrapTable('remove', {
+            field: 'PMid',
+            values: [row.PMid]
+          })
+      }
+  }
+
+  window.SMactionEvents = {
+      'click .remove': function (e, value, row, index) {
+          $SMtable.bootstrapTable('remove', {
+            field: 'SMid',
+            values: [row.SMid]
+          })
+      }
+  }
+
+
+
 
   var $validate = $('#addMngrForm').validate({
     rules: {
@@ -175,3 +172,23 @@
     $('.has-error').removeClass('has-error');
     $('.form-control-feedback').remove();
   });
+
+
+  // Change container to fluid
+  // If window size is <992
+  $(window).resize(function(event) {
+    changeContainerSize();
+  });
+
+  // Change container size if window size is <992
+  function changeContainerSize(){
+    if ( $(window).width() < 992 ){
+      $('.admin-container').removeClass('container');
+      $('.admin-container').addClass('container-fluid');
+    }
+
+    else {
+      $('.admin-container').removeClass('container-fluid');
+      $('.admin-container').addClass('container');
+    }
+  }

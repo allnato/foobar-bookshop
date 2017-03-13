@@ -73,15 +73,16 @@
                 Product Manager List
               </div>
               <div class="panel-body">
-                <table data-toggle="table" class="table table-striped table-reponsive" id="PMtable">
+                <table  class="table table-striped table-reponsive" id="PMtable">
                   <thead>
                     <tr>
-                      <th data-sortable="true">Employee ID</th>
-                      <th data-sortable="true">Last Name</th>
-                      <th data-sortable="true">First Name</th>
-                      <th data-sortable="true">In-charge</th>
-                      <th data-sortable="true">Last Login</th>
-                      <th data-events="actionEvents"></th>
+                      <th data-field="PMid" data-sortable="true">Employee ID</th>
+                      <th data-field="PMfirstName" data-sortable="true">Last Name</th>
+                      <th data-field="PMlastName" data-sortable="true">First Name</th>
+                      <th data-field="PMinCharge" data-sortable="true">Product In-Charge</th>
+                      <th data-field="PMlastLogin" data-sortable="true">Last Login</th>
+                      <th data-field="PMaction" data-formatter="actionFormatter"
+                      data-events="PMactionEvents" data-align="center">Action</th>
                     </tr>
                   </thead>
                   <tbody id="PMtable-body">
@@ -219,12 +220,16 @@
                 Sales Manager List
               </div>
               <div class="panel-body">
-                <table data-toggle="table" class="table table-striped table-responsive" id="SMtable">
+                <table  class="table table-striped table-responsive" id="SMtable">
                   <thead>
-                    <th data-sortable="true">Employee ID</th>
-                    <th data-sortable="true">Last Name</th>
-                    <th data-sortable="true">First Name</th>
-                    <th data-sortable="true">Last Login</th>
+                    <tr>
+                      <th data-field="SMid" data-sortable="true" >Employee ID</th>
+                      <th data-field="SMlastName" data-sortable="true">Last Name</th>
+                      <th data-field="SMfirstName" data-sortable="true">First Name</th>
+                      <th data-field="SMlastLogin" data-sortable="true">Last Login</th>
+                      <th data-field="SMaction" data-formatter="actionFormatter"
+                      data-events="SMactionEvents" data-align="center">Action</th>
+                    </tr>
                   </thead>
                   <tbody id="SMtable-body">
                     <tr>
@@ -232,12 +237,14 @@
                       <td>Lucio</td>
                       <td>Antonio</td>
                       <td>12/21/2014</td>
+                      <td></td>
                     </tr>
                     <tr>
                       <td>006</td>
                       <td>Pakistan</td>
                       <td>Joe</td>
                       <td>09/21/2016</td>
+                      <td></td>
                     </tr>
                   </tbody>
                 </table>
@@ -345,5 +352,7 @@
       $('#addMngrForm').attr('action', 'addNewAM');
       $('#product-type-container').css('display', 'none');
     });
+
+
   </script>
 </html>
