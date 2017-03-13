@@ -58,7 +58,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="panel panel-primary">
           <div class="panel-heading text-center">
-            Forgot your password?
+            Change your password
           </div>
           <div class="panel-body">
             <!-- Enter Email Form -->
@@ -76,7 +76,6 @@
             </form>
           </div>
         </div>
-        <p class="text-center">A confirmation message will be sent upon submission</p>
       </div>
     </div>
   </div>
