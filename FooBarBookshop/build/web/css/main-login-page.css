@@ -74,3 +74,11 @@ form{
 .footer{
   border-radius: 0px;
 }
+
+.forgot-password{
+  text-align: center;
+}
+
+.forgot-password a{
+  color: white;
+}
