@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
         }
         else {
             System.out.println("bes what happened");
-            request.getRequestDispatcher("404.jsp");
+            request.getRequestDispatcher("error.jsp");
         }
     }
 

@@ -56,7 +56,7 @@ public class RecoverServlet extends HttpServlet {
                 request.getRequestDispatcher("new_password.jsp").forward(request, response);
             }
             else {
-                request.getRequestDispatcher("404.jsp").forward(request, response);
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
         }
 
