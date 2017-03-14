@@ -76,13 +76,15 @@ public class LoginServlet extends HttpServlet {
         status = AccountService.verifyExists(username, password);
         if(status.equals("active")) {
             System.out.println("Uy naglogin haha");
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
+            request.getRequestDispatcher("product-catalog.jsp").forward(request, response);
         }
         else if(status.equals("banned")) {
             System.out.println("I'm locked patulong pls :( ");
+            request.getRequestDispatcher("admin-lockout-accounts.jsp");
         }
         else {
             System.out.println("bes what happened");
+            request.getRequestDispatcher("404.jsp");
         }
     }
 
