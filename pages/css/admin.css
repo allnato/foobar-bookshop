@@ -1,0 +1,77 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+  background-color: #44344F;
+}
+
+#addSMbtn,
+#addPMbtn{
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  background-color: #4caf50;
+  border-color: #388E3C;
+  color: white;
+
+}
+
+.panel{
+  border: 0;
+}
+
+.add-managers-container .panel-heading{
+  background-color: #009688;
+}
+
+.view-managers-container .panel-heading{
+  background-color: #607D8B;
+}
+
+td,
+th{
+  font-family: lato;
+  font-size: 1rem;
+}
+
+ul.pagination li a{
+  font-size: 1rem;
+  font-family: lato;
+  font-weight: bold;
+}
+
+form input,
+form select{
+  font-size: 1rem !important;
+  font-family: lato;
+}
+
+.modal form .form-control{
+  font-size: 1rem;
+  font-family: lato;
+}
+
+.middleInitial .help-block{
+  display: none !important;
+}
+
+.help-block{
+  position: absolute;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.form-group{
+  margin-bottom: 28px;
+}
+
+.fullname .form-control-feedback,
+.logincred .form-control-feedback,
+.city-region-zip .form-control-feedback,
+.cardnumtype .form-control-feedback{
+  text-align: initial;
+}
+
+.modal button{
+  font-family: lato;
+  font-size: 1rem;
+}
