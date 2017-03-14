@@ -55,7 +55,7 @@ public class AccountService {
             }
             catch(SQLException e) {
                 System.out.println("SQL Exception!!!"); // remove in the future
-                Audit.getAuditLog(userID, Audit.ERRORSTATUS, Audit.SQLEX);
+                Audit.getAuditLog(userID, Audit.SQLEX);
                 }
         }
         else {
@@ -96,7 +96,7 @@ public class AccountService {
     public static IDPair verifyExists(String username, String password) {
         ResultSet rs = null;
         String status;
-        int id;
+        int id = 0;
         
         try {
             Connection connection = DBPool.getInstance().getConnection();
@@ -118,8 +118,8 @@ public class AccountService {
             return new IDPair(0, "invalid");
             
         }catch(SQLException e) {
-            System.out.println("ANYARI HAHAHAHAAH LOL");
-            e.printStackTrace();
+            System.out.println("SQL Exception!!!: " + e.getMessage());
+            Audit.getAuditLog(id, Audit.SQLEX);
         }
         
         return new IDPair(0, "invalid");
@@ -224,7 +224,6 @@ public class AccountService {
                 System.out.println("May problem sa mga addresses");
         }
 
-        
         /* Step 5: Add the credit card to the credit_cards table
          */
                 

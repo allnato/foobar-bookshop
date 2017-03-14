@@ -94,12 +94,10 @@ public class LoginServlet extends HttpServlet {
             failState = true;
         }
         catch (ServletException e) {
-            System.out.println("Servlet Exception!!!"); // remove in the future
-            Audit.getAuditLog(userID, Audit.ERRORSTATUS, Audit.SERVLETEX);
+            Audit.getAuditLog(userID, Audit.SERVLETEX);
         }
         catch (IOException e) {
-            System.out.println("IO Exception!!!"); // remove in the future
-            Audit.getAuditLog(userID, Audit.ERRORSTATUS, Audit.IOEX);
+            Audit.getAuditLog(userID, Audit.IOEX);
         }
         finally {
             // add finally statements later

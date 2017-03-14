@@ -6,6 +6,7 @@
 package edu.secprog.security;
 
 import edu.secprog.dto.UserEvent;
+import edu.secprog.services.SecurityService;
 import java.sql.Timestamp;
 
 /**
@@ -34,17 +35,13 @@ public class Audit {
     // always copy this to different files: this.getClass().getEnclosingMethod().getName();
     // executed after checking at DB
     
-    public static UserEvent getAuditLog(int userID, String alertType, String data) {
-        StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
+    public static void getAuditLog(int userID, String data) {
         
-        String classInstance = null;
+        int code;
+        String classInstance, alertType;
+        classInstance = Thread.currentThread().getStackTrace()[2].getClassName();
         
-        for (int i=1; i<stElements.length; i++) {
-            StackTraceElement ste = stElements[i];
-            if (!ste.getClassName().equals(Audit.class.getName()) 
-                    && ste.getClassName().indexOf("java.lang.Thread") != 0)
-                classInstance = ste.getClassName();
-        }
+        alertType = getHttpStatusCode(data);
         
         UserEvent ue = new UserEvent();
         
@@ -54,12 +51,34 @@ public class Audit {
         ue.setUserID(userID);
         ue.setAlertType(alertType);
         ue.setServiceSource(classInstance);
-        ue.setContent(data); // temporary until further notice
+        ue.setContent(data);
         ue.setTimestamp(getCurrentTimeStamp());
         
-        return ue;
+        // check for log threats here
+        SecurityService.addAuditLog(ue);
     }
     
-    // might want to create http status code function here
+    public static String getHttpStatusCode(String data) {
+        int code = 200;
+        String status = INFOSTATUS;
+        
+        switch(data) {
+            case IOEX:
+            case NULLPOINTEREX:
+            case SERVLETEX:
+            case SQLEX:
+                code = 500;
+                break;
+        }
+        
+        if(code >= 200 && code <= 307)
+            status = INFOSTATUS;
+        else if(code >= 400 && code <= 505)
+            status = ERRORSTATUS;
+        else
+            status = DEBUGSTATUS;
+        
+        return(status + ": " + code);
+    }
     
 }
