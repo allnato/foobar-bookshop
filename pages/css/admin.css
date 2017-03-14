@@ -75,3 +75,20 @@ form select{
   font-family: lato;
   font-size: 1rem;
 }
+
+.action-link{
+  padding: 3px;
+  margin: 0 5px;
+}
+
+.action-link:hover{
+  background-color: #e7e7e7;
+}
+
+td.success{
+  background-color: #009688 !important;
+}
+
+td.danger{
+  background-color: #f44336 !important;
+}
