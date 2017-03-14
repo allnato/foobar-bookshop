@@ -6,33 +6,23 @@
 package edu.secprog.servlets;
 
 import edu.secprog.security.BCrypt;
-import edu.secprog.services.AccountService;
-import edu.secprog.services.MailService;
 import edu.secprog.services.PasswordService;
 import java.io.IOException;
-import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Mark Christian Sanchez
  */
-@WebServlet(urlPatterns = {"/sendToEmail"})
-public class PasswordServlet extends HttpServlet {
+@WebServlet(name = "ChangePasswordServlet", urlPatterns = {"/updatePassword"})
+public class ChangePasswordServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+ 
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,20 +51,22 @@ public class PasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] rec = { request.getParameter("email") };
-        UUID uuid = PasswordService.generateToken();
-        String token = uuid.toString();
-        String email = request.getParameter("email");
-        int userID = AccountService.getIDByEmail(email);
-        System.out.println("Value ng IDByEmail is " + userID);
-        if (userID != -1) {
-            System.out.println("Successful yung IDByEmail bes");
-            PasswordService.registerUIDToDB(userID, token, email);
-        }
-        String subject = "Password Reset Instructions";
-        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token + "&uid=" + userID;
-        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
-        request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            String newPassword = BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10));
+            String uid = session.getAttribute("luxdi").toString();
+            PasswordService.updateUserPassword(newPassword, uid);
+            session.invalidate();
+            request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
     }
-    
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }
