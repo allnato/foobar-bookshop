@@ -52,6 +52,24 @@ function cellStyle(value, row, index) {
   }
 }
 
+window.lockEvents = {
+    'click .action-link.lock': function (e, value, row, index) {
+        $table.bootstrapTable('updateCell', {
+          index: index,
+          field: 'status',
+          value: "Locked"
+        });
+    },
+    'click .action-link.unlock': function (e, value, row, index) {
+        $table.bootstrapTable('updateCell', {
+          index: index,
+          field: 'status',
+          value: "Active"
+        });
+    }
+
+}
+
 
 // Change container to fluid
 // If window size is <992
