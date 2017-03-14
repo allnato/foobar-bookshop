@@ -77,6 +77,8 @@ public class SecurityService {
         }
     }
     
+    // one time use for the registration process only - do not remove
+    
     public static int getPassOwner(String username) {
         ResultSet rs = null;
         int userID;
@@ -104,6 +106,50 @@ public class SecurityService {
     }
     
     public static void addAuditLog(UserEvent ue) {
+        long insertID = -1;
+        PreparedStatement pstmt = null;
+        Connection connection = null;
+        ResultSet rs = null;
         
+        try {
+            connection = DBPool.getInstance().getConnection();
+            pstmt = connection.prepareStatement("INSERT INTO user_events(userID, alertType, serviceSource, "
+                    + "content, timestamp) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, ue.getUserID());
+            pstmt.setString(2, ue.getAlertType());
+            pstmt.setString(3, ue.getServiceSource());
+            pstmt.setString(4, ue.getContent());
+            pstmt.setTimestamp(5, ue.getTimestamp());
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Register failed! No rows affected");
+            }
+            // Check if registering is successful. Return ID generated
+            try {
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    insertID = rs.getLong(1);
+                }
+                else {
+                    throw new SQLException("Register failed! No rows affected");
+                }
+            } catch(SQLException e) {
+                System.out.println("Register failed! No rows affected");
+                }
+            // End CHeck if registering is successful
+        } catch(SQLException e) {
+            //put future audit codes here in the future
+            }
+        finally {
+            try {
+                pstmt.close();
+                connection.close();
+            } catch (SQLException ex) {
+                // replace this in the future
+                // what if the logger that logs fail itself? How can it log itself?
+                Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

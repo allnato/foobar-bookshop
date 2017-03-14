@@ -6,6 +6,8 @@
 package edu.secprog.servlets;
 
 import edu.secprog.security.AES;
+import edu.secprog.security.Audit;
+import edu.secprog.security.IDPair;
 import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
 import java.io.IOException;
@@ -59,28 +61,48 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        boolean isLoggedIn;
-        boolean isLocked;
-        long lockedTime;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        boolean failState = true;
+        int userID = 0;
         
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String status;
-        //String[] rec = { "dlsu.sachii@gmail.com" };
-        //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
-        status = AccountService.verifyExists(username, password);
-        if(status.equals("active")) {
-            System.out.println("Uy naglogin haha");
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
+        try {
+            HttpSession session = request.getSession(false);
+            boolean isLoggedIn, isLocked;
+            long lockedTime;
+            IDPair result;
+            String status;
+            
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            //String[] rec = { "dlsu.sachii@gmail.com" };
+            //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+            result = AccountService.verifyExists(username, password);
+            userID = result.getID();
+            status = result.getValue();
+            
+            if(status.equals("active")) {
+                System.out.println("Uy naglogin haha");
+                request.getRequestDispatcher("Home.jsp").forward(request, response);
+            }
+            else if(status.equals("banned")) {
+                System.out.println("I'm locked patulong pls :( ");
+            }
+            else {
+                System.out.println("bes what happened");
+            }
+            
+            failState = true;
         }
-        else if(status.equals("banned")) {
-            System.out.println("I'm locked patulong pls :( ");
+        catch (ServletException e) {
+            System.out.println("Servlet Exception!!!"); // remove in the future
+            Audit.getAuditLog(userID, Audit.ERRORSTATUS, Audit.SERVLETEX);
         }
-        else {
-            System.out.println("bes what happened");
+        catch (IOException e) {
+            System.out.println("IO Exception!!!"); // remove in the future
+            Audit.getAuditLog(userID, Audit.ERRORSTATUS, Audit.IOEX);
+        }
+        finally {
+            // add finally statements later
         }
     }
 
