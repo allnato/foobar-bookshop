@@ -1,0 +1,51 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+
+  background-color: #8cd2a3;
+}
+
+/* navbar */
+.navbar.navbar-inverse{
+  background-color: #564d80;
+  border-color: #413a61;
+}
+
+.navbar-brand{
+  color: white !important;
+}
+
+.nav li a{
+  color: white !important;
+}
+
+.navbar-text{
+  color: white !important;
+}
+
+.panel{
+  border-width: 0 0 4px 0 !important;
+}
+
+.panel-heading{
+  background-color: #607D8B !important;
+}
+
+.error-code{
+  color: #AD1457;
+  font-size: 2rem;
+}
+
+.error-message{
+  color: white;
+  font-size: 4rem;
+}
+
+h1 small{
+  color: #607D8B;
+}
+
+.error-code-message small{
+  color: #607D8B;
+
+}
