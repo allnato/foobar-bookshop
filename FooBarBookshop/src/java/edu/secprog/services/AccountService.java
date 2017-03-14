@@ -125,6 +125,34 @@ public class AccountService {
         return new IDPair(0, "invalid");
     }
     
+    public static int getIDByEmail(String email) {
+        ResultSet rs = null;
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users");
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+                System.out.println("Yung email kasi " + rs.getString("email"));
+                if(BCrypt.checkpw(email, rs.getString("email"))) {
+                    return rs.getInt("userID");
+                }
+                
+            }
+            connection.close();
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        
+        return -1;
+    }
+    
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
         
         long insertID = -1;
@@ -221,7 +249,8 @@ public class AccountService {
             pstmt.executeUpdate();
         }
         catch(SQLException e) {
-                System.out.println("May problem sa mga addresses");
+                e.printStackTrace();
+                System.out.println("May problem sa mga addresses");    
         }
 
         /* Step 5: Add the credit card to the credit_cards table
@@ -253,7 +282,7 @@ public class AccountService {
             // End Check if registering is successful
             
         }
-        catch(SQLException e) {
+        catch(Exception e) {
                 e.printStackTrace();
                 System.out.println("Lahat may problema");
         }
@@ -263,13 +292,15 @@ public class AccountService {
         try {
             Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-            pstmt.setLong(1, customerID);
+            pstmt.setLong(1, insertID);
             pstmt.setLong(2, creditCardID);
+            System.out.println("Customer ID: " + insertID);
             pstmt.executeUpdate();
 
         }
-        catch(SQLException e) {
-                System.out.println("Dami nanamang problem ano ba yan.");
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Dami nanamang problem ano ba yan.");
         }
         
         return true;

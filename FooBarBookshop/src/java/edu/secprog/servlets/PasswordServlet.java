@@ -5,10 +5,14 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.BCrypt;
+import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
+import edu.secprog.services.PasswordService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.UUID;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mark Christian Sanchez
  */
+@WebServlet(urlPatterns = {"/sendToEmail"})
 public class PasswordServlet extends HttpServlet {
 
     /**
@@ -56,11 +61,20 @@ public class PasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String[] rec = null ;
-        rec[0] = request.getParameter("email");
-        String subject = "Password Reset";
-        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/";
+        String[] rec = { request.getParameter("email") };
+        UUID uuid = PasswordService.generateToken();
+        String token = uuid.toString();
+        String email = request.getParameter("email");
+        int userID = AccountService.getIDByEmail(email);
+        System.out.println("Value ng IDByEmail is " + userID);
+        if (userID != -1) {
+            System.out.println("Successful yung IDByEmail bes");
+            PasswordService.registerUIDToDB(userID, token, email);
+        }
+        String subject = "Password Reset Instructions";
+        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token + "&uid=" + userID;
         MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
+        request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
     }
     
 }

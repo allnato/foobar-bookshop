@@ -8,7 +8,7 @@
 
     <!-- Bootstrap stylesheet -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    
+
     <!-- Fonts and Color -->
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/palette.css">
@@ -16,6 +16,16 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/main-login-page.css">
+
+    <style>
+      .capatcha {
+          text-align: center;
+      }
+
+      .g-recaptcha {
+          display: inline-block;
+      }
+    </style>
   </head>
 
   <body>
@@ -33,16 +43,22 @@
               <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
 
-            <div class="form-group">
-                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
+            <div class="form-group offset-md-2">
+              <div class="capatcha">
+                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5" data-type="image"></div>
+              </div>
             </div>
-              
+
             <div class="form-group offset-md-2">
               <button type="submit" class="btn btn-block bg-purple-navy">Login</button>
             </div>
 
             <div class="form-group offset-md-2">
                <button onclick="window.location='registration.jsp';" type="button" class="btn btn-block bg-purple-taupe">Register</button>
+            </div>
+
+            <div class="form-group offset-md-2 text-center forgot-password">
+              <a href="ForgotInstructions" class="text-center">Forgot Password? Click Here</a>
             </div>
           </form>
 
@@ -143,7 +159,7 @@
       "Foobar, stay in touch",
       "To Foobar, or not to Foobar",
       "Foobar - The Revolution",
-      "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars"        
+      "If you know your enemy and know your Foobar, you need not fear the result of a hundred Foobars"
     ];
 
     $(document).ready(function() {
@@ -152,7 +168,7 @@
 
       var num = Math.floor(Math.random() * taglines.length - 1);
       $('.tagline').text(taglines[num]);
-      
+
       $("form").submit(function(event) {
           if(!grecaptcha.getResponse()) {
               event.preventDefault();

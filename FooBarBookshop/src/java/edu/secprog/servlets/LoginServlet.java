@@ -65,6 +65,44 @@ public class LoginServlet extends HttpServlet {
         boolean failState = true;
         int userID = 0;
         
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+<<<<<<< Temporary merge branch 1
+        String[] rec = { "dlsu.sachii@gmail.com" };
+        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+        isLoggedIn = AccountService.verifyExists(username, password);
+        if(isLoggedIn) {
+=======
+        String status;
+        status = AccountService.verifyExists(username, password);
+        if(status.equals("active")) {
+>>>>>>> Temporary merge branch 2
+            System.out.println("Uy naglogin haha");
+            request.getRequestDispatcher("Home.jsp").forward(request, response);
+        }
+        catch (ServletException e) {
+            Audit.getAuditLog(userID, Audit.SERVLETEX);
+        }
+        catch (IOException e) {
+            Audit.getAuditLog(userID, Audit.IOEX);
+        }
+        finally {
+            // add finally statements later
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
+
         try {
             HttpSession session = request.getSession(false);
             boolean isLoggedIn, isLocked;
@@ -91,27 +129,4 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("bes what happened");
             }
             
-            failState = true;
-        }
-        catch (ServletException e) {
-            Audit.getAuditLog(userID, Audit.SERVLETEX);
-        }
-        catch (IOException e) {
-            Audit.getAuditLog(userID, Audit.IOEX);
-        }
-        finally {
-            // add finally statements later
-        }
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-}
+            failState = true;
