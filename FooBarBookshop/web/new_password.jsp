@@ -62,7 +62,7 @@
           </div>
           <div class="panel-body">
             <!-- Enter Email Form -->
-            <form action="" method="POST" id="password_form">
+            <form action="updatePassword" method="POST" id="password_form">
               <h3 class="text-center"><i class="fa fa-lock fa-lg"></i></h3>
               <div class="form-group has-feedback">
                 <label for="password">Enter your new password</label>

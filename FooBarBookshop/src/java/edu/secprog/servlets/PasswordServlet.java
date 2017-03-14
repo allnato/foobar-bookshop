@@ -64,15 +64,17 @@ public class PasswordServlet extends HttpServlet {
         String[] rec = { request.getParameter("email") };
         UUID uuid = PasswordService.generateToken();
         String token = uuid.toString();
-        String email = BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10));
+        String email = request.getParameter("email");
         int userID = AccountService.getIDByEmail(email);
+        System.out.println("Value ng IDByEmail is " + userID);
         if (userID != -1) {
-            
+            System.out.println("Successful yung IDByEmail bes");
             PasswordService.registerUIDToDB(userID, token, email);
         }
         String subject = "Password Reset Instructions";
-        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token;
+        String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token + "&uid=" + userID;
         MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
+        request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
     }
     
 }
