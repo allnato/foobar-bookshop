@@ -45,7 +45,7 @@
 
             <div class="form-group offset-md-2">
               <div class="capatcha">
-                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5" data-type="image"></div>
+                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
               </div>
             </div>
 

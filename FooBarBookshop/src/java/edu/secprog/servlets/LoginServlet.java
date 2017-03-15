@@ -76,16 +76,27 @@ public class LoginServlet extends HttpServlet {
             result = AccountService.verifyExists(username, password);
             userID = result.getID();
             status = result.getValue();
+            System.out.println(status);
+            
+            String invalid = "Invalid username or password";
             
             if(status.equals("active")) {
                 System.out.println("Uy naglogin haha");
-                request.getRequestDispatcher("Home.jsp").forward(request, response);
+                request.getRequestDispatcher("user-profile.jsp").forward(request, response);
             }
             else if(status.equals("banned")) {
                 System.out.println("I'm locked patulong pls :( ");
+                Audit.getAuditLog(userID, invalid);
+                
+                request.setAttribute("invalidMsg", invalid);
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
             else {
                 System.out.println("bes what happened");
+                Audit.getAuditLog(userID, invalid);
+                
+                request.setAttribute("invalidMsg", invalid);
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
             
             failState = false;

@@ -100,17 +100,17 @@ public class AccountService {
         
         try {
             Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.status, u.userID, hashed FROM users u, "
-                    + " passwords WHERE username= '" + username + "';");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
+                    + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
              // If User Exists, check the number of attempts then check the password
                 rs.next();
                 
                 if(BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    status = rs.getString("status");
-                    id = rs.getInt("userID");
-                    return new IDPair(id, status);
+                    status = rs.getString("u.status");
+                    id = rs.getInt("u.userID");
+                    return new IDPair(id, "active");
                 }
             }
             connection.close();

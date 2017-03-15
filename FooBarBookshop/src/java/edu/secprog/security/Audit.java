@@ -59,7 +59,7 @@ public class Audit {
     }
     
     public static String getHttpStatusCode(String data) {
-        int code = 200;
+        int code = 0;
         String status = INFOSTATUS;
         
         switch(data) {
@@ -76,9 +76,12 @@ public class Audit {
         else if(code >= 400 && code <= 505)
             status = ERRORSTATUS;
         else
-            status = DEBUGSTATUS;
+            status = ERRORSTATUS;
         
-        return(status + ": " + code);
+        if(code != 0)
+            return(status + ": " + code);
+        
+        return(status);
     }
     
 }
