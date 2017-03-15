@@ -1,5 +1,7 @@
 changeContainerSize();
 
+
+
 var $table = $('#userTable');
 $(document).ready(function() {
   $table.bootstrapTable({
@@ -54,20 +56,39 @@ function cellStyle(value, row, index) {
 
 window.lockEvents = {
     'click .action-link.lock': function (e, value, row, index) {
+      if(row.status.toLowerCase() != 'locked'){
+        changeConfirmModal(row.userID, row.accountName, row.accountType, "Lock");
+        //$('#confirmModal').modal();
         $table.bootstrapTable('updateCell', {
           index: index,
           field: 'status',
           value: "Locked"
         });
+      }
     },
     'click .action-link.unlock': function (e, value, row, index) {
+      if(row.status.toLowerCase() != 'active'){
+        changeConfirmModal(row.userID, row.accountName, row.accountType, "Unlock");
+        //$('#confirmModal').modal();
         $table.bootstrapTable('updateCell', {
           index: index,
           field: 'status',
           value: "Active"
         });
+      }
     }
 
+}
+
+$('#confirmActionBTN').click(function() {
+
+});
+
+function changeConfirmModal(userID, userName, userType, status){
+  $('.modal-title h3').text(`${status} this Account`);
+  $('.userIDModal').text(userID);
+  $('.userNameModal').text(userName);
+  $('.userTypeModal').text(userType);
 }
 
 
