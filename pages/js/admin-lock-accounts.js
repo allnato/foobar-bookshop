@@ -31,14 +31,20 @@ $(document).ready(function() {
 });
 
 function actionFormatter(value, row, index){
-  return [
-    '<a class="action-link lock" href="javascript:void(0)" title="Lock">',
-    '<i class="fa fa-lock text-danger fa-lg"></i>',
-    '</a>',
-    '<a class="action-link unlock" href="javascript:void(0)" title="Unlock">',
-    '<i class="fa fa-unlock text-success fa-lg"></i>',
-    '</a>'
-  ].join('');
+  if(row.status.toLowerCase() == 'locked'){
+    return [
+      '<a class="action-link unlock" href="javascript:void(0)" title="Unlock">',
+      '<i class="fa fa-unlock text-success fa-lg"></i>',
+      '</a>'
+    ].join('');
+  }
+  else {
+    return [
+      '<a class="action-link lock" href="javascript:void(0)" title="Lock">',
+      '<i class="fa fa-lock text-danger fa-lg"></i>',
+      '</a>',
+    ].join('');
+  }
 }
 
 function cellStyle(value, row, index) {
@@ -58,22 +64,28 @@ window.lockEvents = {
     'click .action-link.lock': function (e, value, row, index) {
       if(row.status.toLowerCase() != 'locked'){
         changeConfirmModal(row.userID, row.accountName, row.accountType, "Lock");
-        //$('#confirmModal').modal();
-        $table.bootstrapTable('updateCell', {
-          index: index,
-          field: 'status',
-          value: "Locked"
+        $('#confirmModal').modal();
+        $('#confirmActionBTN').click(function(event) {
+          $table.bootstrapTable('updateCell', {
+            index: index,
+            field: 'status',
+            value: "Locked"
+          });
+          $('#confirmModal').modal('hide');
         });
       }
     },
     'click .action-link.unlock': function (e, value, row, index) {
       if(row.status.toLowerCase() != 'active'){
         changeConfirmModal(row.userID, row.accountName, row.accountType, "Unlock");
-        //$('#confirmModal').modal();
-        $table.bootstrapTable('updateCell', {
-          index: index,
-          field: 'status',
-          value: "Active"
+        $('#confirmModal').modal();
+        $('#confirmActionBTN').click(function(event) {
+          $table.bootstrapTable('updateCell', {
+            index: index,
+            field: 'status',
+            value: "Active"
+          });
+          $('#confirmModal').modal('hide');
         });
       }
     }
