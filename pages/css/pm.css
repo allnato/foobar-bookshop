@@ -3,3 +3,81 @@ html, body{
   font-size: 16px;
   background-color: #44344F;
 }
+
+.panel{
+  border: 0;
+}
+
+.add-product-container .panel-heading{
+  background-color: #009688;
+}
+
+#addProdBtn{
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  background-color: #4caf50;
+  border-color: #388E3C;
+  color: white;
+
+}
+
+td,
+th{
+  font-family: lato;
+  font-size: 1rem;
+}
+
+ul.pagination li a{
+  font-size: 1rem;
+  font-family: lato;
+  font-weight: bold;
+}
+
+form input,
+form select{
+  font-size: 1rem !important;
+  font-family: lato;
+}
+
+.modal form .form-control{
+  font-size: 1rem;
+  font-family: lato;
+}
+
+.help-block{
+  position: absolute;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.form-group{
+  margin-bottom: 28px;
+}
+
+.modal button{
+  font-family: lato;
+  font-size: 1rem;
+}
+
+.action-link:hover{
+  background-color: #e7e7e7;
+}
+
+td.success{
+  background-color: #009688 !important;
+}
+
+td.danger{
+  background-color: #f44336 !important;
+}
+
+textarea{
+  resize: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

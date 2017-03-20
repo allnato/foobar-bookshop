@@ -64,7 +64,7 @@ $(document).ready(function() {
     ].join('');
   }
 
-  
+
 
   window.PMactionEvents = {
       'click .remove': function (e, value, row, index) {
@@ -171,7 +171,7 @@ $(document).ready(function() {
     $(this).find("input,textarea,select").val('').end();
     $validate.resetForm();
     $('.has-error').removeClass('has-error');
-    $('.has-error').removeClass('has-error');
+    $('.has-success').removeClass('has-success');
     $('.form-control-feedback').remove();
   });
 
