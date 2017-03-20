@@ -1,4 +1,62 @@
-  changeContainerSize();
+changeContainerSize();
+var $table = $('#productTable');
+
+$(document).ready(function() {
+  $table.bootstrapTable({
+    classes: 'table table-reponsive table-striped table-no-bordered',
+    smartDisplay: true,
+    resizable: true,
+    showToggle: true,
+    showColumns: true,
+    minimumCountColumns: 3,
+    pagination: true,
+    onlyInfoPagination: false,
+    search: true,
+    toolbar: '.table-toolbar',
+    toolbarAlign: 'right',
+    pageSize: 10,
+    formatShowingRows: function(pageFrom, pageTo, totalRows) {
+
+    },
+    formatRecordsPerPage: function(pageNumber) {
+
+    },
+    formatDetailPagination: function(totalRows) {
+      return ;
+    },
+    onClickRow: function(row, $element){
+    },
+  });
+});
+
+function actionFormatter(value, row, index){
+  return [
+    '<a class="remove" href="javascript:void(0)" title="Remove">',
+    '<i class="fa fa-times text-danger"></i>',
+    '</a>'
+  ].join('');
+}
+
+function descriptionFormatter(value, row, index) {
+    return value.substring(0,10) + "...";
+}
+
+
+
+window.actionEvents = {
+    'click .remove': function (e, value, row, index) {
+        changeConfirmModal(row.productID, row.productName, row.productPrice);
+        $('#confirmModal').modal();
+        $('#confirmActionBTN').click(function(event) {
+          $table.bootstrapTable('remove', {
+            field: 'productID',
+            values: [row.productID]
+          })
+          $('#confirmModal').modal('hide');
+        });
+    }
+}
+
 
 var $validate = $('#addProdForm').validate({
   rules:{
@@ -55,6 +113,12 @@ $('#addProdModal').on('hidden.bs.modal', function () {
   $('.has-success').removeClass('has-success');
   $('.form-control-feedback').remove();
 });
+
+function changeConfirmModal(userID, userName, userType){
+  $('.productIDModal').text(userID);
+  $('.productNameModal').text(userName);
+  $('.productPriceModal').text(userType);
+}
 
 // Change container to fluid
 // If window size is <992

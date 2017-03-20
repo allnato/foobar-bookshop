@@ -4,12 +4,21 @@ html, body{
   background-color: #44344F;
 }
 
+.category{
+  font-weight: bold;
+  color: white;
+}
+
 .panel{
   border: 0;
 }
 
 .add-product-container .panel-heading{
   background-color: #009688;
+}
+
+.table-product-container .panel-heading{
+  background-color: #1565c0;
 }
 
 #addProdBtn{
