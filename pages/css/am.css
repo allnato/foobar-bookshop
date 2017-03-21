@@ -1,0 +1,9 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+  background-color: #44344F;
+}
+
+.panel{
+  border-width: 1 1 4px 1;
+}

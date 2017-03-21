@@ -10,7 +10,7 @@ html, body{
 }
 
 .panel{
-  border: 0;
+  border-width: 0 0 4px 0;
 }
 
 .add-product-container .panel-heading{

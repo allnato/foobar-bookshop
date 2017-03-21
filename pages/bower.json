@@ -29,7 +29,8 @@
     "card": "^2.1.1",
     "bootstrap-datepicker": "^1.6.4",
     "sticky-kit": "^1.1.2",
-    "isotope": "^3.0.2"
+    "isotope": "^3.0.2",
+    "chartist": "^0.10.1"
   },
   "resolutions": {
     "bootstrap": "v4.0.0-alpha.5",
