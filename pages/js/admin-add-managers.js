@@ -59,10 +59,12 @@ $(document).ready(function() {
   function actionFormatter(value, row, index){
     return [
       '<a class="remove" href="javascript:void(0)" title="Remove">',
-      '<i class="glyphicon glyphicon-remove text-danger"></i>',
+      '<i class="fa fa-times text-danger"></i>',
       '</a>'
     ].join('');
   }
+
+
 
   window.PMactionEvents = {
       'click .remove': function (e, value, row, index) {
@@ -169,7 +171,7 @@ $(document).ready(function() {
     $(this).find("input,textarea,select").val('').end();
     $validate.resetForm();
     $('.has-error').removeClass('has-error');
-    $('.has-error').removeClass('has-error');
+    $('.has-success').removeClass('has-success');
     $('.form-control-feedback').remove();
   });
 

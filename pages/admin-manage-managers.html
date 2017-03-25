@@ -43,7 +43,18 @@
               <li><a href="">Manage Locked Accounts</a></li>
               <li class="active"><a href="">Manage Managers</a></li>
             </ul>
-            <p class="navbar-text navbar-right">Made with <i class="fa fa-heart"></i> by foobar</p>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                        My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
+                      </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">My Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -257,75 +268,75 @@
 
     <!-- Add new Manager Modal -->
     <div class="modal fade" id="addMngrModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Add New Product Manager</h4>
           </div>
-          <form class="creditForm" method="post" id="addMngrForm">
-            <div class="modal-body">
-              <div class="tab-pane" id="personal-information">
-                <h3>Personal Info</h3>
-                <hr>
-                <div class="row fullname">
-                  <!-- First Name -->
-                  <div class="firstName form-group has-feedback col-sm-5">
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="firstName" class="form-control" id="first_name">
+            <form class="creditForm" method="post" id="addMngrForm">
+              <div class="modal-body">
+                <div class="tab-pane" id="personal-information">
+                  <h3>Personal Info</h3>
+                  <hr>
+                  <div class="row fullname">
+                    <!-- First Name -->
+                    <div class="firstName form-group has-feedback col-sm-5">
+                      <label for="first_name">First Name</label>
+                      <input type="text" name="firstName" class="form-control" id="first_name">
+                    </div>
+                    <!-- Last Name -->
+                    <div class="lastName form-group has-feedback col-sm-5">
+                      <label for="last_name">Last Name</label>
+                      <input type="text" name="lastName" class="form-control" id="last_name">
+                    </div>
+                    <!-- Middle Initial -->
+                    <div class="middleInitial form-group has-feedback col-sm-2">
+                      <label for="middle_initial">M.I.</label>
+                      <input type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
+                    </div>
                   </div>
-                  <!-- Last Name -->
-                  <div class="lastName form-group has-feedback col-sm-5">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="lastName" class="form-control" id="last_name">
+                  <!-- Birth Date -->
+                  <div class="birthDate form-group has-feedback">
+                    <label for="birth_date">Birth Date</label>
+                    <input type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
                   </div>
-                  <!-- Middle Initial -->
-                  <div class="middleInitial form-group has-feedback col-sm-2">
-                    <label for="middle_initial">M.I.</label>
-                    <input type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
+                  <h3>Account Info</h3>
+                  <hr>
+                  <div class="row logincred">
+                    <!-- Email -->
+                    <div class="email form-group has-feedback col-sm-6">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" class="form-control" id="email" placeholder="youremail@mail.com">
+                    </div>
+                    <!-- Username -->
+                    <div class="username form-group has-feedback col-sm-6">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
+                    </div>
                   </div>
-                </div>
-                <!-- Birth Date -->
-                <div class="birthDate form-group has-feedback">
-                  <label for="birth_date">Birth Date</label>
-                  <input type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
-                </div>
-                <h3>Account Info</h3>
-                <hr>
-                <div class="row logincred">
-                  <!-- Email -->
-                  <div class="email form-group has-feedback col-sm-6">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" placeholder="youremail@mail.com">
-                  </div>
-                  <!-- Username -->
-                  <div class="username form-group has-feedback col-sm-6">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
-                  </div>
-                </div>
 
-                <!-- Password -->
-                <div class="password form-group has-feedback">
-                  <label for="password">Password</label>
-                  <input type="password" name="password" class="form-control" id="password" placeholder="Minimum of 8 charcters">
-                </div>
-                <!-- Password:re -->
-                <div class="password form-group has-feedback">
-                  <label for="confirm_password">Confirm password</label>
-                  <input type="password" class="form-control" name="password_confirm" id="confirm_password" placeholder="Retype password">
-                </div>
+                  <!-- Password -->
+                  <div class="password form-group has-feedback">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Minimum of 8 charcters">
+                  </div>
+                  <!-- Password:re -->
+                  <div class="password form-group has-feedback">
+                    <label for="confirm_password">Confirm password</label>
+                    <input type="password" class="form-control" name="password_confirm" id="confirm_password" placeholder="Retype password">
+                  </div>
 
-                <div class="product-type form-group has-feedback" id="product-type-container">
-                  <label for="product-type">Product In-Charge</label>
-                  <input type="text" class="form-control" name="product_type" id="product-type" placeholder="Product Type">
+                  <div class="product-type form-group has-feedback" id="product-type-container">
+                    <label for="product-type">Product In-Charge</label>
+                    <input type="text" class="form-control" name="product_type" id="product-type" placeholder="Product Type">
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-success">Add New Manager</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </form>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Add New Manager</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </form>
         </div>
       </div>
     </div>
