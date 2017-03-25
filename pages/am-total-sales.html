@@ -60,17 +60,123 @@
         <div class="row">
           <div class="total-sales-panel panel panel-info">
             <div class="panel-heading">
-              Total Sales
+              <h1 class="lato">Total Sales per Month: 2017</h1>
             </div>
             <div class="panel-body">
               <div class="row">
+                <!-- Sales per Month Graph -->
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      <div class="year-sales "></div>
+                      <div class="month-sales "></div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Sales per Month Table -->
+          <div class="col-sm-4">
+            <div class="panel sales-table-panel panel-success">
+              <div class="panel-heading">
+                <h3 class="lato">Sales per Month: 2017</h3>
+              </div>
+              <div class="panel-body">
+                <table class="table table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Total Sale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>January</td>
+                      <td>12,340</td>
+                    </tr>
+                    <tr>
+                      <td>February</td>
+                      <td>10,839</td>
+                    </tr>
+                    <tr>
+                      <td>March</td>
+                      <td>3000</td>
+                    </tr>
+                    <tr>
+                      <td>April</td>
+                      <td>8,092</td>
+                    </tr>
+                    <tr>
+                      <td>May</td>
+                      <td>4,092</td>
+                    </tr>
+                    <tr>
+                      <td>June</td>
+                      <td>101</td>
+                    </tr>
+                    <tr>
+                      <td>July</td>
+                      <td>20,121</td>
+                    </tr>
+                    <tr>
+                      <td>August</td>
+                      <td>5,390</td>
+                    </tr>
+                    <tr>
+                      <td>September</td>
+                      <td>3,490</td>
+                    </tr>
+                    <tr>
+                      <td>October</td>
+                      <td>2,715</td>
+                    </tr>
+                    <tr>
+                      <td>November</td>
+                      <td>3,209</td>
+                    </tr>
+                    <tr>
+                      <td>December</td>
+                      <td>4,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Total Sales in the Current Year -->
+          <div class="col-sm-8">
+            <div class="panel overall-sales-panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="lato">Overall Sales: 2017</h3>
+              </div>
+              <div class="panel-body">
+                <h1 class="lato text-center">PhP 43,090.00</h1>
+                <!-- Graph -->
+                <div class="year-sales"></div>
+                <table class="table table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th>Year</th>
+                      <th>Overall Sales</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2016</td>
+                      <td>PhP 11,000</td>
+                    </tr>
+                    <tr>
+                      <td>2015</td>
+                      <td>PhP 12,030</td>
+                    </tr>
+                    <tr>
+                      <td>2014</td>
+                      <td>PhP 14,030</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -89,7 +195,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
 
-      new Chartist.Line('.year-sales', {
+      new Chartist.Line('.month-sales', {
         labels: [
           'Jan', 'Feb', 'Mar', 'Apr', 'May',
           'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
@@ -99,8 +205,18 @@
           [1,2,3,4,5,6,7,8,9,10,11,12]
         ]
       }, {
-        showArea: true,
-        fullWidth: true
+        showArea: true
+      });
+
+      new Chartist.Line('.year-sales', {
+        labels: [
+          2014,2015,2016,2017
+        ],
+        series: [
+          [11000,12000,14000,43000]
+        ]
+      }, {
+        showArea: true
       });
 
 

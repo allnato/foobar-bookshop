@@ -5,5 +5,47 @@ html, body{
 }
 
 .panel{
-  border-width: 1 1 4px 1;
+  border-width: 0 0 4px 0;
+}
+
+.total-sales-panel.panel .panel{
+  border-width: 1px 1px 4px 1px;
+}
+
+.total-sales-panel .panel-heading h1,
+.sales-table-panel .panel-heading h3,
+.overall-sales-panel .panel-heading h3{
+  color: white;
+  margin: 0;
+}
+
+.overall-sales-panel h1{
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+
+.total-sales-panel .ct-label{
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: lato;
+  color: gray;
+}
+
+.sales-table-panel td,
+.sales-table-panel th{
+  font-size: 1rem;
+  font-family: lato;
+}
+
+.overall-sales-panel td,
+.overall-sales-panel th{
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: lato;
+}
+
+.sales-table-panel tr td,
+.sales-table-panel tr th{
+  text-align: right;
 }
