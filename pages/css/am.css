@@ -13,8 +13,14 @@ html, body{
 }
 
 .total-sales-panel .panel-heading h1,
+.top-purchased-graph .panel-heading h1,
 .sales-table-panel .panel-heading h3,
-.overall-sales-panel .panel-heading h3{
+.overall-sales-panel .panel-heading h3,
+.purchased-table-panel .panel-heading h3,
+.category-table-panel .panel-heading h1,
+.top-product-table-panel h3,
+.top-product-graph-panel h1,
+.product-table-panel h1{
   color: white;
   margin: 0;
 }
@@ -32,6 +38,22 @@ html, body{
   color: gray;
 }
 
+.top-purchased-graph .ct-label
+{
+  font-size: .9rem;
+  font-weight: bold;
+  font-family: lato;
+  color: seagreen;
+}
+
+.top-product-graph-panel .ct-label
+{
+  font-size: .7rem;
+  font-weight: bold;
+  font-family: lato;
+  color: seagreen;
+}
+
 .sales-table-panel td,
 .sales-table-panel th{
   font-size: 1rem;
@@ -46,6 +68,16 @@ html, body{
 }
 
 .sales-table-panel tr td,
-.sales-table-panel tr th{
+.sales-table-panel tr th,
+.purchased-table-panel tr th,
+.purchased-table-panel tr td,
+.top-product-table-panel tr td,
+.top-product-table-panel tr th{
   text-align: right;
+}
+
+
+.top-purchased-graph .ct-bar,
+.top-product-graph-panel .ct-bar{
+  stroke-width: 40px
 }
