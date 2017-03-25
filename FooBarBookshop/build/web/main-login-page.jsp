@@ -56,6 +56,10 @@
             <div class="form-group offset-md-2">
                <button onclick="window.location='registration.jsp';" type="button" class="btn btn-block bg-purple-taupe">Register</button>
             </div>
+
+            <div class="form-group offset-md-2 text-center forgot-password">
+              <a href="ForgotInstructions" class="text-center">Forgot Password? Click Here</a>
+            </div>
           </form>
 
         </div>

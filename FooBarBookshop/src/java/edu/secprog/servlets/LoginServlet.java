@@ -5,9 +5,11 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.AES;
 import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,16 +71,20 @@ public class LoginServlet extends HttpServlet {
         String[] rec = { "dlsu.sachii@gmail.com" };
         MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
         String status;
+        //String[] rec = { "dlsu.sachii@gmail.com" };
+        //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
         status = AccountService.verifyExists(username, password);
         if(status.equals("active")) {
             System.out.println("Uy naglogin haha");
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
+            request.getRequestDispatcher("product-catalog.jsp").forward(request, response);
         }
         else if(status.equals("banned")) {
             System.out.println("I'm locked patulong pls :( ");
+            request.getRequestDispatcher("admin-lockout-accounts.jsp");
         }
         else {
             System.out.println("bes what happened");
+            request.getRequestDispatcher("error.jsp");
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package edu.secprog.services;
 
+import edu.secprog.db.DBPool;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
@@ -28,13 +29,11 @@ public class AccountService {
         ResultSet rs = null;
         if(uStatus.equals("active")) {
             try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             // Check for three successful fails
-            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM foobar_booksop.logins"
-                    + " WHERE userID= '" + userID + "' AND foobar_booksop.logins.status= " + "'failed'"
-                    + " ORDER BY foobar_booksop.logins.timestamp DESC LIMIT 3;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM logins"
+                    + " WHERE userID= '" + userID + "' AND status= " + "'failed'"
+                    + " ORDER BY timestamp DESC LIMIT 3;");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
                 rs.next();
@@ -50,11 +49,9 @@ public class AccountService {
                     pstmt.close();
                     return true;
                 }
-                
-             
             }
             
-        }catch(ClassNotFoundException | SQLException e) {
+        }catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
@@ -65,27 +62,48 @@ public class AccountService {
         return false;
     }
     
-    public static boolean checkPassword(String userID) {
-        // Josh do check password
-        return false;
-    }
+    // used for forgot password
     
-    public static String verifyExists(String username, String password) {
-        
+    public static boolean checkPrevPassword(String username, String password) {
         ResultSet rs = null;
         String status;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT status, userID FROM users"
-                    + " WHERE username= '" + username + "';");
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
+                    + " passwords WHERE username= '" + username + "';");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
              // If User Exists, check the number of attempts then check the password
                 rs.next();
                 
-                if(BCrypt.checkpw(password, rs.getString("password"))) {
+                if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
+                    return true;
+                }
+            }
+            connection.close();
+            pstmt.close();
+            
+        }catch(SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public static String verifyExists(String username, String password) {
+        ResultSet rs = null;
+        String status;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.status, u.userID, hashed FROM users u, "
+                    + " passwords WHERE username= '" + username + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+             // If User Exists, check the number of attempts then check the password
+                rs.next();
+                
+                if(BCrypt.checkpw(password, rs.getString("hashed"))) {
                     status = rs.getString("status");
                     return status;
                 }
@@ -94,12 +112,40 @@ public class AccountService {
             pstmt.close();
             return "invalid";
             
-        }catch(ClassNotFoundException | SQLException e) {
+        }catch(SQLException e) {
             System.out.println("ANYARI HAHAHAHAAH LOL");
             e.printStackTrace();
         }
         
         return "invalid";
+    }
+    
+    public static int getIDByEmail(String email) {
+        ResultSet rs = null;
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users");
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+                System.out.println("Yung email kasi " + rs.getString("email"));
+                if(BCrypt.checkpw(email, rs.getString("email"))) {
+                    return rs.getInt("userID");
+                }
+                
+            }
+            connection.close();
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        
+        return -1;
     }
     
     public static boolean registerUser(Customer nc, CustomerAddress bca, CustomerAddress dca, CreditCard cc) throws ClassNotFoundException {
@@ -111,20 +157,17 @@ public class AccountService {
         /* Step 1: Add the data to the user table, regardless if employee or customer
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO users(firstname, lastname,"
-                    + "middleinitial,birthdate,email,username,password,status) values("
-                    + "?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    + "middleinitial,birthdate,email,username,status) values("
+                    + "?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, nc.getFirstname());
             pstmt.setString(2, nc.getLastname());
             pstmt.setString(3, nc.getMiddleinitial());
             pstmt.setString(4, nc.getBirthdate());
             pstmt.setString(5, nc.getEmail());
             pstmt.setString(6, nc.getUsername());
-            pstmt.setString(7, nc.getPassword());
-            pstmt.setString(8, nc.getStatus());
+            pstmt.setString(7, nc.getStatus());
             int affectedRows = pstmt.executeUpdate();
             
             if (affectedRows == 0) {
@@ -143,15 +186,12 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End CHeck if registering is successful
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
         }
         /* Step 2: Add date registered and generated ID to the customers table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customers(userID, dateRegistered) "
                     + "values(?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setLong(1, insertID);
@@ -173,14 +213,12 @@ public class AccountService {
                 System.out.println("Register failed! No rows affected");
             }
             // End Check if registering is successful
-        } catch(ClassNotFoundException | SQLException e) {
+        } catch(SQLException e) {
         }
         /* Step 3: Add the billing and delivery address data to the customer_address table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_address(customerID, addressType,"
                     + "address,city,zipcode,region,country) "
                     + "values(?,?,?,?,?,?,?)");
@@ -215,9 +253,7 @@ public class AccountService {
          */
                 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO credit_cards(name, cardNum,"
                     + "type, expDate) "
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -250,9 +286,7 @@ public class AccountService {
         /* Step 6: Add the credit card ID to the customer_cards table
          */
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
+            Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
             pstmt.setLong(1, insertID);
             pstmt.setLong(2, creditCardID);

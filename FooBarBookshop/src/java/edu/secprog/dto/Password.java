@@ -6,6 +6,7 @@
 package edu.secprog.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Password implements Serializable {
     private String hashed;
     private byte[] encrypted;
     private byte[] vector;
-    private String timestamp;
+    private Timestamp timestamp;
     private int userID;
 
     /**
@@ -86,14 +87,14 @@ public class Password implements Serializable {
     /**
      * @return the timestamp
      */
-    public String getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
     /**
      * @param timestamp the timestamp to set
      */
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
 
