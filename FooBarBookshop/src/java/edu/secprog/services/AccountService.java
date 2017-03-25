@@ -110,7 +110,7 @@ public class AccountService {
                 if(BCrypt.checkpw(password, rs.getString("hashed"))) {
                     status = rs.getString("u.status");
                     id = rs.getInt("u.userID");
-                    return new IDPair(id, "active");
+                    return new IDPair(id, status);
                 }
             }
             connection.close();

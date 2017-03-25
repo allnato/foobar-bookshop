@@ -6,7 +6,6 @@
 package edu.secprog.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author CoRX
  */
-@WebServlet(name = "ErrorServlet", urlPatterns = {"/error"})
+@WebServlet(name = "ErrorServlet", urlPatterns = {"/Error"})
 public class ErrorServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -32,6 +31,15 @@ public class ErrorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //String msgDesc;
+        //int userID, responseCode;
+        
+        //userID = (int) request.getAttribute("userID");
+        //responseCode = response.getStatus();
+        //msgDesc = request.getAttribute("msgDesc").toString();
+        
+        //Audit.getAuditLog(userID, responseCode, msgDesc);
         request.getRequestDispatcher("error.jsp").forward(request, response);
     }
 

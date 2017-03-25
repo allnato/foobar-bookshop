@@ -1,3 +1,6 @@
+<%@ page isErrorPage="true" import="java.io.*" %>
+<%@ page import="edu.secprog.security.*" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -47,8 +50,30 @@
       <h1 class="lato error-message">Oops Something went wrong :(</h1>
       <h1><small>Please try again later or contact the web administrator.</small></h1>
       <hr>
-      <h2 class="lato error-code">Error Code: <span>404</span></h2>
-      <h2 class="lato error-code-message"><small><%=request.getAttribute("invalidMsg")%></small></h2>
+      <h2 class="lato error-code">Error Code: <span><%=response.getStatus()%></span></h2>
+      <h2 class="lato error-code-message">
+             <%!
+                String errMsg;
+             %>
+             <%
+                errMsg = Audit.getHttpStatusMsg(response.getStatus());
+              
+                if (errMsg != null) {
+                %><small><%=errMsg%></small>
+             <% }
+                else {
+                    try {
+                        errMsg = exception.getMessage();
+                    }
+                    catch (Exception e) {
+                        errMsg = "Internal Server Error";
+                    }
+                    finally {
+                %><small><%=errMsg%></small>
+                 <% }
+                 }
+             %>
+      </h2>
     </div>
   </div>
 </body>

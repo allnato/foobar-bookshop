@@ -13,6 +13,9 @@ import edu.secprog.services.MailService;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,12 +64,13 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
-            boolean failState = true;
-            IDPair result;
-            int userID = 0;
-            String status;
+        IDPair result;
+        int userID = 0;
+        String status;
+        int responseCode = 200;
+        String msgDesc = null;
             
         try {
             String username = request.getParameter("username");
@@ -78,37 +82,39 @@ public class LoginServlet extends HttpServlet {
             status = result.getValue();
             System.out.println(status);
             
-            String invalid = "Invalid username or password";
-            
             if(status.equals("active")) {
                 System.out.println("Uy naglogin haha");
+                responseCode = Audit.OKINFO;
+                msgDesc = "Successful user log in";
+                
                 request.getRequestDispatcher("user-profile.jsp").forward(request, response);
             }
             else if(status.equals("banned")) {
                 System.out.println("I'm locked patulong pls :( ");
-                Audit.getAuditLog(userID, invalid);
+                responseCode = Audit.BADINFO;
+                msgDesc = "Invalid username or password";
                 
-                request.setAttribute("invalidMsg", invalid);
-                request.getRequestDispatcher("error.jsp").forward(request, response);
+                response.sendError(Audit.BADINFO, msgDesc);
             }
             else {
                 System.out.println("bes what happened");
-                Audit.getAuditLog(userID, invalid);
+                responseCode = Audit.BADINFO;
+                msgDesc = "Invalid username or password";
                 
-                request.setAttribute("invalidMsg", invalid);
-                request.getRequestDispatcher("error.jsp").forward(request, response);
+                response.sendError(Audit.BADINFO, msgDesc);
             }
-            
-            failState = false;
+
         }
         catch (ServletException e) {
-            Audit.getAuditLog(userID, Audit.SERVLETEX);
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
         }
         catch (IOException e) {
-            Audit.getAuditLog(userID, Audit.IOEX);
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
         }
         finally {
-            // add finally statements later
+            Audit.getAuditLog(userID, responseCode, msgDesc);
         }
     }
 

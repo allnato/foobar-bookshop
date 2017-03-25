@@ -43,10 +43,8 @@
               <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
 
-            <div class="form-group offset-md-2">
-              <div class="capatcha">
-                <div class="g-recaptcha" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
-              </div>
+            <div class="offset-md-1">
+                <div class="g-recaptcha recaptScale" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
             </div>
 
             <div class="form-group offset-md-2">
@@ -168,6 +166,18 @@
 
       var num = Math.floor(Math.random() * taglines.length - 1);
       $('.tagline').text(taglines[num]);
+
+      $('.g-recaptcha').each(function() {
+        var rc = grecaptcha.render(this, {
+        'data-sitekey' : "6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"
+        });
+
+        $(this).find('iframe:first')
+       .removeAttr('width')
+       .addClass('img-responsive')
+       .parent()
+       .css('width', 'auto');
+      });
 
       $("form").submit(function(event) {
           if(!grecaptcha.getResponse()) {

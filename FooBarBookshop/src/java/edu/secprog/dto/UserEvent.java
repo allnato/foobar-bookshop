@@ -20,10 +20,12 @@ public class UserEvent implements Serializable {
     public static String COLUMN_SERVICESOURCE = "serviceSource";
     public static String COLUMN_CONTENT = "content";
     public static String COLUMN_TIMESTAMP = "timestamp";
+    public static String COLUMN_RESPONSECODE = "responseCode";
     
     private int eventID;
     private int userID;
     private String alertType;
+    private int responseCode;
     private String serviceSource;
     private String content;
     private Timestamp timestamp;
@@ -69,7 +71,7 @@ public class UserEvent implements Serializable {
     public void setAlertType(String alertType) {
         this.alertType = alertType;
     }
-
+    
     /**
      * @return the serviceSource
      */
@@ -110,6 +112,20 @@ public class UserEvent implements Serializable {
      */
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    /**
+     * @return the responseCode
+     */
+    public int getResponseCode() {
+        return responseCode;
+    }
+
+    /**
+     * @param responseCode the responseCode to set
+     */
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
     }
 
     

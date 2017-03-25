@@ -113,13 +113,14 @@ public class SecurityService {
         
         try {
             connection = DBPool.getInstance().getConnection();
-            pstmt = connection.prepareStatement("INSERT INTO user_events(userID, alertType, serviceSource, "
-                    + "content, timestamp) values(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt = connection.prepareStatement("INSERT INTO user_events(userID, alertType, responseCode, "
+                    + "serviceSource, content, timestamp) values(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, ue.getUserID());
             pstmt.setString(2, ue.getAlertType());
-            pstmt.setString(3, ue.getServiceSource());
-            pstmt.setString(4, ue.getContent());
-            pstmt.setTimestamp(5, ue.getTimestamp());
+            pstmt.setInt(3,ue.getResponseCode());
+            pstmt.setString(4, ue.getServiceSource());
+            pstmt.setString(5, ue.getContent());
+            pstmt.setTimestamp(6, ue.getTimestamp());
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows == 0) {
