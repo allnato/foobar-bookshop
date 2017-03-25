@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import edu.secprog.services.PasswordService;
 import java.io.IOException;
 import java.util.Date;
@@ -35,31 +36,55 @@ public class RecoverServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         
-        String token = request.getParameter("token");
-        String userID = request.getParameter("uid");
-        UUID uuid = UUID.fromString(token);
-        Date timestamp = PasswordService.DateFromUUID(uuid);
-        Date now = new Date();
-        if( (now.getTime() - timestamp.getTime()) > 3600000) {
-            // Token has expired
-            System.out.println("Expired na");
-            request.getRequestDispatcher("expired.jsp").forward(request, response);
-        }
-        else {
-            // Check if the token matches
-            System.out.println("Pasado yung token bes");
-            if(PasswordService.checkValidityOfToken(userID, token)) {
-                HttpSession session = request.getSession();
-                session.setAttribute("luxdi", userID);
-                request.getRequestDispatcher("new_password.jsp").forward(request, response);
+        int id = 0;
+        int responseCode = Audit.OKINFO;
+        String msgDesc = null;
+        
+        try {
+            String token = request.getParameter("token");
+            String userID = request.getParameter("uid");
+            UUID uuid = UUID.fromString(token);
+            id = Integer.parseInt(userID);
+
+            Date timestamp = PasswordService.DateFromUUID(uuid);
+            Date now = new Date();
+
+            if( (now.getTime() - timestamp.getTime()) > 3600000) {
+                // Token has expired
+                responseCode = Audit.BADREQ;
+                msgDesc = "Password Reset Confirmation Code has been expired";
+
+                response.sendError(responseCode, msgDesc);
             }
             else {
-                request.getRequestDispatcher("error.jsp").forward(request, response);
+                // Check if the token matches
+                System.out.println("Pasado yung token bes");
+                if(PasswordService.checkValidityOfToken(userID, token)) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("luxdi", userID);
+                    
+                    responseCode = Audit.OKINFO;
+                    msgDesc = "Password Reset Code Confirmed";
+                    
+                    request.getRequestDispatcher("new_password.jsp").forward(request, response);
+                }
+                else {
+                    responseCode = Audit.BADREQ;
+                    msgDesc = "Error on Password Reset Confirmation Code";
+
+                    response.sendError(responseCode, msgDesc);
+                }
             }
         }
-
+        catch (ServletException e) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            Audit.getAuditLog(id, responseCode, msgDesc);
+        }
     }
 
 

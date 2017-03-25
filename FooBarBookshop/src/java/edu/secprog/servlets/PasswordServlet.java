@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
@@ -63,24 +64,43 @@ public class PasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
+        int userID = 0;
+        int responseCode = 200;
+        String msgDesc = null;
+        
         try {
             String[] rec = { request.getParameter("email") };
             UUID uuid = PasswordService.generateToken();
+            
             String token = uuid.toString();
             String email = request.getParameter("email");
-            int userID = AccountService.getIDByEmail(email);
+            userID = AccountService.getIDByEmail(email);
 
             if (userID != -1) {
-                // responseCode and Msg here
+                responseCode = Audit.OKINFO;
+                msgDesc = "Attempt on Password Reset";
                 
                 PasswordService.registerUIDToDB(userID, token, email);
             }
+            else {
+                responseCode = Audit.BADINFO;
+                msgDesc = "Failure to Send Password Reset Instructions";
+                request.setAttribute("MsgDesc", msgDesc);
+                
+                request.getRequestDispatcher("forgot_password.jsp").forward(request, response);
+            }
+            
             String subject = "Password Reset Instructions";
             String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token + "&uid=" + userID;
             MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
+            
             request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
         } catch (ServletException ex) {
-            Logger.getLogger(PasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            Audit.getAuditLog(userID, responseCode, msgDesc);
         }
     }
     
