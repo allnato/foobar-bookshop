@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,18 +30,24 @@ public class ErrorServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        //String msgDesc;
-        //int userID, responseCode;
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
         
-        //userID = (int) request.getAttribute("userID");
-        //responseCode = response.getStatus();
-        //msgDesc = request.getAttribute("msgDesc").toString();
-        
-        //Audit.getAuditLog(userID, responseCode, msgDesc);
-        request.getRequestDispatcher("error.jsp").forward(request, response);
+        try {
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
 
     /**

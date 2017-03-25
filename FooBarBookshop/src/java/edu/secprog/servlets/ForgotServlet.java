@@ -5,8 +5,11 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,10 +44,24 @@ public class ForgotServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        request.getRequestDispatcher("forgot_password.jsp").forward(request, response);
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
+        
+        try {
+            request.getRequestDispatcher("forgot_password.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
 
     }
 

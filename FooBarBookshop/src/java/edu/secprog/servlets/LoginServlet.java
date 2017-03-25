@@ -65,11 +65,11 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(true);
         IDPair result;
         int userID = 0;
         String status;
-        int responseCode = 200;
+        int responseCode = Audit.OKINFO;
         String msgDesc = null;
             
         try {
@@ -83,27 +83,23 @@ public class LoginServlet extends HttpServlet {
             System.out.println(status);
             
             if(status.equals("active")) {
-                System.out.println("Uy naglogin haha");
                 responseCode = Audit.OKINFO;
                 msgDesc = "Successful user log in";
                 
                 request.getRequestDispatcher("user-profile.jsp").forward(request, response);
             }
             else if(status.equals("banned")) {
-                System.out.println("I'm locked patulong pls :( ");
                 responseCode = Audit.BADINFO;
                 msgDesc = "Invalid username or password";
                 
-                response.sendError(Audit.BADINFO, msgDesc);
+                response.sendError(responseCode, msgDesc);
             }
             else {
-                System.out.println("bes what happened");
                 responseCode = Audit.BADINFO;
                 msgDesc = "Invalid username or password";
                 
-                response.sendError(Audit.BADINFO, msgDesc);
+                response.sendError(responseCode, msgDesc);
             }
-
         }
         catch (ServletException e) {
             responseCode = Audit.SERVLETEX;

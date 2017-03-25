@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,14 +43,27 @@ public class LogoutServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         
         HttpSession currSession = request.getSession();
         currSession.invalidate();
         
-        request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
         
-
+        try {
+            request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
 
     /**
