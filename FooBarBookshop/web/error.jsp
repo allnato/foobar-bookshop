@@ -1,5 +1,6 @@
 <%@ page isErrorPage="true" import="java.io.*" %>
 <%@ page import="edu.secprog.security.*" %>
+<%@ page import="javax.servlet.*" %>
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +61,11 @@
               
                 if (errMsg != null) {
                 %><small><%=errMsg%></small>
-             <% }
+                <% }
+                else if ((errMsg = request.getAttribute("javax.servlet.error.message").toString()) != null
+                            && !errMsg.trim().equals("")) {
+                %><small><%=errMsg%></small>
+                <% }
                 else {
                     try {
                         errMsg = exception.getMessage();
