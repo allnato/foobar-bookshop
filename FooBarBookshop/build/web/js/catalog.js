@@ -76,6 +76,6 @@ $(window).resize(function(event) {
     $(".sidebar-nav").trigger("sticky_kit:detach");
   }
   else {
-    $(".sidebar-nav").stick_in_parent({recalc_every: 1});
+    $(".sidebar-nav").stick_in_parent();
   }
 });

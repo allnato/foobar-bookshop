@@ -3,10 +3,12 @@
   color: #333333;
   background-color: #f1f1f1;
 }
+
 .navbar-default .navbar-nav>li.active>a,
 .navbar-default .navbar-nav>li.active>a:hover{
-  color: #4caf50;
+  color: #313131;
   background-color: #f1f1f1;
+  font-weight: bold;
 }
 
 .navbar-default .navbar-nav{
