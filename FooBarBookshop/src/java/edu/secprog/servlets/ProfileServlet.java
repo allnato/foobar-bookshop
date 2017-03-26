@@ -5,13 +5,15 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.User;
+import edu.secprog.services.AccountService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,6 +45,16 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+            HttpSession session = request.getSession();
+            System.out.println("Nagload yung ProfileServlet mga bes");
+            User currUser = AccountService.getUserInfo((Integer)session.getAttribute("userID"));
+            request.setAttribute("firstName", currUser.getFirstname());
+            request.setAttribute("lastName", currUser.getLastname());
+            request.setAttribute("middleInitial", currUser.getMiddleinitial());
+            request.setAttribute("birthDate", currUser.getBirthdate());
+            request.setAttribute("userName", currUser.getUsername());
             request.getRequestDispatcher("user-profile.jsp").forward(request, response);
     }
 

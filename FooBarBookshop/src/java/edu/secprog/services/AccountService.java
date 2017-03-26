@@ -9,9 +9,7 @@ import edu.secprog.db.DBPool;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
-import java.util.ArrayList;
-
-import edu.secprog.dto.Employee;
+import edu.secprog.dto.User;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.security.IDPair;
@@ -304,6 +302,37 @@ public class AccountService {
         }
         
         return true;
+    }
+    
+    public static User getUserInfo(int userID) {
+         ResultSet rs = null;
+        String status;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users"
+                    + " WHERE userID= '" + userID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+               rs.next();
+               User user = new User();
+               user.setFirstname(rs.getString(User.COLUMN_FIRSTNAME));
+               user.setLastname(rs.getString(User.COLUMN_LASTNAME));
+               user.setMiddleinitial(rs.getString(User.COLUMN_MIDDLEINITIAL));
+               user.setBirthdate(rs.getString(User.COLUMN_BIRTHDATE));
+               user.setUsername(rs.getString(User.COLUMN_USERNAME));
+               user.setUserID(rs.getInt(User.COLUMN_USERID));
+               return user;
+            }
+            
+            connection.close();
+            pstmt.close();
+            
+        }catch(SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        return null;
     }
     
 }

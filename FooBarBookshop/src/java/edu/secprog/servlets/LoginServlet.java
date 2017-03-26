@@ -80,8 +80,12 @@ public class LoginServlet extends HttpServlet {
             if(status.equals("active")) {
                 responseCode = Audit.OKINFO;
                 msgDesc = "Successful user log in";
+                session = request.getSession(true);
+                //Sessions
+                session.setAttribute("userID", userID);
+                session.setAttribute("status", status);
                 
-                request.getRequestDispatcher("user-profile.jsp").forward(request, response);
+                response.sendRedirect("/SECPROG_MP/profile");
             }
             else if(status.equals("banned")) {
                 responseCode = Audit.BADINFO;
@@ -96,10 +100,10 @@ public class LoginServlet extends HttpServlet {
                 response.sendError(responseCode, msgDesc);
             }
         }
-        catch (ServletException e) {
-            responseCode = Audit.SERVLETEX;
-            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
-        }
+//        catch (ServletException e) {
+//            responseCode = Audit.SERVLETEX;
+//            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+//        }
         catch (IOException e) {
             responseCode = Audit.IOEX;
             response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));

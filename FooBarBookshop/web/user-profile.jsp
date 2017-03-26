@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
   <head>
@@ -109,26 +111,26 @@
                     <!-- First Name -->
                     <div class="firstName form-group has-feedback col-sm-5">
                       <label for="first_name">First Name</label>
-                      <input disabled type="text" name="firstName" class="form-control" id="first_name">
+                      <input disabled type="text" name="firstName" class="form-control" id="first_name" value="<c:out value="${firstName}"/>">
                     </div>
                     <!-- Last Name -->
                     <div class="lastName form-group has-feedback col-sm-5">
                       <label for="last_name">Last Name</label>
-                      <input disabled type="text" name="lastName" class="form-control" id="last_name">
+                      <input disabled type="text" name="lastName" class="form-control" id="last_name" value="<c:out value="${lastName}"/>">
                     </div>
                     <!-- Middle Initial -->
                     <div class="middleInitial form-group has-feedback col-sm-2">
                       <label for="middle_initial">M.I.</label>
-                      <input disabled type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
+                      <input disabled type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1" value="<c:out value="${middleInitial}"/>">
                     </div>
                   </div>
                   <div class="username form-group has-feedback">
                     <label for="username">Username</label>
-                    <input disabled type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
+                    <input disabled type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters" value="<c:out value="${userName}"/>">
                   </div>
                   <div class="birthDate form-group has-feedback">
                     <label for="birth_date">Birth Date</label>
-                    <input disabled type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
+                    <input disabled type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy" value="<c:out value="${birthDate}"/>">
                   </div>
 
                   <div class="tab-pane" id="address-information">
