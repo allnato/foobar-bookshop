@@ -341,7 +341,7 @@ public class AccountService {
         return null;
     }
     
-    public int getCustomerID(int userID) {
+    public static int getCustomerID(int userID) {
         ResultSet rs = null;
         try {
             Connection connection = DBPool.getInstance().getConnection();
@@ -365,7 +365,7 @@ public class AccountService {
         return -1;
     }
     
-    public CustomerAddress getBillingAddress(int customerID) {
+    public static CustomerAddress getBillingAddress(int customerID) {
         ResultSet rs = null;
         try {
             Connection connection = DBPool.getInstance().getConnection();
@@ -392,7 +392,7 @@ public class AccountService {
         return null;
     }
     
-    public CustomerAddress getDeliveryAddress(int customerID) {
+    public static CustomerAddress getDeliveryAddress(int customerID) {
         ResultSet rs = null;
         try {
             Connection connection = DBPool.getInstance().getConnection();

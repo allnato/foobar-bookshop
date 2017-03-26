@@ -139,25 +139,25 @@
                     <div class="billingFields">
                       <div class="address form-group has-feedback">
                         <label for="b_address">Address</label>
-                        <input disabled type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address">
+                        <input disabled type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address" value="<c:out value="${bAddress}"/>">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="b_city">City</label>
-                          <input disabled type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila" value="<c:out value="${bCity}"/>">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="b_region">Region/Province/State</label>
-                          <input disabled type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas" value="<c:out value="${bRegion}"/>">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="b_zipcode">Zipcode</label>
-                          <input disabled type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103" value="<c:out value="${bZipcode}"/>">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="b_country">Country</label>
-                        <select disabled type="text" name="b_country" class="form-control" id="b_country">
+                        <select disabled type="text" name="b_country" class="form-control" id="b_country" value="<c:out value="${bCountry}"/>">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>
@@ -415,25 +415,25 @@
                     <div class="deliveryFields">
                       <div class="address form-group has-feedback">
                         <label for="d_address">Address</label>
-                        <input disabled type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address">
+                        <input disabled type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address" value="<c:out value="${dAddress}"/>">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="d_city">City</label>
-                          <input disabled type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila" value="<c:out value="${dCity}"/>">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="d_region">Region</label>
-                          <input disabled type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas" value="<c:out value="${dRegion}"/>">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="d_zipcode">Zipcode</label>
-                          <input disabled type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103" value="<c:out value="${dZipcode}"/>">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="d_country">Country</label>
-                        <select disabled type="text" name="d_country" class="form-control" id="d_country">
+                        <select disabled type="text" name="d_country" class="form-control" id="d_country" value="<c:out value="${dCountry}"/>">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>

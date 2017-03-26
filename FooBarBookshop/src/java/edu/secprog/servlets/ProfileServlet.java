@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.CustomerAddress;
 import edu.secprog.dto.User;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
@@ -55,6 +56,26 @@ public class ProfileServlet extends HttpServlet {
             request.setAttribute("middleInitial", currUser.getMiddleinitial());
             request.setAttribute("birthDate", currUser.getBirthdate());
             request.setAttribute("userName", currUser.getUsername());
+            
+            
+            int customerID = AccountService.getCustomerID((Integer)session.getAttribute("userID"));
+            CustomerAddress bAddr = AccountService.getBillingAddress(customerID);
+            CustomerAddress dAddr = AccountService.getDeliveryAddress(customerID);
+            // Billing Address
+            request.setAttribute("bAddressType", bAddr.getAddressType());
+            request.setAttribute("bAddress", bAddr.getAddress());
+            request.setAttribute("bCity", bAddr.getCity());
+            request.setAttribute("bZipcode", bAddr.getZipcode());
+            request.setAttribute("bRegion", bAddr.getRegion());
+            request.setAttribute("bCountry", bAddr.getCountry());
+            // Delivery Address
+            request.setAttribute("dAddressType", dAddr.getAddressType());
+            request.setAttribute("dAddress", dAddr.getAddress());
+            request.setAttribute("dCity", dAddr.getCity());
+            request.setAttribute("dZipcode", dAddr.getZipcode());
+            request.setAttribute("dRegion", dAddr.getRegion());
+            request.setAttribute("dCountry", dAddr.getCountry());
+            
             request.getRequestDispatcher("user-profile.jsp").forward(request, response);
     }
 
