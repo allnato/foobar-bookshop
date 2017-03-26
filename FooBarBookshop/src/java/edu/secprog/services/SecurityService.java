@@ -10,6 +10,7 @@ import edu.secprog.security.AES;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.dto.Password;
+import edu.secprog.dto.UserEvent;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -68,13 +69,17 @@ public class SecurityService {
             }
         finally {
             try {
-                pstmt.close();
-                connection.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (connection != null)
+                    connection.close();
             } catch (SQLException ex) {
                 Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
+    // one time use for the registration process only - do not remove
     
     public static int getPassOwner(String username) {
         ResultSet rs = null;
@@ -100,5 +105,54 @@ public class SecurityService {
         }
         
         return -1;
+    }
+    
+    public static void addAuditLog(UserEvent ue) {
+        long insertID = -1;
+        PreparedStatement pstmt = null;
+        Connection connection = null;
+        ResultSet rs = null;
+        
+        try {
+            connection = DBPool.getInstance().getConnection();
+            pstmt = connection.prepareStatement("INSERT INTO user_events(userID, alertType, responseCode, "
+                    + "serviceSource, content, timestamp) values(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, ue.getUserID());
+            pstmt.setString(2, ue.getAlertType());
+            pstmt.setInt(3,ue.getResponseCode());
+            pstmt.setString(4, ue.getServiceSource());
+            pstmt.setString(5, ue.getContent());
+            pstmt.setTimestamp(6, ue.getTimestamp());
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Register failed! No rows affected");
+            }
+            // Check if registering is successful. Return ID generated
+            try {
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    insertID = rs.getLong(1);
+                }
+                else {
+                    throw new SQLException("Register failed! No rows affected");
+                }
+            } catch(SQLException e) {
+                System.out.println("Register failed! No rows affected");
+                }
+            // End CHeck if registering is successful
+        } catch(SQLException e) {
+            //put future audit codes here in the future
+            }
+        finally {
+            try {
+                pstmt.close();
+                connection.close();
+            } catch (SQLException ex) {
+                // replace this in the future
+                // what if the logger that logs fail itself? How can it log itself?
+                Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

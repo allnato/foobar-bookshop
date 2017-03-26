@@ -1,16 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.secprog.servlets;
 
 import edu.secprog.security.AES;
+import edu.secprog.security.Audit;
+import edu.secprog.security.IDPair;
 import edu.secprog.services.AccountService;
 import edu.secprog.services.MailService;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,32 +59,53 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        boolean isLoggedIn;
-        boolean isLocked;
-        long lockedTime;
-        
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String[] rec = { "dlsu.sachii@gmail.com" };
-        MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(true);
+        IDPair result;
+        int userID = 0;
         String status;
-        //String[] rec = { "dlsu.sachii@gmail.com" };
-        //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
-        status = AccountService.verifyExists(username, password);
-        if(status.equals("active")) {
-            System.out.println("Uy naglogin haha");
-            request.getRequestDispatcher("product-catalog.jsp").forward(request, response);
+        int responseCode = Audit.OKINFO;
+        String msgDesc = null;
+            
+        try {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            //String[] rec = { "dlsu.sachii@gmail.com" };
+            //MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec , "Hallo *salute*", "Grabe grabe grabe");
+            result = AccountService.verifyExists(username, password);
+            userID = result.getID();
+            status = result.getValue();
+            System.out.println(status);
+            
+            if(status.equals("active")) {
+                responseCode = Audit.OKINFO;
+                msgDesc = "Successful user log in";
+                
+                request.getRequestDispatcher("user-profile.jsp").forward(request, response);
+            }
+            else if(status.equals("banned")) {
+                responseCode = Audit.BADINFO;
+                msgDesc = "Invalid username or password";
+                
+                response.sendError(responseCode, msgDesc);
+            }
+            else {
+                responseCode = Audit.BADINFO;
+                msgDesc = "Invalid username or password";
+                
+                response.sendError(responseCode, msgDesc);
+            }
         }
-        else if(status.equals("banned")) {
-            System.out.println("I'm locked patulong pls :( ");
-            request.getRequestDispatcher("admin-lockout-accounts.jsp");
+        catch (ServletException e) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
         }
-        else {
-            System.out.println("bes what happened");
-            request.getRequestDispatcher("error.jsp");
+        catch (IOException e) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            Audit.getAuditLog(userID, responseCode, msgDesc);
         }
     }
 

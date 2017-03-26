@@ -460,4 +460,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2017-03-26 12:27:00
+=======
+-- Dump completed on 2017-03-26 11:21:43
+>>>>>>> audit-logging

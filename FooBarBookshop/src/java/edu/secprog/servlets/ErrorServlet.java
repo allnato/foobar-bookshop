@@ -5,32 +5,20 @@
  */
 package edu.secprog.servlets;
 
-import edu.secprog.services.AccountService;
+import edu.secprog.security.Audit;
 import java.io.IOException;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Mark Christian Sanchez
+ * @author CoRX
  */
-@WebServlet(urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+@WebServlet(name = "ErrorServlet", urlPatterns = {"/Error"})
+public class ErrorServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -42,9 +30,24 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
+        
+        try {
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
 
     /**
@@ -58,21 +61,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        boolean isLoggedIn;
-        boolean isLocked;
-        long lockedTime;
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        isLoggedIn = AccountService.verifyExists(username, password);
-        if(isLoggedIn) {
-            System.out.println("Uy naglogin haha");
-            request.getRequestDispatcher("Home.jsp").forward(request, response);
-        }
-        else {
-            System.out.println("bes what happened");
-        }
+        doGet(request, response);
     }
 
     /**

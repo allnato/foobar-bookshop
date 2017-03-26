@@ -12,7 +12,9 @@ import edu.secprog.dto.CustomerAddress;
 import java.util.ArrayList;
 
 import edu.secprog.dto.Employee;
+import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
+import edu.secprog.security.IDPair;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,36 +27,36 @@ import java.sql.Statement;
  */
 public class AccountService {
 
-    public static boolean checkAttempts(String userID, String uStatus) {
+    public static boolean checkAttempts(int userID, String uStatus) {
         ResultSet rs = null;
         if(uStatus.equals("active")) {
             try {
-            Connection connection = DBPool.getInstance().getConnection();
-            // Check for three successful fails
-            PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM logins"
-                    + " WHERE userID= '" + userID + "' AND status= " + "'failed'"
-                    + " ORDER BY timestamp DESC LIMIT 3;");
-            rs = pstmt.executeQuery();
-            if(rs.isBeforeFirst()) {
-                rs.next();
-                int count = rs.getInt("count");
-                if(count >= 3) {
-                    System.out.println("HOI LOCKED NA BES");
-                    connection.close();
-                    pstmt.close();
-                    return false;
-                }
-                else {
-                    connection.close();
-                    pstmt.close();
-                    return true;
+                Connection connection = DBPool.getInstance().getConnection();
+                // Check for three successful fails
+                PreparedStatement pstmt = connection.prepareStatement("SELECT COUNT(*) AS count FROM logins"
+                        + " WHERE userID= '" + userID + "' AND status= " + "'failed'"
+                        + " ORDER BY timestamp DESC LIMIT 3;");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    rs.next();
+                    int count = rs.getInt("count");
+                    if(count >= 3) {
+                        System.out.println("HOI LOCKED NA BES");
+                        connection.close();
+                        pstmt.close();
+                        return false;
+                    }
+                    else {
+                        connection.close();
+                        pstmt.close();
+                        return true;
+                    }
                 }
             }
-            
-        }catch(SQLException e) {
-            System.out.println("ANYARI HAHAHAHAAH LOL");
-            e.printStackTrace();
-        }
+            catch(SQLException e) {
+                System.out.println("SQL Exception!!!"); // remove in the future
+                Audit.getAuditLog(userID, Audit.SQLEX);
+                }
         }
         else {
             return false;
@@ -91,33 +93,36 @@ public class AccountService {
         return false;
     }
     
-    public static String verifyExists(String username, String password) {
+    public static IDPair verifyExists(String username, String password) {
         ResultSet rs = null;
         String status;
+        int id = 0;
+        
         try {
             Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.status, u.userID, hashed FROM users u, "
-                    + " passwords WHERE username= '" + username + "';");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
+                    + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
             rs = pstmt.executeQuery();
             if(rs.isBeforeFirst()) {
              // If User Exists, check the number of attempts then check the password
                 rs.next();
                 
                 if(BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    status = rs.getString("status");
-                    return status;
+                    status = rs.getString("u.status");
+                    id = rs.getInt("u.userID");
+                    return new IDPair(id, status);
                 }
             }
             connection.close();
             pstmt.close();
-            return "invalid";
+            return new IDPair(0, "invalid");
             
         }catch(SQLException e) {
-            System.out.println("ANYARI HAHAHAHAAH LOL");
-            e.printStackTrace();
+            System.out.println("SQL Exception!!!: " + e.getMessage());
+            Audit.getAuditLog(id, Audit.SQLEX);
         }
         
-        return "invalid";
+        return new IDPair(0, "invalid");
     }
     
     public static int getIDByEmail(String email) {
@@ -248,7 +253,6 @@ public class AccountService {
                 System.out.println("May problem sa mga addresses");    
         }
 
-        
         /* Step 5: Add the credit card to the credit_cards table
          */
                 

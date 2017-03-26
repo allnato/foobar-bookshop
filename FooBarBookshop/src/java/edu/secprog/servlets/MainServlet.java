@@ -7,6 +7,7 @@ package edu.secprog.servlets;
  */
 
 import edu.secprog.dto.Employee;
+import edu.secprog.security.Audit;
 import edu.secprog.services.AccountService;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,26 +37,27 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        Account newEmployee = new Employee();
-//        
-//        String email = request.getParameter(Account.COLUMN_EMAIL);
-//        String pass = request.getParameter(Account.COLUMN_PASSWORD);
-//        String firstname = request.getParameter(Account.COLUMN_FIRSTNAME);
-//        String lastname = request.getParameter(Account.COLUMN_LASTNAME);
-//        String middleinitial = request.getParameter(Account.COLUMN_MIDDLEINITIAL);
-//        String birthdate = request.getParameter(Account.COLUMN_BIRTHDATE);
-//        String username = request.getParameter(Account.COLUMN_USERNAME);
-//        String status = request.getParameter(Account.COLUMN_STATUS);
           doGet(request,response);
     }
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-             throws ServletException, IOException {
-        
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //Redirect to default login page
-        request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
         
-        
+        try {
+            request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
         
         
