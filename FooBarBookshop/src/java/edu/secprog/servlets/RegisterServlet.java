@@ -77,6 +77,10 @@ public class RegisterServlet extends HttpServlet {
         CreditCard cc = new CreditCard();
         Password ps = new Password();
         
+        int responseCode = 200;
+        String msgDesc = null;
+        int userID = 0;
+        
         // Set user information
         try {
             nc.setFirstname(request.getParameter("firstName"));
@@ -149,7 +153,6 @@ public class RegisterServlet extends HttpServlet {
 
             if (isSuccessful) {
                 // Set password
-                int userID;
                 byte[] vector;
                 vector = AES.setVector();
 
