@@ -171,9 +171,18 @@ public class RegisterServlet extends HttpServlet {
                     
                     request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
                 }
+                else {
+                    responseCode = Audit.BADINFO;
+                    msgDesc = "User Registration Failed";
+                
+                    response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+                }
             }
             else {
-                // error logger here
+                responseCode = Audit.BADINFO;
+                msgDesc = "User Registration Failed";
+                
+                response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
             }
         } catch (ClassNotFoundException ex) {
             responseCode = Audit.CLASSNOTFOUNDEX;

@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isErrorPage="true" import="java.io.*" %>
 <%@ page import="edu.secprog.security.*" %>
 <%@ page import="javax.servlet.*" %>
@@ -8,6 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="refresh" content="7; url=/SECPROG_MP/home">
   <title>Foobar | Error</title>
   <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
 
@@ -49,7 +51,8 @@
     <div class="row">
 
       <h1 class="lato error-message">Oops Something went wrong :(</h1>
-      <h1><small>Please try again later or contact the web administrator.</small></h1>
+      <h1><small>Please try again later or contact the web administrator.
+              You will be redirected to the homepage in a few seconds.</small></h1>
       <hr>
       <h2 class="lato error-code">Error Code: <span><%=response.getStatus()%></span></h2>
       <h2 class="lato error-code-message">

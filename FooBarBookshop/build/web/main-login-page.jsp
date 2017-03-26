@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/main-login-page.css">
 
     <style>
-      .capatcha {
+      .captcha {
           text-align: center;
       }
 
@@ -167,20 +167,9 @@
       var num = Math.floor(Math.random() * taglines.length - 1);
       $('.tagline').text(taglines[num]);
 
-      $('.g-recaptcha').each(function() {
-        var rc = grecaptcha.render(this, {
-        'data-sitekey' : "6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"
-        });
-
-        $(this).find('iframe:first')
-       .removeAttr('width')
-       .addClass('img-responsive')
-       .parent()
-       .css('width', 'auto');
-      });
-
       $("form").submit(function(event) {
-          if(!grecaptcha.getResponse()) {
+          
+          if(grecaptcha.getResponse() === "") {
               event.preventDefault();
               alert("Kindly check the recaptcha and try again.");
           }
