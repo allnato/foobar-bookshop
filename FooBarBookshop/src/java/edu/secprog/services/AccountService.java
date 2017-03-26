@@ -311,7 +311,6 @@ public class AccountService {
     
     public static User getUserInfo(int userID) {
          ResultSet rs = null;
-        String status;
         try {
             Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users"
@@ -339,6 +338,84 @@ public class AccountService {
             e.printStackTrace();
         }
         
+        return null;
+    }
+    
+    public int getCustomerID(int userID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT customerID FROM customers"
+                    + " WHERE userID= '" + userID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int customerID = rs.getInt("customerID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return customerID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return -1;
+    }
+    
+    public CustomerAddress getBillingAddress(int customerID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM customer_address"
+                    + " WHERE addressType = 'billing' AND customerID= '" + customerID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                CustomerAddress bAddr = new CustomerAddress();
+                bAddr.setAddress(rs.getString(CustomerAddress.COLUMN_ADDRESS));
+                bAddr.setAddressType(rs.getString(CustomerAddress.COLUMN_ADDRESSTYPE));
+                bAddr.setCity(rs.getString(CustomerAddress.COLUMN_CITY));
+                bAddr.setCountry(rs.getString(CustomerAddress.COLUMN_COUNTRY));
+                bAddr.setRegion(rs.getString(CustomerAddress.COLUMN_REGION));
+                bAddr.setZipcode(rs.getString(CustomerAddress.COLUMN_ZIPCODE));
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return bAddr;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public CustomerAddress getDeliveryAddress(int customerID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM customer_address"
+                    + " WHERE addressType = 'delivery' AND customerID= '" + customerID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                CustomerAddress dAddr = new CustomerAddress();
+                dAddr.setAddress(rs.getString(CustomerAddress.COLUMN_ADDRESS));
+                dAddr.setAddressType(rs.getString(CustomerAddress.COLUMN_ADDRESSTYPE));
+                dAddr.setCity(rs.getString(CustomerAddress.COLUMN_CITY));
+                dAddr.setCountry(rs.getString(CustomerAddress.COLUMN_COUNTRY));
+                dAddr.setRegion(rs.getString(CustomerAddress.COLUMN_REGION));
+                dAddr.setZipcode(rs.getString(CustomerAddress.COLUMN_ZIPCODE));
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return dAddr;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
     
