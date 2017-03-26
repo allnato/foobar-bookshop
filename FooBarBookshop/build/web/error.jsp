@@ -50,7 +50,7 @@
   <div class="wrapper container">
     <div class="row">
 
-      <h1 class="lato error-message">Oops Something went wrong :(</h1>
+      <h1 class="lato error-message">Oops, Something went wrong :(</h1>
       <h1><small>Please try again later or contact the web administrator.
               You will be redirected to the homepage in a few seconds.</small></h1>
       <hr>

@@ -12,6 +12,14 @@
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>edu.secprog.servlets.ErrorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeLoginServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeProfileServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeProfileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/Error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeLoginServlet</servlet-name>
+        <url-pattern>/employee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeProfileServlet</servlet-name>
+        <url-pattern>/employeeProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

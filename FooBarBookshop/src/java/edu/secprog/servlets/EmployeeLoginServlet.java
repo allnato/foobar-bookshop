@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mark Christian Sanchez
  */
-@WebServlet(name = "EmployeeLoginServlet", urlPatterns = {"/employeelogin"})
-public class EmpMainServlet extends HttpServlet {
+@WebServlet(name = "EmployeeLoginServlet", urlPatterns = {"/employee"})
+public class EmployeeLoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +44,7 @@ public class EmpMainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        request.getRequestDispatcher("employee-login-page.html").forward(request, response);
+        request.getRequestDispatcher("employee-login-page.jsp").forward(request, response);
     }
 
     /**
@@ -58,7 +58,6 @@ public class EmpMainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         
     }
 
