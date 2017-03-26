@@ -74,8 +74,8 @@
                   <img src="img/speckles.png" class="img-responsive" alt="profile-picture">
                 </div>
                 <div>
-                  <h2 class="profile-fullname lato">Joe Pakistan</h2>
-                  <h2 class="profile-username text-center lato"><small>JoePak</small></h2>
+                    <h2 class="profile-fullname lato"><c:out value="${firstName}"/></h2>
+                  <h2 class="profile-username text-center lato"><small><c:out value="${userName}"/></small></h2>
                   <div class="action-buttons well">
                     <div class="form-group">
                       <button class="btn btn-default form-control btn-block" id="edit-profile-btn">

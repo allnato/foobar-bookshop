@@ -68,19 +68,20 @@ public class AccountService {
         ResultSet rs = null;
         String status;
         try {
-            Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
-                    + " passwords WHERE username= '" + username + "';");
-            rs = pstmt.executeQuery();
-            if(rs.isBeforeFirst()) {
-             // If User Exists, check the number of attempts then check the password
-                rs.next();
-                
-                if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    return true;
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
+                        + " passwords WHERE username= '" + username + "';");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    // If User Exists, check the number of attempts then check the password
+                    rs.next();
+                    
+                    if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
+                        return true;
+                    }
                 }
             }
-            connection.close();
             pstmt.close();
             
         }catch(SQLException e) {
@@ -97,21 +98,22 @@ public class AccountService {
         int id = 0;
         
         try {
-            Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
-                    + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
-            rs = pstmt.executeQuery();
-            if(rs.isBeforeFirst()) {
-             // If User Exists, check the number of attempts then check the password
-                rs.next();
-                
-                if(BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    status = rs.getString("u.status");
-                    id = rs.getInt("u.userID");
-                    return new IDPair(id, status);
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
+                        + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    // If User Exists, check the number of attempts then check the password
+                    rs.next();
+                    
+                    if(BCrypt.checkpw(password, rs.getString("hashed"))) {
+                        status = rs.getString("u.status");
+                        id = rs.getInt("u.userID");
+                        return new IDPair(id, status);
+                    }
                 }
             }
-            connection.close();
             pstmt.close();
             return new IDPair(0, "invalid");
             
@@ -128,18 +130,19 @@ public class AccountService {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users");
-            rs = pstmt.executeQuery();
-            while(rs.next()) {
-                System.out.println("Yung email kasi " + rs.getString("email"));
-                if(BCrypt.checkpw(email, rs.getString("email"))) {
-                    return rs.getInt("userID");
+            PreparedStatement pstmt;
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234")) {
+                pstmt = connection.prepareStatement("SELECT * FROM users");
+                rs = pstmt.executeQuery();
+                while(rs.next()) {
+                    System.out.println("Yung email kasi " + rs.getString("email"));
+                    if(BCrypt.checkpw(email, rs.getString("email"))) {
+                        return rs.getInt("userID");
+                    }
+                    
                 }
-                
             }
-            connection.close();
             pstmt.close();
             
         }catch(ClassNotFoundException | SQLException e) {
@@ -294,13 +297,15 @@ public class AccountService {
             pstmt.setLong(2, creditCardID);
             System.out.println("Customer ID: " + insertID);
             pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
 
         }
         catch(Exception e) {
             e.printStackTrace();
             System.out.println("Dami nanamang problem ano ba yan.");
         }
-        
+
         return true;
     }
     
@@ -321,6 +326,8 @@ public class AccountService {
                user.setBirthdate(rs.getString(User.COLUMN_BIRTHDATE));
                user.setUsername(rs.getString(User.COLUMN_USERNAME));
                user.setUserID(rs.getInt(User.COLUMN_USERID));
+               connection.close();
+               pstmt.close();
                return user;
             }
             

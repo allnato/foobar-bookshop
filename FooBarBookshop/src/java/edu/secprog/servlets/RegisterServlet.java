@@ -169,7 +169,7 @@ public class RegisterServlet extends HttpServlet {
                     responseCode = Audit.OKINFO;
                     msgDesc = "A New User Registered";
                     
-                    request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+                    response.sendRedirect("/SECPROG_MP/home");
                 }
             }
             else {
