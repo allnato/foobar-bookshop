@@ -78,7 +78,7 @@ public class PasswordServlet extends HttpServlet {
 
             if (userID != -1) {
                 responseCode = Audit.OKINFO;
-                msgDesc = "Attempt on Password Reset";
+                msgDesc = "Attempt on Password Reset"; // this will be used if any next set of lines would fail
                 
                 PasswordService.registerUIDToDB(userID, token, email);
             }
@@ -93,6 +93,8 @@ public class PasswordServlet extends HttpServlet {
             String subject = "Password Reset Instructions";
             String body = "Hello you forgot your password please click on this link. http://localhost:8080/SECPROG_MP/recover?token=" + token + "&uid=" + userID;
             MailService.sendFromGmail(MailService.USER_NAME, MailService.PASSWORD, rec, subject, body);
+            
+            msgDesc = "Sent Password Reset Instructions";
             
             request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
         } catch (ServletException ex) {

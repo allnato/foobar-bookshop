@@ -30,6 +30,7 @@ public class Audit {
     public static final int NULLPOINTEREX = 597;
     public static final int SERVLETEX = 596;
     public static final int IOEX = 595;
+    public static final int CLASSNOTFOUNDEX = 594;
     
     // public static final String SQLEX = "Sql Exception";
     // public static final String NULLPOINTEREX = "Null Pointer Exception";
@@ -138,6 +139,9 @@ public class Audit {
                 break;
             case SQLEX:
                 data = "SQL Exception";
+                break;
+            case CLASSNOTFOUNDEX:
+                data = "Class Not Found Exception";
                 break;
         }
         
