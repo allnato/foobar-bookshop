@@ -8,6 +8,11 @@ package edu.secprog.services;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import edu.secprog.db.DBPool;
+import edu.secprog.dto.Password;
+import edu.secprog.security.AES;
+import edu.secprog.security.Audit;
+import edu.secprog.security.BCrypt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +21,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -87,22 +94,38 @@ public class PasswordService {
             return false;
         }
         
-        public static boolean updateUserPassword (String password, String uid) {
-             ResultSet rs = null;
+        public static boolean updatePassword (Password ps) {
+            ResultSet rs = null;
+            Connection connection = null;
+            PreparedStatement pstmt = null;
             
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-                PreparedStatement pstmt = connection.prepareStatement("UPDATE users SET password = ? WHERE userID='" + uid + "'");
-                pstmt.setString(1, password);
+                connection = DBPool.getInstance().getConnection();
+                pstmt = connection.prepareStatement("UPDATE passwords SET hashed = ?, encrypted = ?, vector = ?, timestamp = ? WHERE userID='" 
+                        + ps.getUserID() + "'");
+                
+                pstmt.setString(1, ps.getHashed());
+                pstmt.setBytes(2, ps.getEncrypted());
+                pstmt.setBytes(3, ps.getVector());
+                pstmt.setTimestamp(4, ps.getTimestamp());
+                
                 pstmt.executeUpdate();
                 connection.close();
                 pstmt.close();
                 return true;
             }
-            catch(ClassNotFoundException | SQLException e) {
-                
+            catch(SQLException e) {
+                // Logger here
+            }
+            finally {
+                try {
+                    if (pstmt != null)
+                        pstmt.close();
+                    if (connection != null)
+                        connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             return false;
         }

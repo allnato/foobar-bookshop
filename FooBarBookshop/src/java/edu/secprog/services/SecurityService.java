@@ -69,8 +69,10 @@ public class SecurityService {
             }
         finally {
             try {
-                pstmt.close();
-                connection.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (connection != null)
+                    connection.close();
             } catch (SQLException ex) {
                 Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
             }

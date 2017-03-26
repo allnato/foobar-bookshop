@@ -5,6 +5,9 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.Password;
+import edu.secprog.security.AES;
+import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.services.PasswordService;
 import java.io.IOException;
@@ -45,18 +48,42 @@ public class ChangePasswordServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Password ps = new Password();
+        byte[] vector;
+        int userID = 0;
+        int responseCode = 200;
+        String msgDesc = null;
+
+        try {
             HttpSession session = request.getSession();
-            String newPassword = BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10));
-            String uid = session.getAttribute("luxdi").toString();
-            PasswordService.updateUserPassword(newPassword, uid);
+            userID = (int) session.getAttribute("luxdi");
+            vector = AES.setVector();
+
+            ps.setHashed(BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt(10)));
+            ps.setEncrypted(AES.encryptString(request.getParameter("password"), vector));
+            ps.setVector(vector);
+            ps.setTimestamp(Audit.getCurrentTimeStamp());
+
+            PasswordService.updatePassword(ps);
             session.invalidate();
+
+            responseCode = Audit.OKINFO;
+            msgDesc = "Password Change Successful";
+            
             request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+        }
+        catch (ServletException e) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+
+        finally {
+            Audit.getAuditLog(userID, responseCode, msgDesc);
+        }
     }
 
     /**

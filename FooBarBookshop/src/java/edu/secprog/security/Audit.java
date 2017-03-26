@@ -54,6 +54,9 @@ public class Audit {
         
         data = getHttpStatusMsg(responseCode);
         
+        if (data == null || data.trim().equals("")) // NEVER LOG RESPONSE CODE 200 WITH NO MESSAGE!
+            return;
+        
         UserEvent ue = new UserEvent();
         
         if (!(userID > 0))
