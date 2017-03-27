@@ -10,11 +10,11 @@ var card = new Card({
     expiryInput: 'input#exp_date',
     nameInput: 'input#card_name'
   }
-})
+});
 
 // Initialize Date Picker
 $('#birth_date').datepicker({
-  format: "mm-dd-yyyy",
+  format: "yyyy-mm-dd", 
   startDate: "01-01-1800",
   maxViewMode: 3,
   todayBtn: "linked",
@@ -104,7 +104,7 @@ var $validate = $('#personal-information-form').validate({
     },
     b_address:{
       required: true,
-      maxlength: 50
+      maxlength: 128
     },
     b_city:{
       required: true,
@@ -124,7 +124,7 @@ var $validate = $('#personal-information-form').validate({
     },
     d_address:{
       required: true,
-      maxlength: 30
+      maxlength: 128
     },
     d_city:{
       required: true,

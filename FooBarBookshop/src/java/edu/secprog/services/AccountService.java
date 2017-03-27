@@ -9,9 +9,7 @@ import edu.secprog.db.DBPool;
 import edu.secprog.dto.CreditCard;
 import edu.secprog.dto.Customer;
 import edu.secprog.dto.CustomerAddress;
-import java.util.ArrayList;
-
-import edu.secprog.dto.Employee;
+import edu.secprog.dto.User;
 import edu.secprog.security.Audit;
 import edu.secprog.security.BCrypt;
 import edu.secprog.security.IDPair;
@@ -70,19 +68,20 @@ public class AccountService {
         ResultSet rs = null;
         String status;
         try {
-            Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
-                    + " passwords WHERE username= '" + username + "';");
-            rs = pstmt.executeQuery();
-            if(rs.isBeforeFirst()) {
-             // If User Exists, check the number of attempts then check the password
-                rs.next();
-                
-                if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    return true;
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("SELECT u.userID, hashed FROM users u, "
+                        + " passwords WHERE username= '" + username + "';");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    // If User Exists, check the number of attempts then check the password
+                    rs.next();
+                    
+                    if(!BCrypt.checkpw(password, rs.getString("hashed"))) {
+                        return true;
+                    }
                 }
             }
-            connection.close();
             pstmt.close();
             
         }catch(SQLException e) {
@@ -99,21 +98,22 @@ public class AccountService {
         int id = 0;
         
         try {
-            Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
-                    + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
-            rs = pstmt.executeQuery();
-            if(rs.isBeforeFirst()) {
-             // If User Exists, check the number of attempts then check the password
-                rs.next();
-                
-                if(BCrypt.checkpw(password, rs.getString("hashed"))) {
-                    status = rs.getString("u.status");
-                    id = rs.getInt("u.userID");
-                    return new IDPair(id, status);
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
+                        + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    // If User Exists, check the number of attempts then check the password
+                    rs.next();
+                    
+                    if(BCrypt.checkpw(password, rs.getString("hashed"))) {
+                        status = rs.getString("u.status");
+                        id = rs.getInt("u.userID");
+                        return new IDPair(id, status);
+                    }
                 }
             }
-            connection.close();
             pstmt.close();
             return new IDPair(0, "invalid");
             
@@ -130,18 +130,19 @@ public class AccountService {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users");
-            rs = pstmt.executeQuery();
-            while(rs.next()) {
-                System.out.println("Yung email kasi " + rs.getString("email"));
-                if(BCrypt.checkpw(email, rs.getString("email"))) {
-                    return rs.getInt("userID");
+            PreparedStatement pstmt;
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234")) {
+                pstmt = connection.prepareStatement("SELECT * FROM users");
+                rs = pstmt.executeQuery();
+                while(rs.next()) {
+                    System.out.println("Yung email kasi " + rs.getString("email"));
+                    if(BCrypt.checkpw(email, rs.getString("email"))) {
+                        return rs.getInt("userID");
+                    }
+                    
                 }
-                
             }
-            connection.close();
             pstmt.close();
             
         }catch(ClassNotFoundException | SQLException e) {
@@ -292,18 +293,276 @@ public class AccountService {
         try {
             Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-            pstmt.setLong(1, insertID);
+            pstmt.setLong(1, customerID);
             pstmt.setLong(2, creditCardID);
             System.out.println("Customer ID: " + insertID);
             pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
 
         }
         catch(Exception e) {
             e.printStackTrace();
             System.out.println("Dami nanamang problem ano ba yan.");
         }
-        
+
         return true;
     }
     
+    public static User getUserInfo(int userID) {
+         ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM users"
+                    + " WHERE userID= '" + userID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+               rs.next();
+               User user = new User();
+               user.setFirstname(rs.getString(User.COLUMN_FIRSTNAME));
+               user.setLastname(rs.getString(User.COLUMN_LASTNAME));
+               user.setMiddleinitial(rs.getString(User.COLUMN_MIDDLEINITIAL));
+               user.setBirthdate(rs.getString(User.COLUMN_BIRTHDATE));
+               user.setUsername(rs.getString(User.COLUMN_USERNAME));
+               user.setUserID(rs.getInt(User.COLUMN_USERID));
+               connection.close();
+               pstmt.close();
+               return user;
+            }
+            
+            connection.close();
+            pstmt.close();
+            
+        }catch(SQLException e) {
+            System.out.println("ANYARI HAHAHAHAAH LOL");
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    public static int getCustomerID(int userID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT customerID FROM customers"
+                    + " WHERE userID= '" + userID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int customerID = rs.getInt("customerID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return customerID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return -1;
+    }
+    
+    public static CustomerAddress getBillingAddress(int customerID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM customer_address"
+                    + " WHERE addressType = 'billing' AND customerID= '" + customerID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                CustomerAddress bAddr = new CustomerAddress();
+                bAddr.setAddress(rs.getString(CustomerAddress.COLUMN_ADDRESS));
+                bAddr.setAddressType(rs.getString(CustomerAddress.COLUMN_ADDRESSTYPE));
+                bAddr.setCity(rs.getString(CustomerAddress.COLUMN_CITY));
+                bAddr.setCountry(rs.getString(CustomerAddress.COLUMN_COUNTRY));
+                bAddr.setRegion(rs.getString(CustomerAddress.COLUMN_REGION));
+                bAddr.setZipcode(rs.getString(CustomerAddress.COLUMN_ZIPCODE));
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return bAddr;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static CustomerAddress getDeliveryAddress(int customerID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM customer_address"
+                    + " WHERE addressType = 'delivery' AND customerID= '" + customerID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                CustomerAddress dAddr = new CustomerAddress();
+                dAddr.setAddress(rs.getString(CustomerAddress.COLUMN_ADDRESS));
+                dAddr.setAddressType(rs.getString(CustomerAddress.COLUMN_ADDRESSTYPE));
+                dAddr.setCity(rs.getString(CustomerAddress.COLUMN_CITY));
+                dAddr.setCountry(rs.getString(CustomerAddress.COLUMN_COUNTRY));
+                dAddr.setRegion(rs.getString(CustomerAddress.COLUMN_REGION));
+                dAddr.setZipcode(rs.getString(CustomerAddress.COLUMN_ZIPCODE));
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return dAddr;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static boolean editProfile(int userID, Customer nc, CustomerAddress bca, CustomerAddress dca) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE users SET " +
+                    "firstname = ?," +
+                    "lastname = ?," +
+                    "middleinitial = ?,"+
+                    "birthdate = ?," +
+                    "email = ?," +
+                    "username = ?" +
+                    "WHERE userID = ?");
+            pstmt.setString(1, nc.getFirstname());
+            pstmt.setString(2, nc.getLastname());
+            pstmt.setString(3, nc.getMiddleinitial());
+            pstmt.setString(4, nc.getBirthdate());
+            pstmt.setString(5, nc.getEmail());
+            pstmt.setString(6, nc.getUsername());
+            pstmt.setInt(7, userID);
+            pstmt.executeUpdate();
+           
+            
+        } catch(SQLException e) {
+            System.out.println("May mali sa edit profile customer reg info");
+        }
+        
+        try {
+            int customerID = AccountService.getCustomerID(userID);
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("UPDATE customer_address SET " +
+                        "address = ?," +
+                        "city = ?," +
+                        "zipcode = ?,"+
+                        "region = ?," +
+                        "country = ?" +
+                        "WHERE customerID ='" + customerID + "' AND addressType='billing' ");
+                pstmt.setString(1, bca.getAddress());
+                pstmt.setString(2, bca.getCity());
+                pstmt.setString(3, bca.getZipcode());
+                pstmt.setString(4, bca.getRegion());
+                pstmt.setString(5, bca.getCountry());
+                pstmt.executeUpdate();
+                pstmt = connection.prepareStatement("UPDATE customer_address SET " +
+                        "address = ?," +
+                        "city = ?," +
+                        "zipcode = ?,"+
+                        "region = ?," +
+                        "country = ?" +
+                        "WHERE customerID ='" + customerID + "' AND addressType= 'delivery'");
+                pstmt.setString(1, dca.getAddress());
+                pstmt.setString(2, dca.getCity());
+                pstmt.setString(3, dca.getZipcode());
+                pstmt.setString(4, dca.getRegion());
+                pstmt.setString(5, dca.getCountry());
+                pstmt.executeUpdate();
+            }
+            pstmt.close();
+        }
+        catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("May problem sa mga addresses");    
+        }
+        
+        return false;
+    }
+    
+    public static boolean editCreditCard(int userID, CreditCard CC) {
+        int customerID = AccountService.getCustomerID(userID);
+        int creditcardID = AccountService.getCreditCardID(customerID);
+        System.out.println("Bes yung customerID = " + customerID);
+        System.out.println("Bes yung creditcardID = " + creditcardID);
+        PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("UPDATE credit_cards SET " +
+                        "name = ?," +
+                        "cardNum = ?," +
+                        "type = ?,"+
+                        "expDate = ?" +
+                        "WHERE creditcardID ='" + creditcardID + "';");
+                pstmt.setString(1, CC.getName());
+                pstmt.setString(2, CC.getCardNum());
+                pstmt.setString(3, CC.getType());
+                pstmt.setString(4, CC.getExpDate());
+                pstmt.executeUpdate();
+                pstmt.close();
+                connection.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        
+        return false;
+    }
+    
+    public static boolean editPassword(int userID) {
+        
+        return false;
+    }
+    
+    public static int getCreditCardID(int customerID) {
+        
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT creditcardID FROM customer_cards"
+                    + " WHERE customerID=" + customerID + ";");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int creditcardID = rs.getInt("creditcardID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return creditcardID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public static String getUsernameViaID(int userID) {
+        
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement pstmt;
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234")) {
+                pstmt = connection.prepareStatement("SELECT username FROM users WHERE userID = '" + userID + "'");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    rs.next();
+                    return rs.getString("username");
+                }
+            }
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 }

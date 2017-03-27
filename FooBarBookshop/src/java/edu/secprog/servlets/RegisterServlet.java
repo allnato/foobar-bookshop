@@ -86,7 +86,7 @@ public class RegisterServlet extends HttpServlet {
             nc.setFirstname(request.getParameter("firstName"));
             nc.setMiddleinitial(request.getParameter("middleInitial"));
             nc.setLastname(request.getParameter("lastName"));
-            nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
+            nc.setEmail(request.getParameter("email"));
             Date birthDate = null;
             SimpleDateFormat sdf0 =
                 new SimpleDateFormat("yyyy-MM-dd");
@@ -169,7 +169,7 @@ public class RegisterServlet extends HttpServlet {
                     responseCode = Audit.OKINFO;
                     msgDesc = "A New User Registered";
                     
-                    request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
+                    response.sendRedirect("/SECPROG_MP/home");
                 }
             }
             else {

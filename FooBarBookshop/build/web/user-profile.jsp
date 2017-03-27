@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
   <head>
@@ -72,8 +74,8 @@
                   <img src="img/speckles.png" class="img-responsive" alt="profile-picture">
                 </div>
                 <div>
-                  <h2 class="profile-fullname lato">Joe Pakistan</h2>
-                  <h2 class="profile-username text-center lato"><small>JoePak</small></h2>
+                    <h2 class="profile-fullname lato"><c:out value="${firstName}"/></h2>
+                  <h2 class="profile-username text-center lato"><small><c:out value="${userName}"/></small></h2>
                   <div class="action-buttons well">
                     <div class="form-group">
                       <button class="btn btn-default form-control btn-block" id="edit-profile-btn">
@@ -102,33 +104,33 @@
                 </div>
               </div>
               <div class="profile-information-container col-sm-7">
-                <form action="" method="POST" id="personal-information-form">
+                <form action="updateProfile" method="POST" id="personal-information-form">
                   <h3>Personal Info</h3>
                   <hr>
                   <div class="row fullname">
                     <!-- First Name -->
                     <div class="firstName form-group has-feedback col-sm-5">
                       <label for="first_name">First Name</label>
-                      <input disabled type="text" name="firstName" class="form-control" id="first_name">
+                      <input disabled type="text" name="firstName" class="form-control" id="first_name" value="<c:out value="${firstName}"/>">
                     </div>
                     <!-- Last Name -->
                     <div class="lastName form-group has-feedback col-sm-5">
                       <label for="last_name">Last Name</label>
-                      <input disabled type="text" name="lastName" class="form-control" id="last_name">
+                      <input disabled type="text" name="lastName" class="form-control" id="last_name" value="<c:out value="${lastName}"/>">
                     </div>
                     <!-- Middle Initial -->
                     <div class="middleInitial form-group has-feedback col-sm-2">
                       <label for="middle_initial">M.I.</label>
-                      <input disabled type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1">
+                      <input disabled type="text" name="middleInitial" class="form-control" id="middle_initial" maxlength="1" value="<c:out value="${middleInitial}"/>">
                     </div>
                   </div>
                   <div class="username form-group has-feedback">
                     <label for="username">Username</label>
-                    <input disabled type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters">
+                    <input disabled type="text" name="username" class="form-control" id="username" placeholder="Minimum of 4 characters" value="<c:out value="${userName}"/>">
                   </div>
                   <div class="birthDate form-group has-feedback">
                     <label for="birth_date">Birth Date</label>
-                    <input disabled type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy">
+                    <input disabled type="text" name="birthDate" class="form-control" id="birth_date" placeholder="mm-dd-yyyy" value="<c:out value="${birthDate}"/>">
                   </div>
 
                   <div class="tab-pane" id="address-information">
@@ -137,25 +139,25 @@
                     <div class="billingFields">
                       <div class="address form-group has-feedback">
                         <label for="b_address">Address</label>
-                        <input disabled type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address">
+                        <input disabled type="text" name="b_address" class="form-control" id="b_address" placeholder="Home Address" value="<c:out value="${bAddress}"/>">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="b_city">City</label>
-                          <input disabled type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="b_city" class="form-control" id="b_city" placeholder="ex. Manila" value="<c:out value="${bCity}"/>">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="b_region">Region/Province/State</label>
-                          <input disabled type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="b_region" class="form-control" id="b_region" placeholder="ex. Texas" value="<c:out value="${bRegion}"/>">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="b_zipcode">Zipcode</label>
-                          <input disabled type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="b_zipcode" class="form-control" id="b_zipcode" placeholder="ex. 4103" value="<c:out value="${bZipcode}"/>">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="b_country">Country</label>
-                        <select disabled type="text" name="b_country" class="form-control" id="b_country">
+                        <select disabled type="text" name="b_country" class="form-control" id="b_country" value="<c:out value="${bCountry}"/>">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>
@@ -413,25 +415,25 @@
                     <div class="deliveryFields">
                       <div class="address form-group has-feedback">
                         <label for="d_address">Address</label>
-                        <input disabled type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address">
+                        <input disabled type="text" name="d_address" class="form-control" id="d_address" placeholder="Home Address" value="<c:out value="${dAddress}"/>">
                       </div>
                       <div class="row city-region-zip">
                         <div class="city form-group has-feedback col-sm-4">
                           <label for="d_city">City</label>
-                          <input disabled type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila">
+                          <input disabled type="text" name="d_city" class="form-control" id="d_city" placeholder="ex. Manila" value="<c:out value="${dCity}"/>">
                         </div>
                         <div class="region form-group has-feedback col-sm-4">
                           <label for="d_region">Region</label>
-                          <input disabled type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas">
+                          <input disabled type="text" name="d_region" class="form-control" id="d_region" placeholder="ex. Texas" value="<c:out value="${dRegion}"/>">
                         </div>
                         <div class="zipcode form-group has-feedback col-sm-4">
                           <label for="d_zipcode">Zipcode</label>
-                          <input disabled type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103">
+                          <input disabled type="text" name="d_zipcode" class="form-control" id="d_zipcode" placeholder="ex. 4103" value="<c:out value="${dZipcode}"/>">
                         </div>
                       </div>
                       <div class="country form-group has-feedback">
                         <label for="d_country">Country</label>
-                        <select disabled type="text" name="d_country" class="form-control" id="d_country">
+                        <select disabled type="text" name="d_country" class="form-control" id="d_country" value="<c:out value="${dCountry}"/>">
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
                           <option value="AL">Albania</option>
@@ -704,7 +706,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Change Your Password</h4>
           </div>
-          <form action="" method="POST" id="password-form">
+          <form action="changePassword" method="POST" id="password-form">
             <div class="modal-body">
                 <div class="form-group has-feedback">
                   <label for="currentPassword"><i class="fa fa-key"></i> Current Password</label>
@@ -734,7 +736,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Change your Credit Card</h4>
           </div>
-          <form class="creditForm" method="post" id="credit-card-form">
+          <form action="updateCard"class="creditForm" method="POST" id="credit-card-form">
             <div class="modal-body">
               <div class="tab-pane" id="card-information">
                   <div class="card-wrapper">
@@ -750,7 +752,7 @@
                       </div>
                       <div class="card_type form-group has-feedback col-sm-4">
                         <label for="type">Type</label>
-                        <input type="text" name="cardType" class="form-control" id="card_type" disabled>
+                        <input type="text" name="cardType" class="form-control" id="card_type" readonly>
                       </div>
                     </div>
                     <div class="exp_date form-group has-feedback">
@@ -782,4 +784,10 @@
   <script src="js/detect-card.js" charset="utf-8"></script>
 
   <script src="js/user-profile.js" charset="utf-8"></script>
+  <script>
+      $('#b_country').val("<c:out value="${bCountry}" />");
+      $('#d_country').val("<c:out value="${dCountry}" />");
+      
+      
+  </script>
 </html>

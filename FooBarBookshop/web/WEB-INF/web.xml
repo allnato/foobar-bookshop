@@ -12,6 +12,14 @@
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>edu.secprog.servlets.ErrorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditCreditCard</servlet-name>
+        <servlet-class>edu.secprog.servlets.EditCreditCardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePasswordServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.UpdatePasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/Error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCreditCard</servlet-name>
+        <url-pattern>/updateCard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePasswordServlet</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

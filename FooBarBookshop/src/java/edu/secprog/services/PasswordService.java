@@ -98,7 +98,7 @@ public class PasswordService {
             ResultSet rs = null;
             Connection connection = null;
             PreparedStatement pstmt = null;
-            
+            System.out.println("Updatinng Password...");
             try {
                 connection = DBPool.getInstance().getConnection();
                 pstmt = connection.prepareStatement("UPDATE passwords SET hashed = ?, encrypted = ?, vector = ?, timestamp = ? WHERE userID='" 
