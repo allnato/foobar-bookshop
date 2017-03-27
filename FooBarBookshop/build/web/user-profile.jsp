@@ -706,7 +706,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Change Your Password</h4>
           </div>
-          <form action="" method="POST" id="password-form">
+          <form action="changePassword" method="POST" id="password-form">
             <div class="modal-body">
                 <div class="form-group has-feedback">
                   <label for="currentPassword"><i class="fa fa-key"></i> Current Password</label>

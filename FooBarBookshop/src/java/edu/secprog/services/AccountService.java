@@ -541,4 +541,28 @@ public class AccountService {
         }
         return -1;
     }
+    
+    public static String getUsernameViaID(int userID) {
+        
+        ResultSet rs = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            PreparedStatement pstmt;
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/foobar_booksop", "test", "1234")) {
+                pstmt = connection.prepareStatement("SELECT username FROM users WHERE userID = '" + userID + "'");
+                rs = pstmt.executeQuery();
+                if(rs.isBeforeFirst()) {
+                    rs.next();
+                    return rs.getString("username");
+                }
+            }
+            pstmt.close();
+            
+        }catch(ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
 }

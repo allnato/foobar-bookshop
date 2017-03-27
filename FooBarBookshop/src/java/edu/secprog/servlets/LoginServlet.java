@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(true);
+        HttpSession session;
         IDPair result;
         int userID = 0;
         String status;
