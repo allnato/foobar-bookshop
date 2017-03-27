@@ -1,6 +1,7 @@
 $('#postActionBTN').click(function(event) {
   // Check if Text area is empty
   if($('.modal textarea').val().trim() == "" || $('.modal textarea').val().trim().length == 0 ){
+    generateAlert('warning', '<h4>Your review message is empty</h4> Please enter a non-empty message')
     console.log("Empty Review Message");
     $('#reviewModal').modal('hide');
     return;

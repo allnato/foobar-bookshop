@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/palette.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/my-cart.css">
     <link rel="stylesheet" href="css/navigation.css">
@@ -84,25 +85,25 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr class="item-row">
                         <td>Humpty Dumpty</td>
                         <td>60.00 PHP</td>
                         <td>x3</td>
                         <td>180.00 PHP</td>
-                        <td><button type="button" class="btn btn-sm"><i class="fa fa-times"></i></button></td>
+                        <td><button type="button" class="removeRowBTN btn btn-sm"><i class="fa fa-times"></i></button></td>
                       </tr>
-                      <tr>
+                      <tr class="item-row">
                         <td>Adventure Time</td>
                         <td>120.00 PHP</td>
                         <td>x4</td>
                         <td>480.00 PHP</td>
-                        <td><button type="button" class="btn btn-sm"><i class="fa fa-times"></i></button></td>
+                        <td><button type="button" class="removeRowBTN btn btn-sm"><i class="fa fa-times"></i></button></td>
                       </tr>
                       <tr class="total-table">
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>660.00 PHP</td>
+                        <td class="total-amount"></td>
                       </tr>
                     </tbody>
                   </table>
@@ -133,9 +134,51 @@
       </div>
     </div>
   </body>
+  <div class="modal fade" id="removeItemModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            Remove this Item?
+          </div>
+        </div>
+        <div class="modal-body">
+          <table class="table table-responsive table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="name-modal"></td>
+                <td class="price-modal"></td>
+                <td class="quantity-modal"></td>
+                <td class="total-modal"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-sm-6 text-right">
+              <button class="btn btn-lg btn-success text-right" id="keepActionBTN" data-dismiss="modal">Keep</button>
+            </div>
+            <div class="col-sm-6 text-left">
+              <button class="btn btn-lg btn-danger" id="removeActionBTN">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="js/jquery.noty.packaged.min.js" charset="utf-8"></script>
   <script src="js/my-cart.js" charset="utf-8"></script>
 
 </html>

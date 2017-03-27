@@ -17,6 +17,12 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="css/product-item.css">
     <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <style media="screen">
+      textarea{
+        resize:none;
+      }
+    </style>
   </head>
 
   <body>
@@ -109,7 +115,15 @@
         <div class="item-reviews-container row">
           <div class="panel panel-info">
             <div class="panel-body">
-              <h3 class="item-reviews-label lora">Item Reviews</h3>
+              <div class="row">
+                <div class="col-sm-6">
+                  <h3 class="item-reviews-label lora">Item Reviews</h3>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-success pull-right btn-lg lato"
+                   data-toggle="modal" data-target="#reviewModal">Add a Review</button>
+                </div>
+              </div>
               <hr>
               <div class="list-group">
                 <a  class="list-group-item">
@@ -157,9 +171,34 @@
       </div>
     </div>
   </body>
+  <div class="modal fade" id="reviewModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Write a Review</div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <textarea required name="name" rows="8" class="form-control lato textarea" placeholder="Write your Review Here"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-sm-6 text-right">
+              <button class="btn btn-lg btn-success text-right" id="postActionBTN">Post</button>
+            </div>
+            <div class="col-sm-6 text-left">
+              <button class="btn btn-lg btn-danger" id="cancelActionBTN" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="js/jquery.noty.packaged.min.js" charset="utf-8"></script>
   <script src="js/product-item.js" charset="utf-8"></script>
 
 </html>
