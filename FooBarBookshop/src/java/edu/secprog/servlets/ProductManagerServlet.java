@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,22 +31,6 @@ public class ProductManagerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ManageProductsServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ManageProductsServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -58,7 +44,32 @@ public class ProductManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        
+        try {
+            String action = request.getServletPath();
+
+            boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
+            int userID = (int) session.getAttribute("l1k23h4");
+
+            if (isLoggedIn) {
+                switch(action) {
+                    case "/manageProducts":
+                        request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
+                        break;
+                    default:
+                        response.sendError(Audit.SERVLETEX);
+                }
+            }
+            else
+                response.sendError(Audit.UNAUTH);
+        }
+        catch (NullPointerException ex) {
+            response.sendError(Audit.UNAUTH);
+        }
+        finally {
+            // error logging here
+        }
     }
 
     /**
@@ -72,7 +83,7 @@ public class ProductManagerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**

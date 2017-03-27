@@ -57,6 +57,7 @@ public class EmployeeHomeServlet extends HttpServlet {
             role = SecurityService.blockEmployeeTraversal(userID);
 
             if(isLoggedIn) {
+                System.out.println("my role is " + role);
                 if (role.equals("Administrator")) {
                     session.setAttribute("l1k23h4", userID);
                     request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
@@ -103,7 +104,7 @@ public class EmployeeHomeServlet extends HttpServlet {
         password = request.getParameter("password");
         
         result = AccountService.verifyPrivilege(username, password);
-        userID = result.getID(); // try via getAttribute userID
+        userID = result.getID();
         role = result.getValue();
         
         System.out.println(userID);

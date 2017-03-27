@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,19 +43,34 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
+        HttpSession session = request.getSession(false);
         
-        System.out.println(action);
-        
-        switch(action) {
-            case "/adminLock":
-                request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
-                break;
-            case "/adminManage":
-                request.getRequestDispatcher("admin-manage-managers.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(Audit.SERVLETEX);
+        try {
+            String action = request.getServletPath();
+
+            boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
+            int userID = (int) session.getAttribute("l1k23h4");
+
+            if (isLoggedIn) {
+                switch(action) {
+                    case "/adminLock":
+                        request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
+                        break;
+                    case "/adminManage":
+                        request.getRequestDispatcher("admin-manage-managers.jsp").forward(request, response);
+                        break;
+                    default:
+                        response.sendError(Audit.SERVLETEX);
+                }
+            }
+            else
+                response.sendError(Audit.UNAUTH);
+        }
+        catch (NullPointerException ex) {
+            response.sendError(Audit.UNAUTH);
+        }
+        finally {
+            // error logging here
         }
     }
 

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -57,19 +58,34 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
+        HttpSession session = request.getSession(false);
         
-        System.out.println("employeeServlet " + action);
-        
-        switch(action) {
-            case "/employeeHome":
-                request.getRequestDispatcher("employeeHome").forward(request, response);
-                break;
-            case "/employeeProfile":
-                request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(Audit.SERVLETEX);
+        try {
+            String action = request.getServletPath();
+
+            boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
+            int userID = (int) session.getAttribute("l1k23h4");
+
+            if (isLoggedIn) {
+                switch(action) {
+                    case "/employeeHome":
+                        request.getRequestDispatcher("employeeHome").forward(request, response);
+                        break;
+                    case "/employeeProfile":
+                        request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
+                        break;
+                    default:
+                        response.sendError(Audit.SERVLETEX);
+                }
+            }
+            else
+                response.sendError(Audit.UNAUTH);
+        }
+        catch (NullPointerException ex) {
+            response.sendError(Audit.UNAUTH);
+        }
+        finally {
+            // error logging here
         }
     }
 
