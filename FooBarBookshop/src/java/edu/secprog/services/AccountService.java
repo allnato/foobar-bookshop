@@ -419,4 +419,81 @@ public class AccountService {
         return null;
     }
     
+    public static boolean editProfile(int userID, Customer nc, CustomerAddress bca, CustomerAddress dca) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("UPDATE users SET " +
+                    "firstname = ?," +
+                    "lastname = ?," +
+                    "middleinitial = ?,"+
+                    "birthdate = ?," +
+                    "email = ?," +
+                    "username = ?" +
+                    "WHERE userID = ?");
+            pstmt.setString(1, nc.getFirstname());
+            pstmt.setString(2, nc.getLastname());
+            pstmt.setString(3, nc.getMiddleinitial());
+            pstmt.setString(4, nc.getBirthdate());
+            pstmt.setString(5, nc.getEmail());
+            pstmt.setString(6, nc.getUsername());
+            pstmt.setInt(7, userID);
+            pstmt.executeUpdate();
+           
+            
+        } catch(SQLException e) {
+            System.out.println("May mali sa edit profile customer reg info");
+        }
+        
+        try {
+            int customerID = AccountService.getCustomerID(userID);
+            PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("UPDATE customer_address SET " +
+                        "address = ?," +
+                        "city = ?," +
+                        "zipcode = ?,"+
+                        "region = ?," +
+                        "country = ?" +
+                        "WHERE customerID ='" + customerID + "' AND addressType='billing' ");
+                pstmt.setString(1, bca.getAddress());
+                pstmt.setString(2, bca.getCity());
+                pstmt.setString(3, bca.getZipcode());
+                pstmt.setString(4, bca.getRegion());
+                pstmt.setString(5, bca.getCountry());
+                pstmt.executeUpdate();
+                pstmt = connection.prepareStatement("UPDATE customer_address SET " +
+                        "address = ?," +
+                        "city = ?," +
+                        "zipcode = ?,"+
+                        "region = ?," +
+                        "country = ?" +
+                        "WHERE customerID ='" + customerID + "' AND addressType= 'delivery'");
+                pstmt.setString(1, dca.getAddress());
+                pstmt.setString(2, dca.getCity());
+                pstmt.setString(3, dca.getZipcode());
+                pstmt.setString(4, dca.getRegion());
+                pstmt.setString(5, dca.getCountry());
+                pstmt.executeUpdate();
+            }
+            pstmt.close();
+        }
+        catch(SQLException e) {
+                e.printStackTrace();
+                System.out.println("May problem sa mga addresses");    
+        }
+        
+        return false;
+    }
+    
+    public static boolean editCreditCard(int customerID) {
+        
+        return false;
+    }
+    
+    public static boolean editPassword(int userID) {
+        
+        return false;
+    }
+    
 }

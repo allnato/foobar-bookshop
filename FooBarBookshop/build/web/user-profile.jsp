@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="profile-information-container col-sm-7">
-                <form action="" method="POST" id="personal-information-form">
+                <form action="updateProfile" method="POST" id="personal-information-form">
                   <h3>Personal Info</h3>
                   <hr>
                   <div class="row fullname">
