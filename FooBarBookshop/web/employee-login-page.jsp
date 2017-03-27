@@ -23,7 +23,7 @@
         <div class="banner-login col-md-4 offset-md-4 col-sm-12 match">
           <h1 class=" lora text-xs-center">fb</h1>
 
-          <form action="employeeProfile" method="POST" class="col-md-10">
+          <form action="employeeHome" method="POST" class="col-md-10">
             <div class="form-group">
               <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
@@ -57,7 +57,7 @@
 
       $("form").submit(function(event) {
           
-          if(grecaptcha.getResponse() === "") {
+          if(!grecaptcha.getResponse() === "") {
               //event.preventDefault();
               //alert("Kindly check the recaptcha and try again.");
           }

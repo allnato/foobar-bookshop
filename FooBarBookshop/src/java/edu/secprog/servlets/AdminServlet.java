@@ -7,7 +7,6 @@ package edu.secprog.servlets;
 
 import edu.secprog.security.Audit;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author CoRX
  */
-@WebServlet(name = "EmployeeProfileServlet", urlPatterns = {"/employeeProfile"})
-public class EmployeeProfileServlet extends HttpServlet {
+@WebServlet(name = "AdminServlet", urlPatterns = {"/adminLock","/adminManage"})
+public class AdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +42,20 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        String action = request.getServletPath();
+        
+        System.out.println(action);
+        
+        switch(action) {
+            case "/adminLock":
+                request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
+                break;
+            case "/adminManage":
+                request.getRequestDispatcher("admin-manage-managers.jsp").forward(request, response);
+                break;
+            default:
+                response.sendError(Audit.SERVLETEX);
+        }
     }
 
     /**
@@ -57,20 +69,7 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
         
-        System.out.println("employeeServlet " + action);
-        
-        switch(action) {
-            case "/employeeHome":
-                request.getRequestDispatcher("employeeHome").forward(request, response);
-                break;
-            case "/employeeProfile":
-                request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(Audit.SERVLETEX);
-        }
     }
 
     /**

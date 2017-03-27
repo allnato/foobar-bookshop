@@ -20,6 +20,26 @@
         <servlet-name>EmployeeProfileServlet</servlet-name>
         <servlet-class>edu.secprog.servlets.EmployeeProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductManagerServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.ProductManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.SalesManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeLogoutServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeLogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -39,6 +59,22 @@
     <servlet-mapping>
         <servlet-name>EmployeeProfileServlet</servlet-name>
         <url-pattern>/employeeProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminLock</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminManage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeLogoutServlet</servlet-name>
+        <url-pattern>/employeeLogout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -125,6 +125,47 @@ public class AccountService {
         return new IDPair(0, "invalid");
     }
     
+    public static IDPair verifyPrivilege(String username, String password) {
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        String status;
+        int id = 0;
+        
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            pstmt = connection.prepareStatement("SELECT u.username, u.status, u.userID, hashed FROM users u, "
+                    + " passwords p WHERE u.username= '" + username + "' AND p.userID=u.userID;");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+             // If User Exists, check the number of attempts then check the password
+                rs.next();
+                
+                if(BCrypt.checkpw(password, rs.getString("hashed")) && rs.getString("u.status").equals("active")) {
+                    id = rs.getInt("u.userID");
+                    
+                    pstmt = connection.prepareStatement("SELECT e.employeeType\n FROM users u, employees e\n" +
+                            "WHERE u.userID= '" + id + "'");
+                    rs = pstmt.executeQuery();
+                    if(rs.isBeforeFirst()) {
+                        rs.next();
+                        status = rs.getString("e.employeeType");
+                        
+                        return new IDPair(id, status);
+                    }
+                }
+            }
+            connection.close();
+            pstmt.close();
+            return new IDPair(0, "invalid");
+            
+        }catch(SQLException e) {
+            System.out.println("SQL Exception!!!: " + e.getMessage());
+            Audit.getAuditLog(id, Audit.SQLEX);
+        }
+        
+        return new IDPair(0, "invalid");
+    }
+    
     public static int getIDByEmail(String email) {
         ResultSet rs = null;
         

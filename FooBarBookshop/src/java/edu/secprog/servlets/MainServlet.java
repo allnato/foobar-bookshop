@@ -59,10 +59,5 @@ public class MainServlet extends HttpServlet {
                 Audit.getAuditLog(userID, responseCode);
         }
     }
-        
-        
-        
-        
-  
 }
 

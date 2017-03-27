@@ -13,13 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author CoRX
  */
-@WebServlet(name = "EmployeeProfileServlet", urlPatterns = {"/employeeProfile"})
-public class EmployeeProfileServlet extends HttpServlet {
+@WebServlet(name = "EmployeeLogoutServlet", urlPatterns = {"/employeeLogout"})
+public class EmployeeLogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +44,25 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+                HttpSession currSession = request.getSession();
+        currSession.invalidate();
+        
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
+        
+        try {
+            request.getRequestDispatcher("employee-login-page.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
 
     /**
@@ -57,20 +76,7 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
         
-        System.out.println("employeeServlet " + action);
-        
-        switch(action) {
-            case "/employeeHome":
-                request.getRequestDispatcher("employeeHome").forward(request, response);
-                break;
-            case "/employeeProfile":
-                request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(Audit.SERVLETEX);
-        }
     }
 
     /**

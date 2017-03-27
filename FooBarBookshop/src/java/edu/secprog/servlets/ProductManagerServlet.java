@@ -5,7 +5,6 @@
  */
 package edu.secprog.servlets;
 
-import edu.secprog.security.Audit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author CoRX
  */
-@WebServlet(name = "EmployeeProfileServlet", urlPatterns = {"/employeeProfile"})
-public class EmployeeProfileServlet extends HttpServlet {
+@WebServlet(name = "ProductManagerServlet", urlPatterns = {"/manageProducts"})
+public class ProductManagerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,6 +29,22 @@ public class EmployeeProfileServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManageProductsServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManageProductsServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -43,7 +58,7 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -57,20 +72,7 @@ public class EmployeeProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
-        
-        System.out.println("employeeServlet " + action);
-        
-        switch(action) {
-            case "/employeeHome":
-                request.getRequestDispatcher("employeeHome").forward(request, response);
-                break;
-            case "/employeeProfile":
-                request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(Audit.SERVLETEX);
-        }
+        processRequest(request, response);
     }
 
     /**
