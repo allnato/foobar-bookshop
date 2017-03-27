@@ -293,7 +293,7 @@ public class AccountService {
         try {
             Connection connection = DBPool.getInstance().getConnection();
             PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-            pstmt.setLong(1, insertID);
+            pstmt.setLong(1, customerID);
             pstmt.setLong(2, creditCardID);
             System.out.println("Customer ID: " + insertID);
             pstmt.executeUpdate();
@@ -486,7 +486,29 @@ public class AccountService {
         return false;
     }
     
-    public static boolean editCreditCard(int customerID) {
+    public static boolean editCreditCard(int userID, CreditCard CC) {
+        int customerID = AccountService.getCustomerID(userID);
+        int creditcardID = AccountService.getCreditCardID(customerID);
+        System.out.println("Bes yung customerID = " + customerID);
+        System.out.println("Bes yung creditcardID = " + creditcardID);
+        PreparedStatement pstmt;
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                pstmt = connection.prepareStatement("UPDATE credit_cards SET " +
+                        "name = ?," +
+                        "cardNum = ?," +
+                        "type = ?,"+
+                        "expDate = ?" +
+                        "WHERE creditcardID ='" + creditcardID + "';");
+                pstmt.setString(1, CC.getName());
+                pstmt.setString(2, CC.getCardNum());
+                pstmt.setString(3, CC.getType());
+                pstmt.setString(4, CC.getExpDate());
+                pstmt.executeUpdate();
+                pstmt.close();
+                connection.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
         
         return false;
     }
@@ -496,4 +518,27 @@ public class AccountService {
         return false;
     }
     
+    public static int getCreditCardID(int customerID) {
+        
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT creditcardID FROM customer_cards"
+                    + " WHERE customerID=" + customerID + ";");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int creditcardID = rs.getInt("creditcardID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return creditcardID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

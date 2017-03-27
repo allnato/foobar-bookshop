@@ -86,7 +86,7 @@ public class RegisterServlet extends HttpServlet {
             nc.setFirstname(request.getParameter("firstName"));
             nc.setMiddleinitial(request.getParameter("middleInitial"));
             nc.setLastname(request.getParameter("lastName"));
-            nc.setEmail(BCrypt.hashpw(request.getParameter("email"), BCrypt.gensalt(10)));
+            nc.setEmail(request.getParameter("email"));
             Date birthDate = null;
             SimpleDateFormat sdf0 =
                 new SimpleDateFormat("yyyy-MM-dd");

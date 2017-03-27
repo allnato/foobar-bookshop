@@ -736,7 +736,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Change your Credit Card</h4>
           </div>
-          <form class="creditForm" method="post" id="credit-card-form">
+          <form action="updateCard"class="creditForm" method="POST" id="credit-card-form">
             <div class="modal-body">
               <div class="tab-pane" id="card-information">
                   <div class="card-wrapper">
@@ -752,7 +752,7 @@
                       </div>
                       <div class="card_type form-group has-feedback col-sm-4">
                         <label for="type">Type</label>
-                        <input type="text" name="cardType" class="form-control" id="card_type" disabled>
+                        <input type="text" name="cardType" class="form-control" id="card_type" readonly>
                       </div>
                     </div>
                     <div class="exp_date form-group has-feedback">
@@ -784,4 +784,10 @@
   <script src="js/detect-card.js" charset="utf-8"></script>
 
   <script src="js/user-profile.js" charset="utf-8"></script>
+  <script>
+      $('#b_country').val("<c:out value="${bCountry}" />");
+      $('#d_country').val("<c:out value="${dCountry}" />");
+      
+      
+  </script>
 </html>
