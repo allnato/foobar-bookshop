@@ -56,3 +56,13 @@ td,th{
 .complete-payment button{
   font-size: 1rem;
 }
+
+#removeItemModal th,
+#removeItemModal td{
+  text-align: center;
+}
+
+.modal button{
+  font-family: lato;
+  font-size: 1rem;
+}
