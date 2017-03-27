@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,10 +42,24 @@ public class EmployeeLoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
-        request.getRequestDispatcher("employee-login-page.jsp").forward(request, response);
+        int userID = 0;
+        int responseCode = Audit.OKINFO;
+        
+        try {
+            request.getRequestDispatcher("employee-login-page.jsp").forward(request, response);
+        } catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        } catch (IOException ex) {
+            responseCode = Audit.IOEX;
+            response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
+        }
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
+        }
     }
 
     /**

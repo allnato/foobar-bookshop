@@ -56,15 +56,16 @@ public class EmployeeProfileServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
+        int responseCode = Audit.OKINFO;
+        int userID = 0;
         
         try {
             String action = request.getServletPath();
 
             boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
-            int userID = (int) session.getAttribute("l1k23h4");
+            userID = (int) session.getAttribute("l1k23h4");
 
             if (isLoggedIn) {
                 switch(action) {
@@ -75,17 +76,26 @@ public class EmployeeProfileServlet extends HttpServlet {
                         request.getRequestDispatcher("employee-profile.jsp").forward(request, response);
                         break;
                     default:
-                        response.sendError(Audit.SERVLETEX);
+                        responseCode = Audit.SERVLETEX;
+                        response.sendError(responseCode, Audit.getHttpStatusMsg(responseCode));
                 }
             }
-            else
-                response.sendError(Audit.UNAUTH);
+            else {
+                responseCode = Audit.UNAUTH;
+                response.sendError(responseCode);
+            }
         }
         catch (NullPointerException ex) {
-            response.sendError(Audit.UNAUTH);
+            responseCode = Audit.UNAUTH;
+            response.sendError(responseCode);
+        }
+        catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode);
         }
         finally {
-            // error logging here
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode);
         }
     }
 

@@ -45,13 +45,15 @@ public class EmployeeHomeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
+        int responseCode = Audit.OKINFO;
+        int userID = 0;
+        String msgDesc = null;
         
         try {
             boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
-            int userID = (int) session.getAttribute("l1k23h4");
+            userID = (int) session.getAttribute("l1k23h4");
             String role;
 
             role = SecurityService.blockEmployeeTraversal(userID);
@@ -70,17 +72,29 @@ public class EmployeeHomeServlet extends HttpServlet {
                     session.setAttribute("l1k23h4", userID);
                     request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
                 }
-                else
-                    response.sendError(Audit.BADINFO, "Invalid username or password or unauthorized access");
+                else {
+                    responseCode = Audit.BADINFO;
+                    msgDesc = "Invalid username or password or unauthorized access";
+                    
+                    response.sendError(Audit.BADINFO, msgDesc);
+                }
             }
-            else
-                response.sendError(Audit.UNAUTH);
+            else {
+                responseCode = Audit.UNAUTH;
+                response.sendError(responseCode);
+            }
         }
         catch (NullPointerException ex) {
-            response.sendError(Audit.UNAUTH);
+            responseCode = Audit.UNAUTH;
+            response.sendError(responseCode);
+        }
+        catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode);
         }
         finally {
-            // put the logging here
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode, msgDesc);
         }
     }
 
@@ -93,40 +107,59 @@ public class EmployeeHomeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String role, username, password;
-        int userID;
+        int userID = 0;
         IDPair result;
+        int responseCode = Audit.OKINFO;
+        String msgDesc = null;
         
-        username = request.getParameter("username");
-        password = request.getParameter("password");
-        
-        result = AccountService.verifyPrivilege(username, password);
-        userID = result.getID();
-        role = result.getValue();
-        
-        System.out.println(userID);
-        System.out.println(role);
-        
-        if (role.equals("Administrator")) {
-            session.setAttribute("l1k23h4", userID);
-            session.setAttribute("qj123xf54", true);
-            request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
+        try {
+            username = request.getParameter("username");
+            password = request.getParameter("password");
+
+            result = AccountService.verifyPrivilege(username, password);
+            userID = result.getID();
+            role = result.getValue();
+
+            System.out.println(userID);
+            System.out.println(role);
+
+            if (role.equals("Administrator")) {
+                session.setAttribute("l1k23h4", userID);
+                session.setAttribute("qj123xf54", true);
+                request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
+            }
+            else if (role.equals("Product Manager")) {
+                session.setAttribute("l1k23h4", userID);
+                session.setAttribute("qj123xf54", true);
+                request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
+            }
+            else if (role.equals("Sales Manager")) {
+                session.setAttribute("l1k23h4", userID);
+                session.setAttribute("qj123xf54", true);
+                request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
+            }
+            else {
+                responseCode = Audit.BADINFO;
+                msgDesc = "Invalid username or password or unauthorized access";
+                    
+                response.sendError(Audit.BADINFO, msgDesc);
+            }
         }
-        else if (role.equals("Product Manager")) {
-            session.setAttribute("l1k23h4", userID);
-            session.setAttribute("qj123xf54", true);
-            request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
+        catch (NullPointerException ex) {
+            responseCode = Audit.UNAUTH;
+            response.sendError(responseCode);
         }
-        else if (role.equals("Sales Manager")) {
-            session.setAttribute("l1k23h4", userID);
-            session.setAttribute("qj123xf54", true);
-            request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
+        catch (ServletException ex) {
+            responseCode = Audit.SERVLETEX;
+            response.sendError(responseCode);
         }
-        else
-            response.sendError(Audit.BADINFO, "Invalid username or password or unauthorized access");
+        finally {
+            if (responseCode != Audit.OKINFO)
+                Audit.getAuditLog(userID, responseCode, msgDesc);
+        }
     }
 
     /**
