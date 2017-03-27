@@ -69,6 +69,22 @@
         <url-pattern>/adminManage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ProductManagerServlet</servlet-name>
+        <url-pattern>/manageProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesTotal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>

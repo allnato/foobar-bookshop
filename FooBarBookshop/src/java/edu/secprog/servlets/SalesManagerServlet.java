@@ -5,6 +5,7 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.security.Audit;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,7 +44,38 @@ public class SalesManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         
+        try {
+            String action = request.getServletPath();
+
+            boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
+            int userID = (int) session.getAttribute("l1k23h4");
+
+            if (isLoggedIn) {
+                switch(action) {
+                    case "/salesCategory":
+                        request.getRequestDispatcher("am-category-sales.jsp").forward(request, response);
+                        break;
+                    case "/salesProduct":
+                        request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
+                        break;
+                    case "/salesTotal":
+                        request.getRequestDispatcher("am-total-sales.jsp").forward(request, response);
+                        break;
+                    default:
+                        response.sendError(Audit.SERVLETEX);
+                }
+            }
+            else
+                response.sendError(Audit.UNAUTH);
+        }
+        catch (NullPointerException ex) {
+            response.sendError(Audit.UNAUTH);
+        }
+        finally {
+            // error logging here
+        }
     }
 
     /**
