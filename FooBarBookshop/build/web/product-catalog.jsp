@@ -33,11 +33,11 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-          <a href="#" class="navbar-brand">fb</a>
+          <a href="catalog" class="navbar-brand">fb</a>
         </div>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Catalog</a></li>
+            <li class="active"><a href="catalog">Catalog</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
@@ -51,10 +51,10 @@
                       My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                     </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">My Profile</a></li>
+                <li><a href="profile">My Profile</a></li>
                 <li><a href="#">Purchase History</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="logout">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -155,20 +155,20 @@
                       <!-- Product Action -->
                       <div class="item-forms">
                         <div class="form-group">
-                          <form action="item">
+                          <form action="item" method="GET" action="item">
                             <button class="form-control item-btn-info btn btn-primary btn-sm btn-block lato">
                               <i class="fa fa-info-circle fa-lg"></i>
                               View product info
                             </button>
-                              <input type="hidden" value="${product.productID}" name="productID">
+                              <input type="hidden" class="productID" value="${product.productID}" name="productID">
                           </form>
                         </div>
                         <div class="row">
                           <div class="item-quantity form-group col-lg-3">
-                            <input type="number" class="form-control text-center lato" min="1" value="1">
+                            <input type="number" class="form-control text-center lato productQuantity" min="1" value="1">
                           </div>
                           <div class="item-btn-cart form-group col-lg-9">
-                            <button class="btn btn-warning btn-block">
+                            <button class="btn btn-warning btn-block addCartBTN">
                               <i class="fa fa-cart-plus"></i>
                               Add to Cart
                             </button>
@@ -184,15 +184,6 @@
               </div>
               </c:forEach>
 
-            <div class="pagination-container">
-              <ul class="pagination pagination-lg text-center">
-                <li class="disabled"><a href="#">&laquo;</a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
