@@ -6,8 +6,10 @@
 package edu.secprog.servlets;
 
 import edu.secprog.security.Audit;
+import edu.secprog.services.EmployeeService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,6 +48,8 @@ public class ProductManagerServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         int responseCode = Audit.OKINFO;
         int userID = 0;
+        List<String> prodList;
+        String category;
         
         try {
             String action = request.getServletPath();
@@ -56,6 +60,10 @@ public class ProductManagerServlet extends HttpServlet {
             if (isLoggedIn) {
                 switch(action) {
                     case "/manageProducts":
+                        category = EmployeeService.getProductCategory(userID);
+                        prodList = EmployeeService.getProductList(category);
+                        
+                        request.setAttribute("prodList", prodList);
                         request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
                         break;
                     default:

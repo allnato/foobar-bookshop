@@ -39,7 +39,7 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li><a href="#">Product Sales</a></li>
+              <li><a href="salesProduct">Product Sales</a></li>
               <li class="active"><a href="">Category Sales</a></li>
               <li><a href="salesTotal">Total Sales</a></li>
             </ul>

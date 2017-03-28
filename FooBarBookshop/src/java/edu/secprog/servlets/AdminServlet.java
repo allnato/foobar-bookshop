@@ -6,7 +6,9 @@
 package edu.secprog.servlets;
 
 import edu.secprog.security.Audit;
+import edu.secprog.services.EmployeeService;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,6 +47,7 @@ public class AdminServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         int responseCode = Audit.OKINFO;
         int userID = 0;
+        List<String> accList;
         
         try {
             String action = request.getServletPath();
@@ -55,9 +58,17 @@ public class AdminServlet extends HttpServlet {
             if (isLoggedIn) {
                 switch(action) {
                     case "/adminLock":
+                        accList = EmployeeService.getLockAccounts();
+                        
+                        request.setAttribute("accList", accList);
                         request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
                         break;
                     case "/adminManage":
+                        accList = EmployeeService.getProductManagers();
+                        request.setAttribute("prodMList", accList);
+                        
+                        accList = EmployeeService.getSalesManagers();
+                        request.setAttribute("salesMList", accList);
                         request.getRequestDispatcher("admin-manage-managers.jsp").forward(request, response);
                         break;
                     default:

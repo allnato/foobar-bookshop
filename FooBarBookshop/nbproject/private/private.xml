@@ -3,6 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/ProductManagerServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/SecurityService.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/EmployeeService.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/AdminServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/EmployeeHomeServlet.java</file>
             <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/SalesManagerServlet.java</file>
         </group>
     </open-files>

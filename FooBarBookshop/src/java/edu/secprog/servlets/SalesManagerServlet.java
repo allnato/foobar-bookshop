@@ -6,8 +6,10 @@
 package edu.secprog.servlets;
 
 import edu.secprog.security.Audit;
+import edu.secprog.services.EmployeeService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,6 +61,11 @@ public class SalesManagerServlet extends HttpServlet {
                         request.getRequestDispatcher("am-category-sales.jsp").forward(request, response);
                         break;
                     case "/salesProduct":
+                        List<String> topSales = EmployeeService.getTopProductSales();
+                        List<String> allSales = EmployeeService.getAllProductSales();
+                        
+                        request.setAttribute("allSales", allSales);
+                        request.setAttribute("topSales", topSales);
                         request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
                         break;
                     case "/salesTotal":
