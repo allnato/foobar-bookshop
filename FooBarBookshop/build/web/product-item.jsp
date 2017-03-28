@@ -128,43 +128,17 @@
               </div>
               <hr>
               <div class="list-group">
+                <c:forEach var="reviews" items="${reviews}">
                 <a  class="list-group-item">
-                  <h4 class="list-group-item-heading">Kurt Anthony</h4>
+                  <h4 class="list-group-item-heading">${reviews.name}</h4>
                   <br/>
                   <p class="list-group-item-text">
-                    Lorem ipsum dolor sit amet, sumo consul at eam, et exerci menandri qui.
-                    Has cu eius vivendum, ex essent insolens mea.
-                    Usu no verear delenit nominavi, eu eum eleifend perpetua vulputate.
-                    Per ad idque veritus adolescens. Cum adipisci iracundia ei, ex dico principes nec.
+                    Date: ${reviews.dateReviewed}
+                    
+                    ${reviews.message}
                   </p>
                 </a>
-                <a  class="list-group-item">
-                  <h4 class="list-group-item-heading">Lora Park</h4>
-                  <br/>
-                  <p class="list-group-item-text">
-                    Eam et tamquam deserunt qualisque. Ei vel affert convenire concludaturque,
-                    altera constituam his at. Veri appetere elaboraret quo ut, debet efficiendi qui ne.
-                    Ex quot apeirian consequuntur vix.
-                  </p>
-                </a>
-                <a class="list-group-item">
-                  <h4 class="list-group-item-heading">Cindy Belmont</h4>
-                  <br/>
-                  <p class="list-group-item-text">
-                    Ad errem delicatissimi vim, nostrud persecuti forensibus ut pro,
-                    commune deseruisse concludaturque eu pro.
-                    Putent aperiri ad sit, minim placerat id est.
-                  </p>
-                </a>
-                <a class="list-group-item">
-                  <h4 class="list-group-item-heading">Miguel Castro</h4>
-                  <br/>
-                  <p class="list-group-item-text">
-                    Eam et tamquam deserunt qualisque. Ei vel affert convenire concludaturque,
-                    altera constituam his at. Veri appetere elaboraret quo ut, debet efficiendi qui ne.
-                    Ex quot apeirian consequuntur vix.
-                  </p>
-                </a>
+                </c:forEach>
               </div>
             </div>
           </div>

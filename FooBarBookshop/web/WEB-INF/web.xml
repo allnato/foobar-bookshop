@@ -20,6 +20,10 @@
         <servlet-name>UpdatePasswordServlet</servlet-name>
         <servlet-class>edu.secprog.servlets.UpdatePasswordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddReviewServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.AddReviewServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>UpdatePasswordServlet</servlet-name>
         <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddReviewServlet</servlet-name>
+        <url-pattern>/addReview</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

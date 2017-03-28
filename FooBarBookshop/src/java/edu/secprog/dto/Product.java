@@ -6,6 +6,7 @@
 package edu.secprog.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +25,8 @@ public class Product implements Serializable {
     private String description;
     private double price;
     private double avgRating;
+    private int noOfReviews;
+    private ArrayList<Review> reviews;
 
     /**
      * @return the productID
@@ -91,6 +94,37 @@ public class Product implements Serializable {
     public void setProductID(int productID) {
         this.productID = productID;
     }
+
+    /**
+     * @return the noOfReviews
+     */
+    public int getNoOfReviews() {
+        return noOfReviews;
+    }
+
+    /**
+     * @param noOfReviews the noOfReviews to set
+     */
+    public void setNoOfReviews(int noOfReviews) {
+        this.noOfReviews = noOfReviews;
+    }
+
+    /**
+     * @return the reviews
+     */
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
+
+    /**
+     * @param reviews the reviews to set
+     */
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews = reviews;
+    }
+    
+    
+    
     
     
 }

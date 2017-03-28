@@ -291,14 +291,14 @@ public class AccountService {
         /* Step 6: Add the credit card ID to the customer_cards table
          */
         try {
-            Connection connection = DBPool.getInstance().getConnection();
-            PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
-            pstmt.setLong(1, customerID);
-            pstmt.setLong(2, creditCardID);
-            System.out.println("Customer ID: " + insertID);
-            pstmt.executeUpdate();
-            pstmt.close();
-            connection.close();
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO customer_cards(customerID, creditcardID) values(?,?)");
+                pstmt.setLong(1, customerID);
+                pstmt.setLong(2, creditCardID);
+                System.out.println("Customer ID: " + insertID);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
 
         }
         catch(Exception e) {
@@ -355,6 +355,30 @@ public class AccountService {
                 pstmt.close();
                 rs.close();
                 return customerID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return -1;
+    }
+    
+    public static int getUserID(int customerID) {
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT userID FROM customers"
+                    + " WHERE customerID= '" + customerID + "';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int userID = rs.getInt("userID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return userID;
             }
         
         

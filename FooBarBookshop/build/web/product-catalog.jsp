@@ -150,7 +150,7 @@
                       <!-- Product Price -->
                       <h3 class="text-center lato text-success">PHP <span class="item-price">${product.price}</span></h3>
                       <!-- Product Reviews -->
-                      <h3 class="text-center lato"><small><span class="item-review">69</span> Reviews</small></h3>
+                      <h3 class="text-center lato"><small><span class="item-review">${product.noOfReviews}</span> Reviews</small></h3>
 
                       <!-- Product Action -->
                       <div class="item-forms">

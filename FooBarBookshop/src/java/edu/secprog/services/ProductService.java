@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +38,7 @@ public class ProductService {
                      product.setDescription(rs.getString("description"));
                      product.setPrice(rs.getDouble("price"));
                      product.setAvgRating(rs.getDouble("avgRating"));
+                     product.setNoOfReviews(ProductService.getAllReviews(product.getProductID()).size());
                      products.add(product);
                 }
                 connection.close();
@@ -72,6 +74,7 @@ public class ProductService {
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
                     product.setAvgRating(rs.getDouble("avgRating"));
+                    product.setReviews(ProductService.getAllReviews(product.getProductID()));
                     connection.close();
                     rs.close();
                     pstmt.close();
@@ -88,8 +91,9 @@ public class ProductService {
         return null;
     }
     
-    public static ArrayList<Review> getAllReviews(String productID) {
+    public static ArrayList<Review> getAllReviews(int productID) {
         ResultSet rs = null;
+        ResultSet rs1;
          ArrayList<Review> reviews = new ArrayList();
          Review review;
         try {
@@ -98,11 +102,24 @@ public class ProductService {
                 pstmt = connection.prepareStatement("SELECT reviewID FROM product_reviews WHERE productID ='" + productID + "'");
                 rs = pstmt.executeQuery();
                 while(rs.next()) {
-                     
+                    pstmt = connection.prepareStatement("SELECT * FROM review WHERE reviewID ='" + rs.getInt("reviewID") + "'");
+                    rs1 = pstmt.executeQuery();
+                    if(rs1.isBeforeFirst()) {
+                        rs1.next();
+                        review = new Review();
+                        review.setCustomerID(rs1.getInt("customerID"));
+                        review.setReviewID(rs.getInt("reviewID"));
+                        review.setDateReviewed(rs.getString("dateReviewed"));
+                        review.setMessage(rs.getString("message"));
+                        review.setRating(rs.getInt("rating"));
+                        review.setName(AccountService.getUsernameViaID(AccountService.getUserID(review.getCustomerID())));
+                        reviews.add(review);
+                    }
                 }
                 connection.close();
                 rs.close();
                 pstmt.close();
+                return reviews;
                 
             }
             
@@ -112,6 +129,39 @@ public class ProductService {
         }
         
         // If everything fails, then:
-        return null;
+        return reviews;
     }
+   public static void addReview(Review review, int productID) {
+       int reviewID;
+       ResultSet rs = null;
+       try {
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO review(customerID, message, dateReviewed) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                pstmt.setLong(1, review.getCustomerID());
+                pstmt.setString(2, review.getMessage());
+                pstmt.setString(3, review.getDateReviewed());
+                pstmt.executeUpdate();
+                rs = pstmt.getGeneratedKeys();
+                if(rs.next()) {
+                    reviewID = rs.getInt(1);
+                    pstmt = connection.prepareStatement("INSERT INTO product_reviews(reviewID, productID) values(?,?)");
+                    pstmt.setInt(1, reviewID);
+                    pstmt.setInt(2, productID);
+                    pstmt.executeUpdate();
+                    
+                }
+                pstmt.close();
+                connection.close();
+                rs.close();
+            }
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Dami nanamang problem ano ba yan.");
+        }
+       
+   }
+        
 }
+
