@@ -90,7 +90,7 @@ $('.addCartBTN').click(function(){
       var productQuantity = $productQuantity.val();
       
         $.ajax({
-        url: 'addcart',
+        url: 'additem',
         type: 'GET',
         dataType: 'JSON',
         data: {
