@@ -79,3 +79,34 @@ $(window).resize(function(event) {
     $(".sidebar-nav").stick_in_parent();
   }
 });
+
+$('.addCartBTN').click(function(){
+    console.log("Add Cart Pushed");
+      $itemForm = $(this).parents('.item-forms');
+      $productID = $itemForm.find('.productID');
+      $productQuantity = $itemForm.find('.productQuantity');
+      
+      var productID = $productID.val();
+      var productQuantity = $productQuantity.val();
+      
+        $.ajax({
+        url: 'addcart',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+          productID: productID,
+          productQuantity: productQuantity}
+      })
+      .done(function(response) {
+        console.log("success");
+        
+      })
+      .fail(function(response) {
+        console.log("error");
+        console.log(response);
+        
+      })
+      .always(function() {
+        console.log("complete");
+      });
+});

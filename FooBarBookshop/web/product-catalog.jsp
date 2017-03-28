@@ -165,7 +165,7 @@
                         </div>
                         <div class="row">
                           <div class="item-quantity form-group col-lg-3">
-                            <input type="number" class="form-control text-center lato" min="1" value="1">
+                            <input type="number" class="form-control text-center lato productQuantity" min="1" value="1">
                           </div>
                           <div class="item-btn-cart form-group col-lg-9">
                             <button class="btn btn-warning btn-block addCartBTN">
