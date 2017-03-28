@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib prefix="c" 
+           uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
   <head>
@@ -80,17 +82,17 @@
                   <img class="img-responsive img-thumbnail" src="img/item-placeholder-fat.png" alt="placeholder-img">
                 </div>
                 <div class="item-information col-xs-6">
-                  <h1 class="item-name lora">Humpty Dumpty</h1>
+                  <h1 class="item-name lora">${product.name}</h1>
                   <div class="item-sub-info">
                     <h4 class="item-update-label lato">Last Update: <span class="item-update">12/21/2017</span></h4> &emsp;
                     <h4 class="item-review-label text-info lato"><span class="item-review">4</span> Reviews</h4>
                   </div>
                   <hr>
-                  <h3 class="item-price-label lora">Price: <span class="item-price lato">60.00 PHP</span></h3>
+                  <h3 class="item-price-label lora">Price: <span class="item-price lato">${product.price} PHP</span></h3>
                   <h3 class="item-type-label lora">Type: <span class="item-type lato">Book</span></h3>
                   <p class="item-information-label lora">Item Information</p>
                   <p class="item-information lato">
-                    Humpty Dumpty is a character in an English nursery rhyme, probably originally a riddle and one of the best known in the English-speaking world.
+                    ${product.description}
                   </p>
                   <!-- Forms -->
                   <div class="item-form">

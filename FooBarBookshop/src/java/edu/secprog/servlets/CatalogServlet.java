@@ -5,8 +5,10 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.Product;
+import edu.secprog.services.ProductService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +44,9 @@ public class CatalogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        ArrayList<Product> products = ProductService.getAllProducts();
+        request.setAttribute("products", products);
         request.getRequestDispatcher("product-catalog.jsp").forward(request, response);
     }
 

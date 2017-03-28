@@ -85,7 +85,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("userID", userID);
                 session.setAttribute("status", status);
                 
-                response.sendRedirect("/SECPROG_MP/profile");
+                response.sendRedirect("/SECPROG_MP/catalog");
             }
             else if(status.equals("banned")) {
                 responseCode = Audit.BADINFO;

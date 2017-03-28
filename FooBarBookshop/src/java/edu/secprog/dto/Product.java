@@ -88,5 +88,9 @@ public class Product implements Serializable {
         this.avgRating = avgRating;
     }
     
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+    
     
 }

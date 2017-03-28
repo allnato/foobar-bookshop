@@ -5,8 +5,9 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.Product;
+import edu.secprog.services.ProductService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,11 @@ public class ProductItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+            String productID = request.getParameter("productID");
+            System.out.println("productID ->" + productID);
+            Product product = ProductService.getProduct(productID);
+            request.setAttribute("product", product);
             request.getRequestDispatcher("product-item.jsp").forward(request, response);
     }
 
