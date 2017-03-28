@@ -6,8 +6,10 @@
 package edu.secprog.servlets;
 
 import edu.secprog.dto.Product;
+import edu.secprog.dto.Review;
 import edu.secprog.services.ProductService;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +42,9 @@ public class ProductItemServlet extends HttpServlet {
             String productID = request.getParameter("productID");
             System.out.println("productID ->" + productID);
             Product product = ProductService.getProduct(productID);
+            ArrayList<Review> review = ProductService.getAllReviews(Integer.parseInt(productID));
             request.setAttribute("product", product);
+            request.setAttribute("reviews", review);
             request.getRequestDispatcher("product-item.jsp").forward(request, response);
     }
 

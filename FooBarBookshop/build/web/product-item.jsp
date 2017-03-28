@@ -134,7 +134,7 @@
                   <br/>
                   <p class="list-group-item-text">
                     Date: ${reviews.dateReviewed}
-                    
+                    <br/>
                     ${reviews.message}
                   </p>
                 </a>

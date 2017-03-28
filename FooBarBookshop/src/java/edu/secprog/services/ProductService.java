@@ -108,10 +108,10 @@ public class ProductService {
                         rs1.next();
                         review = new Review();
                         review.setCustomerID(rs1.getInt("customerID"));
-                        review.setReviewID(rs.getInt("reviewID"));
-                        review.setDateReviewed(rs.getString("dateReviewed"));
-                        review.setMessage(rs.getString("message"));
-                        review.setRating(rs.getInt("rating"));
+                        review.setReviewID(rs1.getInt("reviewID"));
+                        review.setDateReviewed(rs1.getString("dateReviewed"));
+                        review.setMessage(rs1.getString("message"));
+                        review.setRating(rs1.getInt("rating"));
                         review.setName(AccountService.getUsernameViaID(AccountService.getUserID(review.getCustomerID())));
                         reviews.add(review);
                     }
