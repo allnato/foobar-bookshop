@@ -8,9 +8,11 @@ package edu.secprog.servlets;
 import edu.secprog.security.Audit;
 import edu.secprog.security.IDPair;
 import edu.secprog.services.AccountService;
+import edu.secprog.services.EmployeeService;
 import edu.secprog.services.SecurityService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,15 +64,23 @@ public class EmployeeHomeServlet extends HttpServlet {
                 System.out.println("my role is " + role);
                 if (role.equals("Administrator")) {
                     session.setAttribute("l1k23h4", userID);
-                    request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
+                    
+                    List<String> accList = EmployeeService.getLockAccounts();
+                    request.setAttribute("accList", accList);
+                    request.getRequestDispatcher("adminLock").forward(request, response);
                 }
                 else if (role.equals("Product Manager")) {
                     session.setAttribute("l1k23h4", userID);
-                    request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
+                    
+                    String category = EmployeeService.getProductCategory(userID);
+                    List<String> prodList = EmployeeService.getProductList(category);
+                        
+                    request.setAttribute("prodList", prodList);
+                    request.getRequestDispatcher("manageProducts").forward(request, response);
                 }
                 else if (role.equals("Sales Manager")) {
                     session.setAttribute("l1k23h4", userID);
-                    request.getRequestDispatcher("am-product-sales.jsp").forward(request, response);
+                    request.getRequestDispatcher("salesProduct").forward(request, response);
                 }
                 else {
                     responseCode = Audit.BADINFO;

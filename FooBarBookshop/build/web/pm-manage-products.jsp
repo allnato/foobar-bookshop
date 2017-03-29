@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -38,7 +41,7 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="">Manage Products</a></li>
+              <li class="active"><a href="#">Manage Products</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -46,9 +49,9 @@
                         My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                       </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">My Profile</a></li>
+                  <li><a href="employeeProfile">My Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="employeeLogout">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -96,13 +99,16 @@
                     </tr>
                   </thead>
                   <tbody id="table-body">
-                    <tr>
-                      <td>3</td>
-                      <td>Humpty Dumpty</td>
-                      <td>65.00</td>
-                      <td>A Classic Folklore</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${prodList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                        <tr>
+                            <td>${parsedItem[0]}</td>
+                            <td>${parsedItem[1]}</td>
+                            <td>${parsedItem[2]}</td>
+                            <td>${parsedItem[3]}</td>
+                          <td></td>
+                        </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

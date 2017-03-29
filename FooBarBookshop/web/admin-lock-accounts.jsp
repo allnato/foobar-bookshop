@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -77,14 +80,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>15</td>
-                      <td>Product Manager</td>
-                      <td>Lloyd, Kirsten S.</td>
-                      <td>12/04/2016</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${accList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                      <tr>
+                        <td>${parsedItem[0]}</td>
+                        <td>${parsedItem[1]}</td>
+                        <td>${parsedItem[2]}</td>
+                        <td>${parsedItem[3]}</td>
+                        <td>${parsedItem[4]}</td>
+                        <td></td>
+                      </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

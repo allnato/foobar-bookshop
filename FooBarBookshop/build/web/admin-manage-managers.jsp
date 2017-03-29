@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -40,8 +43,8 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li><a href="">Manage Locked Accounts</a></li>
-              <li class="active"><a href="">Manage Managers</a></li>
+              <li><a href="adminLock">Manage Locked Accounts</a></li>
+              <li class="active"><a href="#">Manage Managers</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -49,9 +52,9 @@
                         My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                       </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">My Profile</a></li>
+                  <li><a href="employeeProfile">My Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="employeeLogout">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -97,126 +100,17 @@
                     </tr>
                   </thead>
                   <tbody id="PMtable-body">
-                    <tr>
-                    	<td>1</td>
-                    	<td>Cooley</td>
-                    	<td>Yen</td>
-                    	<td>lectus</td>
-                    	<td>15/11/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>2</td>
-                    	<td>Huff</td>
-                    	<td>Irene</td>
-                    	<td>ipsum.</td>
-                    	<td>01/11/2016</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>3</td>
-                    	<td>Stephenson</td>
-                    	<td>Ivana</td>
-                    	<td>vestibulum</td>
-                    	<td>20/09/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>4</td>
-                    	<td>Cortez</td>
-                    	<td>Kiona</td>
-                    	<td>tortor.</td>
-                    	<td>20/05/2016</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>5</td>
-                    	<td>Wheeler</td>
-                    	<td>Vivian</td>
-                    	<td>amet</td>
-                    	<td>27/09/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>6</td>
-                    	<td>Reeves</td>
-                    	<td>Evan</td>
-                    	<td>urna.</td>
-                    	<td>09/02/2018</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>7</td>
-                    	<td>Mitchell</td>
-                    	<td>Myra</td>
-                    	<td>amet,</td>
-                    	<td>09/12/2016</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>8</td>
-                    	<td>Fisher</td>
-                    	<td>Malcolm</td>
-                    	<td>consectetuer</td>
-                    	<td>12/07/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>9</td>
-                    	<td>Barron</td>
-                    	<td>Winter</td>
-                    	<td>nulla.</td>
-                    	<td>10/12/2016</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>10</td>
-                    	<td>Snow</td>
-                    	<td>Imani</td>
-                    	<td>erat.</td>
-                    	<td>22/12/2016</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>11</td>
-                    	<td>Rocha</td>
-                    	<td>Jasmine</td>
-                    	<td>tincidunt</td>
-                    	<td>11/12/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>12</td>
-                    	<td>Osborne</td>
-                    	<td>Ian</td>
-                    	<td>Fusce</td>
-                    	<td>31/10/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>13</td>
-                    	<td>Huffman</td>
-                    	<td>Stewart</td>
-                    	<td>Vivamus</td>
-                    	<td>17/10/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>14</td>
-                    	<td>Hopper</td>
-                    	<td>Keith</td>
-                    	<td>aliquam</td>
-                    	<td>14/06/2017</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                    	<td>15</td>
-                    	<td>Lancaster</td>
-                    	<td>Jack</td>
-                    	<td>turpis</td>
-                    	<td>26/05/2016</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${prodMList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                        <tr>
+                            <td>${parsedItem[0]}</td>
+                            <td>${parsedItem[1]}</td>
+                            <td>${parsedItem[2]}</td>
+                            <td>${parsedItem[3]}</td>
+                            <td>${parsedItem[4]}</td>
+                          <td></td>
+                        </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>
@@ -243,20 +137,16 @@
                     </tr>
                   </thead>
                   <tbody id="SMtable-body">
-                    <tr>
-                      <td>003</td>
-                      <td>Lucio</td>
-                      <td>Antonio</td>
-                      <td>12/21/2014</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>006</td>
-                      <td>Pakistan</td>
-                      <td>Joe</td>
-                      <td>09/21/2016</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${salesMList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                        <tr>
+                            <td>${parsedItem[0]}</td>
+                            <td>${parsedItem[1]}</td>
+                            <td>${parsedItem[2]}</td>
+                            <td>${parsedItem[3]}</td>
+                          <td></td>
+                        </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

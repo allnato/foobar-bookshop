@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -39,8 +42,8 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="">Manage Locked Accounts</a></li>
-              <li><a href="">Manage Managers</a></li>
+              <li class="active"><a href="#">Manage Locked Accounts</a></li>
+              <li><a href="adminManage">Manage Managers</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -48,9 +51,9 @@
                         My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                       </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">My Profile</a></li>
+                  <li><a href="employeeProfile">My Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="employeeLogout">Logout</a></li>
                 </ul>
               </li>
             </ul>
@@ -77,126 +80,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Product Manager</td>
-                      <td>Silva, Tara B.</td>
-                      <td>20/05/2017</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Customer</td>
-                      <td>Henry, Preston G.</td>
-                      <td>14/10/2016</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Sales Manager</td>
-                      <td>Frazier, Cassandra K.</td>
-                      <td>24/06/2016</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Product Manager</td>
-                      <td>Riddle, Vincent Y.</td>
-                      <td>28/06/2017</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Customer</td>
-                      <td>Dean, Elizabeth I.</td>
-                      <td>18/01/2017</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Customer</td>
-                      <td>Mullen, Kyla F.</td>
-                      <td>19/07/2017</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>Product Manager</td>
-                      <td>Morse, Reagan D.</td>
-                      <td>26/10/2017</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>Sales Manager</td>
-                      <td>Ellis, Paki I.</td>
-                      <td>15/03/2017</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>Product Manager</td>
-                      <td>Nielsen, Flynn G.</td>
-                      <td>01/09/2017</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>Customer</td>
-                      <td>Mcleod, Shad Z.</td>
-                      <td>02/11/2017</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>11</td>
-                      <td>Admin</td>
-                      <td>Cain, Kyle G.</td>
-                      <td>09/11/2016</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>12</td>
-                      <td>Sales Manager</td>
-                      <td>Bridges, Demetrius E.</td>
-                      <td>10/01/2018</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>13</td>
-                      <td>Product Manager</td>
-                      <td>Pope, Nola J.</td>
-                      <td>16/08/2017</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>14</td>
-                      <td>Admin</td>
-                      <td>Trujillo, Francis H.</td>
-                      <td>20/10/2016</td>
-                      <td>Active</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>15</td>
-                      <td>Product Manager</td>
-                      <td>Lloyd, Kirsten S.</td>
-                      <td>12/04/2016</td>
-                      <td>Locked</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${accList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                      <tr>
+                        <td>${parsedItem[0]}</td>
+                        <td>${parsedItem[1]}</td>
+                        <td>${parsedItem[2]}</td>
+                        <td>${parsedItem[3]}</td>
+                        <td>${parsedItem[4]}</td>
+                        <td></td>
+                      </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

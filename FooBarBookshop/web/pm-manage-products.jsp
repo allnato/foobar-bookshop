@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -96,13 +99,16 @@
                     </tr>
                   </thead>
                   <tbody id="table-body">
-                    <tr>
-                      <td>3</td>
-                      <td>Humpty Dumpty</td>
-                      <td>65.00</td>
-                      <td>A Classic Folklore</td>
-                      <td></td>
-                    </tr>
+                    <c:forEach items="${prodList}" var="item">
+                      <c:set var="parsedItem" value="${fn:split(item, '$')}"/>
+                        <tr>
+                            <td>${parsedItem[0]}</td>
+                            <td>${parsedItem[1]}</td>
+                            <td>${parsedItem[2]}</td>
+                            <td>${parsedItem[3]}</td>
+                          <td></td>
+                        </tr>
+                    </c:forEach>
                   </tbody>
                 </table>
               </div>

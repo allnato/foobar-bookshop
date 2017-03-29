@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class EmployeeService {
     
-    private static final String DELIM = "$$#%^delimit^%#$$";
+    private static final String DELIM = "$";
     
     public static List<String> getLockAccounts() {
         PreparedStatement pstmt = null;
@@ -97,7 +97,7 @@ public class EmployeeService {
             pstmt = connection.prepareStatement(
                     "SELECT managerID, lastname, firstname, type, birthdate " +
                     "FROM users u, employees e, product_type p " +
-                    "WHERE u.userID = e.userID AND e.userID = p.managerID AND e.employeeType = 'Product Manager';");
+                    "WHERE u.userID = e.userID AND e.employeeID = p.managerID AND e.employeeType = 'Product Manager';");
             rs = pstmt.executeQuery();
             while(rs.next()) {
                 data = "" + rs.getInt("managerID") + DELIM + rs.getString("lastname") + DELIM +
@@ -192,7 +192,7 @@ public class EmployeeService {
             rs = pstmt.executeQuery();
             while(rs.next()) {
                 data = "" + rs.getInt("productID") + DELIM + rs.getString("name") + DELIM +
-                        rs.getDouble("price") + DELIM + rs.getString("description");
+                        rs.getString("price") + DELIM + rs.getString("description");
                 
                 accList.add(data); 
             }
@@ -219,6 +219,8 @@ public class EmployeeService {
         PreparedStatement pstmt = null;
         Connection connection = null;
         ResultSet rs = null;
+        
+        System.out.println("userID in emp service: " + userID);
         
         String category;
         

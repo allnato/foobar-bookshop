@@ -55,11 +55,12 @@ public class AdminServlet extends HttpServlet {
             boolean isLoggedIn = (boolean) session.getAttribute("qj123xf54");
             userID = (int) session.getAttribute("l1k23h4");
 
+            System.out.println("hello world!");
+            
             if (isLoggedIn) {
                 switch(action) {
                     case "/adminLock":
                         accList = EmployeeService.getLockAccounts();
-                        
                         request.setAttribute("accList", accList);
                         request.getRequestDispatcher("admin-lock-accounts.jsp").forward(request, response);
                         break;
@@ -67,6 +68,7 @@ public class AdminServlet extends HttpServlet {
                         accList = EmployeeService.getProductManagers();
                         request.setAttribute("prodMList", accList);
                         
+                        System.out.println("admin Manage");
                         accList = EmployeeService.getSalesManagers();
                         request.setAttribute("salesMList", accList);
                         request.getRequestDispatcher("admin-manage-managers.jsp").forward(request, response);

@@ -63,6 +63,8 @@ public class ProductManagerServlet extends HttpServlet {
                         category = EmployeeService.getProductCategory(userID);
                         prodList = EmployeeService.getProductList(category);
                         
+                        System.out.println(category);
+                        
                         request.setAttribute("prodList", prodList);
                         request.getRequestDispatcher("pm-manage-products.jsp").forward(request, response);
                         break;

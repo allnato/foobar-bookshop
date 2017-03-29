@@ -40,9 +40,9 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Product Sales</a></li>
-              <li><a href="">Category Sales</a></li>
-              <li><a href="#">Total Sales</a></li>
+              <li class="active"><a href="">Product Sales</a></li>
+              <li><a href="salesCategory">Category Sales</a></li>
+              <li><a href="salesTotal">Total Sales</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -50,9 +50,9 @@
                         My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                       </a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">My Profile</a></li>
+                  <li><a href="employeeProfile">My Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="employeeLogout">Logout</a></li>
                 </ul>
               </li>
             </ul>
