@@ -42,7 +42,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="#">
+              <a href="cart">
                       My Cart <i class="fa fa-shopping-cart fa-lg"></i> <span class="badge badge-danger">2</span>
                     </a>
             </li>

@@ -52,6 +52,10 @@
         <servlet-name>AddReviewServlet</servlet-name>
         <servlet-class>edu.secprog.servlets.AddReviewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.CartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -115,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>AddReviewServlet</servlet-name>
         <url-pattern>/addReview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

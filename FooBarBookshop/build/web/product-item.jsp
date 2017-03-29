@@ -38,25 +38,25 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-          <a href="#" class="navbar-brand">fb</a>
+          <a href="catalog" class="navbar-brand">fb</a>
         </div>
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="">Catalog</a></li>
+            <li class="active"><a href="catalog">Catalog</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="#">
+              <a href="cart">
                       My Cart <i class="fa fa-shopping-cart fa-lg"></i> <span class="badge badge-danger">2</span>
                     </a>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+              <a href="profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
                       My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
                     </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">My Profile</a></li>
+                <li><a href="profile">My Profile</a></li>
                 <li><a href="#">Purchase History</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Logout</a></li>
@@ -72,7 +72,7 @@
       <div class="item-container container">
         <div class="item-information-container row">
           <ul class="breadcrumb">
-            <li><a href="#">Catalog</a></li>
+            <li><a href="catalog">Catalog</a></li>
             <li class="active">Item</li>
           </ul>
           <div class="panel panel-info">
