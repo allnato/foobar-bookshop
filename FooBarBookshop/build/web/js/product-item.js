@@ -1,21 +1,22 @@
 $('#postActionBTN').click(function(event) {
   // Check if Text area is empty
   if($('.modal textarea').val().trim() == "" || $('.modal textarea').val().trim().length == 0 ){
-    generateAlert('warning', '<h4>Your review message is empty</h4> Please enter a non-empty message')
+    generateAlert('warning', '<h4>Your review message is empty</h4> Please enter a non-empty message');
     console.log("Empty Review Message");
     $('#reviewModal').modal('hide');
     return;
   }
   $.ajax({
-    url: '/path/to/file',
+    url: 'addReview',
     type: 'POST',
     dataType: 'JSON',
     data: {
-      message: $('.modal textarea').val().trim()}
+      message: $('.modal textarea').val().trim(),
+      id: $('.productID').text()}
   })
   .done(function() {
     console.log("success");
-    generateAlert('success', '<h4 style="color:white">Your review has been posted successfully :-)</h4>')
+    generateAlert('success', '<h4 style="color:white">Your review has been posted successfully :-)</h4>');
   })
   .fail(function() {
     console.log("error");
