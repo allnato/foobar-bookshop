@@ -42,7 +42,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="#">
+              <a href="cart">
                       My Cart <i class="fa fa-shopping-cart fa-lg"></i> <span class="badge badge-danger">2</span>
                     </a>
             </li>
@@ -164,15 +164,18 @@
                           </form>
                         </div>
                         <div class="row">
+                            <form method="GET" action="additem">
                           <div class="item-quantity form-group col-lg-3">
-                            <input type="number" class="form-control text-center lato productQuantity" min="1" value="1">
+                            <input type="number" name="productQuantity" class="form-control text-center lato productQuantity" min="1" value="1">
+                            <input type="hidden" name="productID" value="${product.productID}">
                           </div>
                           <div class="item-btn-cart form-group col-lg-9">
-                            <button class="btn btn-warning btn-block addCartBTN">
+                            <button type="submit" class="btn btn-warning btn-block addCartBTN">
                               <i class="fa fa-cart-plus"></i>
                               Add to Cart
                             </button>
                           </div>
+                            </form>
                         </div>
                       </div>
                     </div>

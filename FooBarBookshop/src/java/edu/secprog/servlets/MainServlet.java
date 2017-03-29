@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
         //Redirect to default login page
         int userID = 0;
         int responseCode = Audit.OKINFO;
-        
+        request.getSession().invalidate();
         try {
             request.getRequestDispatcher("main-login-page.jsp").forward(request, response);
         } catch (ServletException ex) {

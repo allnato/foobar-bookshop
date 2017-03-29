@@ -131,12 +131,12 @@ public class ProductService {
         // If everything fails, then:
         return reviews;
     }
-   public static void addReview(Review review, int productID) {
+   public static boolean addReview(Review review, int productID) {
        int reviewID;
        ResultSet rs = null;
        try {
             try (Connection connection = DBPool.getInstance().getConnection()) {
-                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO review(customerID, message, dateReviewed) values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO review(customerID, message, dateReviewed) values(?,?,?)", Statement.RETURN_GENERATED_KEYS);
                 pstmt.setLong(1, review.getCustomerID());
                 pstmt.setString(2, review.getMessage());
                 pstmt.setString(3, review.getDateReviewed());
@@ -153,13 +153,20 @@ public class ProductService {
                 pstmt.close();
                 connection.close();
                 rs.close();
+            } catch(Exception e){
+                e.printStackTrace();
+                return false;
             }
 
         }
         catch(Exception e) {
             e.printStackTrace();
             System.out.println("Dami nanamang problem ano ba yan.");
+            return false;
         }
+       
+       return true;
+       
        
    }
         
