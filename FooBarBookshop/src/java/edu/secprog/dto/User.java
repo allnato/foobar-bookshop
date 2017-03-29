@@ -20,7 +20,6 @@ public class User implements Serializable {
     public static String COLUMN_BIRTHDATE = "birthdate";
     public static String COLUMN_EMAIL = "email";
     public static String COLUMN_USERNAME = "username";
-    public static String COLUMN_PASSWORD = "password";
     public static String COLUMN_STATUS = "status";
     
     private int userID;
@@ -30,7 +29,6 @@ public class User implements Serializable {
     private String birthdate;
     private String email;
     private String username;
-    private String password;
     private String status;
 
     /**
@@ -129,20 +127,6 @@ public class User implements Serializable {
      */
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     /**

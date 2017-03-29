@@ -1,0 +1,68 @@
+html, body{
+  height: 100%;
+  font-size: 16px;
+  background-color: #8cd2a3;
+}
+
+tbody tr td:nth-child(4){
+  color: #C2185B;
+  font-weight: bold;
+  text-align: right;
+}
+
+tbody tr td:nth-child(2){
+  font-weight: bold;
+  text-align: right;
+}
+
+tbody tr td:nth-child(3){
+  text-align: right;
+}
+
+thead tr th:nth-child(4),
+thead tr th:nth-child(2),
+thead tr th:nth-child(3){
+  text-align: right;
+}
+
+
+td,th{
+  font-family: lato;
+}
+
+.cart-label{
+  font-weight: bold;
+  color: white;
+}
+
+.panel-heading{
+  background-color: #009688 !important;
+}
+
+.total-table{
+  border-top: solid 2px silver;
+}
+
+.total-amount{
+  color: #C2185B;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.complete-payment{
+  margin-top: 4rem;
+}
+
+.complete-payment button{
+  font-size: 1rem;
+}
+
+#removeItemModal th,
+#removeItemModal td{
+  text-align: center;
+}
+
+.modal button{
+  font-family: lato;
+  font-size: 1rem;
+}

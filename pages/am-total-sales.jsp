@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Foobar | Total Sales</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+
+    <!-- Bootstrap stylesheet -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-lumen.min.css">
+    <!-- Fonts and Color -->
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/palette.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="css/chartist.min.css">
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="css/am.css">
+    <link rel="stylesheet" href="css/navigation.css">
+
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">fb</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="nav navbar-nav">
+              <li><a href="#">Product Sales</a></li>
+              <li><a href="">Category Sales</a></li>
+              <li class="active"><a href="#">Total Sales</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                        My Profile <i class="fa fa-user-circle fa-lg"></i> <span class="caret"></span>
+                      </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">My Profile</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="total-sales-container container">
+        <div class="row">
+          <div class="total-sales-panel panel panel-info">
+            <div class="panel-heading">
+              <h1 class="lato">Total Sales per Month: 2017</h1>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <!-- Sales per Month Graph -->
+                <div class="col-sm-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="month-sales "></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Sales per Month Table -->
+          <div class="col-sm-4">
+            <div class="panel sales-table-panel panel-success">
+              <div class="panel-heading">
+                <h3 class="lato">Sales per Month: 2017</h3>
+              </div>
+              <div class="panel-body">
+                <table class="table table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Total Sale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>January</td>
+                      <td>12,340</td>
+                    </tr>
+                    <tr>
+                      <td>February</td>
+                      <td>10,839</td>
+                    </tr>
+                    <tr>
+                      <td>March</td>
+                      <td>3000</td>
+                    </tr>
+                    <tr>
+                      <td>April</td>
+                      <td>8,092</td>
+                    </tr>
+                    <tr>
+                      <td>May</td>
+                      <td>4,092</td>
+                    </tr>
+                    <tr>
+                      <td>June</td>
+                      <td>101</td>
+                    </tr>
+                    <tr>
+                      <td>July</td>
+                      <td>20,121</td>
+                    </tr>
+                    <tr>
+                      <td>August</td>
+                      <td>5,390</td>
+                    </tr>
+                    <tr>
+                      <td>September</td>
+                      <td>3,490</td>
+                    </tr>
+                    <tr>
+                      <td>October</td>
+                      <td>2,715</td>
+                    </tr>
+                    <tr>
+                      <td>November</td>
+                      <td>3,209</td>
+                    </tr>
+                    <tr>
+                      <td>December</td>
+                      <td>4,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Total Sales in the Current Year -->
+          <div class="col-sm-8">
+            <div class="panel overall-sales-panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="lato">Overall Sales: 2017</h3>
+              </div>
+              <div class="panel-body">
+                <h1 class="lato text-center">PhP 43,090.00</h1>
+                <!-- Graph -->
+                <div class="year-sales"></div>
+                <table class="table table-responsive table-striped">
+                  <thead>
+                    <tr>
+                      <th>Year</th>
+                      <th>Overall Sales</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>2016</td>
+                      <td>PhP 11,000</td>
+                    </tr>
+                    <tr>
+                      <td>2015</td>
+                      <td>PhP 12,030</td>
+                    </tr>
+                    <tr>
+                      <td>2014</td>
+                      <td>PhP 14,030</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="js/jquery.min.js" charset="utf-8"></script>
+  <script src="bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+
+  <script src="js/chartist.min.js" charset="utf-8"></script>
+  <script src="js/jquery.validate.min.js" charset="utf-8"></script>
+  <script src="js/am-total-sales.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      new Chartist.Line('.month-sales', {
+        labels: [
+          'Jan', 'Feb', 'Mar', 'Apr', 'May',
+          'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+          'Nov', 'Dec'
+        ],
+        series: [
+          [1,2,3,4,5,6,7,8,9,10,11,12]
+        ]
+      }, {
+        showArea: true
+      });
+
+      new Chartist.Line('.year-sales', {
+        labels: [
+          2014,2015,2016,2017
+        ],
+        series: [
+          [11000,12000,14000,43000]
+        ]
+      }, {
+        showArea: true,
+        fullWidth: true
+      });
+
+
+    });
+  </script>
+
+</html>

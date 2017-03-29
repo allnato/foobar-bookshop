@@ -24,6 +24,7 @@ public class Review implements Serializable {
     private int rating;
     private String message;
     private String dateReviewed;
+    private String name;
 
     /**
      * @return the reviewID
@@ -94,5 +95,21 @@ public class Review implements Serializable {
     public void setDateReviewed(String dateReviewed) {
         this.dateReviewed = dateReviewed;
     }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
     
 }
