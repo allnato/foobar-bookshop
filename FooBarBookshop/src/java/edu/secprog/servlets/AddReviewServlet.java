@@ -5,9 +5,14 @@
  */
 package edu.secprog.servlets;
 
+import edu.secprog.dto.Review;
+import edu.secprog.services.AccountService;
+import edu.secprog.services.ProductService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mark Christian Sanchez
  */
+@WebServlet(name = "AddReviewServlet", urlPatterns = {"/addReview"})
 public class AddReviewServlet extends HttpServlet {
 
 
@@ -45,6 +51,32 @@ public class AddReviewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Get IDs
+        int userID = (Integer)request.getSession().getAttribute("userID");
+        int customerID = AccountService.getCustomerID(userID);
+        System.out.println(request.getParameter("id"));
+        int productID = Integer.parseInt(request.getParameter("id"));
+        //Get Message
+        String message = request.getParameter("message");
+        //Get Current Date
+        Date date = new Date();
+        String currentDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
+        
+        //Create & Construct Review Instance
+        Review review = new Review();
+        review.setCustomerID(customerID);
+        review.setDateReviewed(currentDate);
+        review.setMessage(message);
+        
+        if(ProductService.addReview(review, productID)){
+            response.setContentType("text/html");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().write("true");
+        } else{
+            response.setContentType("text/html");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().write("false");
+        }
         
         
     }
