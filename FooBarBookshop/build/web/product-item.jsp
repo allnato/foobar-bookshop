@@ -83,6 +83,7 @@
                 </div>
                 <div class="item-information col-xs-6">
                   <h1 class="item-name lora">${product.name}</h1>
+                  <p style="display: none" class="productID">${product.productID}</p>
                   <div class="item-sub-info">
                     <h4 class="item-update-label lato">Last Update: <span class="item-update">12/21/2017</span></h4> &emsp;
                     <h4 class="item-review-label text-info lato"><span class="item-review">4</span> Reviews</h4>
