@@ -38,7 +38,7 @@
           </div>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="nav navbar-nav">
-              <li class=""><a href="">Back to Dashboard</a></li>
+              <li class=""><a href="employeeHome">Back to Dashboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
@@ -48,7 +48,7 @@
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#">My Profile</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="employeeLogout">Logout</a></li>
                 </ul>
               </li>
             </ul>

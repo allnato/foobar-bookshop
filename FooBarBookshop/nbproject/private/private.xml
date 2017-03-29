@@ -1,20 +1,14 @@
-<<<<<<< HEAD
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/security/Audit.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/dto/User.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/security/AES.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/security/IDPair.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/LogoutServlet.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/MainServlet.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/ErrorServlet.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/AccountService.java</file>
-            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/LoginServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/ProductManagerServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/SecurityService.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/services/EmployeeService.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/AdminServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/EmployeeHomeServlet.java</file>
+            <file>file:/C:/Users/CoRX/Projects/foobar-bookshop/FooBarBookshop/src/java/edu/secprog/servlets/SalesManagerServlet.java</file>
         </group>
     </open-files>
 </project-private>
->>>>>>> audit-logging

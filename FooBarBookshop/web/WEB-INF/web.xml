@@ -13,6 +13,34 @@
         <servlet-class>edu.secprog.servlets.ErrorServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EmployeeLoginServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeLoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeProfileServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductManagerServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.ProductManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.SalesManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeLogoutServlet</servlet-name>
+        <servlet-class>edu.secprog.servlets.EmployeeLogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditCreditCard</servlet-name>
         <servlet-class>edu.secprog.servlets.EditCreditCardServlet</servlet-class>
     </servlet>
@@ -35,6 +63,46 @@
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/Error</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeLoginServlet</servlet-name>
+        <url-pattern>/employee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeProfileServlet</servlet-name>
+        <url-pattern>/employeeProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminLock</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/adminManage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductManagerServlet</servlet-name>
+        <url-pattern>/manageProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesManagerServlet</servlet-name>
+        <url-pattern>/salesTotal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeLogoutServlet</servlet-name>
+        <url-pattern>/employeeLogout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditCreditCard</servlet-name>

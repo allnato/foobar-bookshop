@@ -23,7 +23,7 @@
         <div class="banner-login col-md-4 offset-md-4 col-sm-12 match">
           <h1 class=" lora text-xs-center">fb</h1>
 
-          <form action="" method="POST" class="col-md-8">
+          <form action="employeeHome" method="POST" class="col-md-10">
             <div class="form-group">
               <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
@@ -32,6 +32,10 @@
               <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
 
+            <div class="form-group">
+              <div class="g-recaptcha recaptScale" data-sitekey="6LfaaBQUAAAAAI_LCKV34P9v9lnTbqQPc6Vjcyf5"></div>
+            </div>
+              
             <div class="form-group">
               <button type="submit" class="btn btn-block btn-success">Login</button>
             </div>
@@ -46,4 +50,19 @@
   <script src="js/jquery.min.js" charset="utf-8"></script>
   <script src="js/tether.min.js" charset="utf-8"></script>
   <script src="js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $("form").submit(function(event) {
+          
+          if(!grecaptcha.getResponse() === "") {
+              //event.preventDefault();
+              //alert("Kindly check the recaptcha and try again.");
+          }
+          grecaptcha.reset();
+      });
+    });
+  </script>
 </html>

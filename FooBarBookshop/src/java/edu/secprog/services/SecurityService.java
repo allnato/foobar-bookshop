@@ -155,4 +155,38 @@ public class SecurityService {
             }
         }
     }
+    
+    public static String blockEmployeeTraversal(int userID) {
+        PreparedStatement pstmt = null;
+        Connection connection = null;
+        ResultSet rs = null;
+        String role = null;
+        
+        try {
+            connection = DBPool.getInstance().getConnection();
+            pstmt = connection.prepareStatement("SELECT employeeType FROM users u, employees e " +
+                    "WHERE u.userID=e.userID AND e.userID= " + userID + ";");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                
+                role = rs.getString("employeeType");
+                return role;
+            }
+        } catch(SQLException e) {
+            //put future audit codes here in the future
+        }
+        finally {
+            try {
+                pstmt.close();
+                connection.close();
+            } catch (SQLException ex) {
+                // replace this in the future
+                // what if the logger that logs fail itself? How can it log itself?
+                Logger.getLogger(SecurityService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return null;
+    }
 }
