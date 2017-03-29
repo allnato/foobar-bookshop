@@ -68,6 +68,7 @@ public class LoginServlet extends HttpServlet {
         String msgDesc = null;
             
         try {
+            
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             //String[] rec = { "dlsu.sachii@gmail.com" };
@@ -84,6 +85,7 @@ public class LoginServlet extends HttpServlet {
                 //Sessions
                 session.setAttribute("userID", userID);
                 session.setAttribute("status", status);
+                session.setAttribute("cartID", AccountService.getCartID(AccountService.getCustomerID(userID)));
                 
                 response.sendRedirect("/SECPROG_MP/catalog");
             }

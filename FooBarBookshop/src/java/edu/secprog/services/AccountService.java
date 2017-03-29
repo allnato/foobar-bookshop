@@ -351,6 +351,20 @@ public class AccountService {
             e.printStackTrace();
             System.out.println("Dami nanamang problem ano ba yan.");
         }
+        
+        try {
+            try (Connection connection = DBPool.getInstance().getConnection()) {
+                PreparedStatement pstmt = connection.prepareStatement("INSERT INTO cart(customerID) values(?)");
+                pstmt.setLong(1, customerID);
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Dami nanamang problem ano ba yan.");
+        }
 
         return true;
     }
@@ -634,5 +648,29 @@ public class AccountService {
         }
         
         return null;
+    }
+    
+    public static int getCartID(int customerID) {
+        
+        ResultSet rs = null;
+        try {
+            Connection connection = DBPool.getInstance().getConnection();
+            PreparedStatement pstmt = connection.prepareStatement("SELECT cartID FROM cart"
+                    + " WHERE customerID=" + customerID + " AND status='open';");
+            rs = pstmt.executeQuery();
+            if(rs.isBeforeFirst()) {
+                rs.next();
+                int cartID = rs.getInt("cartID");
+                connection.close();
+                pstmt.close();
+                rs.close();
+                return cartID;
+            }
+        
+        
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

@@ -47,11 +47,11 @@ public class AddItemServlet extends HttpServlet {
         String productQuantity = request.getParameter("productQuantity");
         System.out.println("The Product ID is: " + productID);
         System.out.println("The Quantity is: " + productQuantity);
-        
         success = true;
         response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");
         response.getWriter().write(success + "");
+        response.sendRedirect("/SECPROG_MP/cart");
     }
 
     /**
